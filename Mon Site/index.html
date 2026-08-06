@@ -1,71 +1,90 @@
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vérification du ticket</title>  <style>
-    body{
-      margin:0;
-      height:100vh;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      background:#111;
-      font-family:Arial, sans-serif;
-      color:white;
+  <title>Accès par ticket</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #111;
+      color: white;
+      font-family: Arial, sans-serif;
     }
 
-    .box{
-      width:320px;
-      background:#1f1f1f;
-      padding:25px;
-      border-radius:12px;
-      text-align:center;
+    .box {
+      background: #1f1f1f;
+      padding: 30px;
+      border-radius: 12px;
+      width: 320px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0,0,0,.5);
     }
 
-    input{
-      width:100%;
-      padding:12px;
-      border:none;
-      border-radius:8px;
-      margin-top:15px;
-      box-sizing:border-box;
-      font-size:16px;
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      box-sizing: border-box;
     }
 
-    button{
-      width:100%;
-      padding:12px;
-      margin-top:15px;
-      border:none;
-      border-radius:8px;
-      background:#00b894;
-      color:white;
-      font-size:16px;
-      font-weight:bold;
-      cursor:pointer;
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 8px;
+      background: #00b894;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
     }
 
-    #message{
-      margin-top:15px;
-      min-height:24px;
+    button:disabled {
+      opacity: .7;
+      cursor: not-allowed;
     }
-  </style></head><body>  <div class="box">
-    <h2>🎫 Entrer votre ticket</h2><input
-  id="ticketInput"
-  type="text"
-  placeholder="ABCD-1234-EFGH"
->
 
-<button id="btnVerifier">
-  Vérifier
-</button>
+    #message {
+      margin-top: 15px;
+      min-height: 24px;
+      font-size: 15px;
+    }
+  </style>
+</head>
 
-<p id="message"></p>
+<body>
 
-  </div>  <script type="module">
+  <div class="box">
 
-    import { initializeApp }
-      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    <h2>🎫 Entrer votre ticket</h2>
+
+    <input
+      id="ticketInput"
+      type="text"
+      placeholder="ABCD-1234-EFGH"
+    >
+
+    <button id="btnVerifier">
+      Vérifier
+    </button>
+
+    <p id="message"></p>
+
+  </div>
+
+  <script type="module">
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
     import {
       getFirestore,
@@ -74,7 +93,7 @@
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-    // CONFIG FIREBASE
+    // Configuration Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyDPh3dJ37auy21L70Mekm_ikuIfeD8wCZU",
       authDomain: "channelplus-8c219.firebaseapp.com",
@@ -85,19 +104,16 @@
     };
 
 
-    // INITIALISATION
+    // Initialisation Firebase
     const app = initializeApp(firebaseConfig);
-    const db  = getFirestore(app);
+    const db = getFirestore(app);
 
 
-    // VÉRIFICATION
-    async function verifierTicket(){
+    // Vérification du ticket
+    async function verifierTicket() {
 
       const btn = document.getElementById("btnVerifier");
       const message = document.getElementById("message");
-
-      btn.disabled = true;
-      btn.textContent = "Vérification...";
 
       const code = document
         .getElementById("ticketInput")
@@ -105,54 +121,56 @@
         .trim()
         .toUpperCase();
 
-      if(!code){
 
+      // Ticket vide
+      if (!code) {
         message.textContent = "⚠️ Entrez un ticket";
-
-        btn.disabled = false;
-        btn.textContent = "Vérifier";
-
         return;
       }
 
-      try{
 
-        // Cherche le ticket dans Firestore
-        const ref  = doc(db, "tickets", code);
+      try {
 
+        btn.disabled = true;
+        btn.textContent = "Vérification...";
+
+
+        // Recherche dans Firestore
+        const ref = doc(db, "tickets", code);
         const snap = await getDoc(ref);
 
-        if(snap.exists()){
 
-          // Ticket valide
+        if (snap.exists()) {
+
+          // Ticket trouvé
           message.textContent = "✅ Accès autorisé";
 
-          // Sauvegarde du ticket
+
+          // Sauvegarde locale
           localStorage.setItem("ticketActif", code);
 
-          // REDIRECTION VERS TON SITE
-          setTimeout(()=>{
+
+          // Redirection vers ton site
+          setTimeout(() => {
 
             window.location.href =
-              "site-multichaine.html";
+              "https://egg-wo.github.io/chariowsell/site-multichaine.html";
 
           }, 500);
 
-        }else{
+        } else {
 
-          // Ticket invalide
+          // Ticket introuvable
           message.textContent = "❌ Ticket introuvable";
-
-          btn.disabled = false;
-          btn.textContent = "Vérifier";
         }
 
-      }catch(err){
+      } catch (err) {
 
         console.error(err);
 
-        message.textContent =
-          "❌ Erreur : " + err.message;
+        message.textContent = "❌ Erreur : " + err.message;
+
+      } finally {
 
         btn.disabled = false;
         btn.textContent = "Vérifier";
@@ -160,37 +178,23 @@
     }
 
 
-    // CLIC BOUTON
+    // Bouton Vérifier
     document
       .getElementById("btnVerifier")
       .addEventListener("click", verifierTicket);
 
 
-    // TOUCHE ENTRÉE
+    // Touche Entrée
     document
       .getElementById("ticketInput")
-      .addEventListener("keydown", (e)=>{
+      .addEventListener("keydown", (e) => {
 
-        if(e.key === "Enter"){
-
+        if (e.key === "Enter") {
           verifierTicket();
         }
       });
 
-  </script></body>
+  </script>
+
+</body>
 </html>
-```IMPORTANT : remplace cette ligne :
-
-window.location.href =
-  "https://ton-site.github.io/site-multichaine.html";
-
-par l’adresse exacte de ton site, par exemple :
-
-window.location.href =
-  "https://nicolas123.github.io/channelplus/site-multichaine.html";
-
-ou si le fichier est dans le même dossier, mets simplement :
-
-window.location.href = "site-multichaine.html";
-
-C’est cette ligne qui envoie automatiquement l’utilisateur vers ton site après vérification réussie du ticket."/>
