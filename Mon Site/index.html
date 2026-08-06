@@ -17,9 +17,9 @@
   <br><br>
 
   <button id="btnVerifier"
-          style="padding:10px 20px;">
-    Vérifier
-  </button>
+        style="padding:10px 20px;cursor:pointer;">
+  Vérifier
+</button>
 
   <p id="message"></p>
 
@@ -71,26 +71,73 @@ function sauvegarderTicket(code) {
 
 
     async function verifierTicket() {
+  const btn = document.getElementById('btnVerifier');
+  const message = document.getElementById('message');
 
-      const code =
-        document.getElementById("ticketInput")
-        .value.trim().toUpperCase();
+  try {
+    btn.disabled = true;
+    btn.textContent = 'Vérification...';
 
-      const ref = doc(db, "tickets", code);
+    const code = document
+      .getElementById('ticketInput')
+      .value.trim()
+      .toUpperCase();
 
-      const snap = await getDoc(ref);
+    if (!code) {
+      message.textContent = '⚠️ Entrez un ticket';
+      return;
+    }
 
+    const ref = doc(db, 'tickets', code);
+    const snap = await getDoc(ref);
 
-      if (!snap.exists()) {
+    if (!snap.exists()) {
+      message.textContent = '❌ Ticket introuvable';
+      return;
+    }
 
-        document.getElementById("message")
-          .textContent = "❌ Ticket introuvable";
+    const data = snap.data();
 
-        return;
-      }
+    // Vérifier expiration
+    if (data.expiresAt && data.expiresAt.toMillis() < Date.now()) {
+      message.textContent = '⛔ Ticket expiré';
+      return;
+    }
 
+    // Première utilisation
+    if (!data.used) {
+      const now = new Date();
 
-      const data = snap.data();
+      // durée par défaut = 24 h si absente
+      const duration = Number(data.duration || 24);
+
+      const expire = new Date(
+        now.getTime() + duration * 60 * 60 * 1000
+      );
+
+      await updateDoc(ref, {
+        used: true,
+        activatedAt: Timestamp.fromDate(now),
+        expiresAt: Timestamp.fromDate(expire)
+      });
+    }
+
+    sauvegarderTicket(code);
+
+    message.textContent = '✅ Accès autorisé';
+
+    setTimeout(() => {
+      window.location.href = 'site-multichaine.html';
+    }, 300);
+
+  } catch (err) {
+    console.error(err);
+    message.textContent = '❌ Erreur : ' + err.message;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Vérifier';
+  }
+}
 
 
       // Vérifier expiration
