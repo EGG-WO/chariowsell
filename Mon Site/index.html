@@ -1,199 +1,196 @@
-```html
-<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Accès par ticket</title>
-</head>
-<body style="background:#111;color:white;font-family:Arial;text-align:center;padding-top:50px;">
+  <title>Vérification du ticket</title>  <style>
+    body{
+      margin:0;
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:#111;
+      font-family:Arial, sans-serif;
+      color:white;
+    }
 
-  <h2>🎫 Entrer votre ticket</h2>
+    .box{
+      width:320px;
+      background:#1f1f1f;
+      padding:25px;
+      border-radius:12px;
+      text-align:center;
+    }
 
-  <input id="ticketInput"
-         placeholder="ABCD-1234-EFGH"
-         style="padding:10px;width:250px;">
+    input{
+      width:100%;
+      padding:12px;
+      border:none;
+      border-radius:8px;
+      margin-top:15px;
+      box-sizing:border-box;
+      font-size:16px;
+    }
 
-  <br><br>
+    button{
+      width:100%;
+      padding:12px;
+      margin-top:15px;
+      border:none;
+      border-radius:8px;
+      background:#00b894;
+      color:white;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
+    }
 
-  <button id="btnVerifier"
-        style="padding:10px 20px;cursor:pointer;">
+    #message{
+      margin-top:15px;
+      min-height:24px;
+    }
+  </style></head><body>  <div class="box">
+    <h2>🎫 Entrer votre ticket</h2><input
+  id="ticketInput"
+  type="text"
+  placeholder="ABCD-1234-EFGH"
+>
+
+<button id="btnVerifier">
   Vérifier
 </button>
 
-  <p id="message"></p>
+<p id="message"></p>
 
-  <script type="module">
+  </div>  <script type="module">
 
-    function setCookie(name, value, days = 30) {
-  const d = new Date();
-  d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
-
-  document.cookie =
-    `${name}=${encodeURIComponent(value)};expires=${d.toUTCString()};path=/`;
-}
-
-function sauvegarderTicket(code) {
-  localStorage.setItem('ticketActif', code);
-  setCookie('ticketActif', code, 30);
-}
-
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { initializeApp }
+      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
     import {
       getFirestore,
       doc,
-      getDoc,
-      updateDoc,
-      Timestamp
+      getDoc
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
+    // CONFIG FIREBASE
     const firebaseConfig = {
-
       apiKey: "AIzaSyDPh3dJ37auy21L70Mekm_ikuIfeD8wCZU",
-
       authDomain: "channelplus-8c219.firebaseapp.com",
-
       projectId: "channelplus-8c219",
-
       storageBucket: "channelplus-8c219.firebasestorage.app",
-
       messagingSenderId: "178858225057",
-
       appId: "1:178858225057:web:63c327bf23eb877f196fe0"
     };
 
 
+    // INITIALISATION
     const app = initializeApp(firebaseConfig);
-
-    const db = getFirestore(app);
-
-
-    async function verifierTicket() {
-  const btn = document.getElementById('btnVerifier');
-  const message = document.getElementById('message');
-
-  try {
-    btn.disabled = true;
-    btn.textContent = 'Vérification...';
-
-    const code = document
-      .getElementById('ticketInput')
-      .value.trim()
-      .toUpperCase();
-
-    if (!code) {
-      message.textContent = '⚠️ Entrez un ticket';
-      return;
-    }
-
-    const ref = doc(db, 'tickets', code);
-    const snap = await getDoc(ref);
-
-    if (!snap.exists()) {
-      message.textContent = '❌ Ticket introuvable';
-      return;
-    }
-
-    const data = snap.data();
-
-    // Vérifier expiration
-    if (data.expiresAt && data.expiresAt.toMillis() < Date.now()) {
-      message.textContent = '⛔ Ticket expiré';
-      return;
-    }
-
-    // Première utilisation
-    if (!data.used) {
-      const now = new Date();
-
-      // durée par défaut = 24 h si absente
-      const duration = Number(data.duration || 24);
-
-      const expire = new Date(
-        now.getTime() + duration * 60 * 60 * 1000
-      );
-
-      await updateDoc(ref, {
-        used: true,
-        activatedAt: Timestamp.fromDate(now),
-        expiresAt: Timestamp.fromDate(expire)
-      });
-    }
-
-    sauvegarderTicket(code);
-
-    message.textContent = '✅ Accès autorisé';
-
-    setTimeout(() => {
-      window.location.href = 'site-multichaine.html';
-    }, 300);
-
-  } catch (err) {
-    console.error(err);
-    message.textContent = '❌ Erreur : ' + err.message;
-  } finally {
-    btn.disabled = false;
-    btn.textContent = 'Vérifier';
-  }
-}
+    const db  = getFirestore(app);
 
 
-      // Vérifier expiration
-      if (data.expiresAt &&
-          data.expiresAt.toMillis() < Date.now()) {
+    // VÉRIFICATION
+    async function verifierTicket(){
 
-        document.getElementById("message")
-          .textContent = "⛔ Ticket expiré";
+      const btn = document.getElementById("btnVerifier");
+      const message = document.getElementById("message");
+
+      btn.disabled = true;
+      btn.textContent = "Vérification...";
+
+      const code = document
+        .getElementById("ticketInput")
+        .value
+        .trim()
+        .toUpperCase();
+
+      if(!code){
+
+        message.textContent = "⚠️ Entrez un ticket";
+
+        btn.disabled = false;
+        btn.textContent = "Vérifier";
 
         return;
       }
 
+      try{
 
-      // Première utilisation
-      if (!data.used) {
+        // Cherche le ticket dans Firestore
+        const ref  = doc(db, "tickets", code);
 
-        const now = new Date();
+        const snap = await getDoc(ref);
 
-        const expire = new Date(
-          now.getTime() + data.duration * 60 * 60 * 1000
-        );
+        if(snap.exists()){
 
+          // Ticket valide
+          message.textContent = "✅ Accès autorisé";
 
-        await updateDoc(ref, {
+          // Sauvegarde du ticket
+          localStorage.setItem("ticketActif", code);
 
-          used: true,
+          // REDIRECTION VERS TON SITE
+          setTimeout(()=>{
 
-          activatedAt: Timestamp.fromDate(now),
+            window.location.href =
+              "site-multichaine.html";
 
-          expiresAt: Timestamp.fromDate(expire)
-        });
+          }, 500);
+
+        }else{
+
+          // Ticket invalide
+          message.textContent = "❌ Ticket introuvable";
+
+          btn.disabled = false;
+          btn.textContent = "Vérifier";
+        }
+
+      }catch(err){
+
+        console.error(err);
+
+        message.textContent =
+          "❌ Erreur : " + err.message;
+
+        btn.disabled = false;
+        btn.textContent = "Vérifier";
       }
-
-      // après activation réussie
-sauvegarderTicket(code);
-
-
-      document.getElementById("message")
-  .textContent = "✅ Accès autorisé";
-  
-
-// Enregistrer dans localStorage + cookie
-sauvegarderTicket(code);
-
-// Petite pause pour être sûr que c'est enregistré
-setTimeout(() => {
-  window.location.href = 'site-multichaine.html';
-}, 100);
     }
 
 
-    document.getElementById("btnVerifier")
+    // CLIC BOUTON
+    document
+      .getElementById("btnVerifier")
       .addEventListener("click", verifierTicket);
 
-  </script>
 
-</body>
+    // TOUCHE ENTRÉE
+    document
+      .getElementById("ticketInput")
+      .addEventListener("keydown", (e)=>{
+
+        if(e.key === "Enter"){
+
+          verifierTicket();
+        }
+      });
+
+  </script></body>
 </html>
-```
+```IMPORTANT : remplace cette ligne :
+
+window.location.href =
+  "https://ton-site.github.io/site-multichaine.html";
+
+par l’adresse exacte de ton site, par exemple :
+
+window.location.href =
+  "https://nicolas123.github.io/channelplus/site-multichaine.html";
+
+ou si le fichier est dans le même dossier, mets simplement :
+
+window.location.href = "site-multichaine.html";
+
+C’est cette ligne qui envoie automatiquement l’utilisateur vers ton site après vérification réussie du ticket."/>
