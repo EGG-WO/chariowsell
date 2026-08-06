@@ -137,6 +137,8 @@
 
         // Recherche dans Firestore
         const ref = doc(db, "tickets", code);
+        message.textContent = "🔄 Recherche du ticket...";
+console.log("Code saisi :", code);
         const snap = await getDoc(ref);
 
 
