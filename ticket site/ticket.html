@@ -1,0 +1,58 @@
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Votre code</title>
+  <style>
+    body{
+      background:#0f172a;
+      color:white;
+      font-family:Arial;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      height:100vh;
+      margin:0;
+    }
+    .box{
+      background:#1e293b;
+      padding:40px;
+      border-radius:20px;
+      text-align:center;
+      width:90%;
+      max-width:500px;
+    }
+    .code{
+      margin-top:20px;
+      font-size:28px;
+      font-weight:bold;
+      color:#22c55e;
+      background:#020617;
+      padding:15px;
+      border-radius:12px;
+      word-break:break-all;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box">
+    <h2>🎉 Votre code personnel</h2>
+    <div class="code" id="code"></div>
+  </div>
+
+  <script>
+    const code = localStorage.getItem("myTicket");
+
+    if(!code){
+      window.location.href = "claim.html";
+    }else{
+      document.getElementById("code").textContent = code;
+    }
+  </script>
+
+</body>
+</html>
+```
