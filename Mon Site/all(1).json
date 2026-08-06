@@ -1,0 +1,17 @@
+{
+  "countries": [
+    "France"
+  ],
+  "categories": [
+    "Généralistes"
+  ],
+  "channels": [
+    {
+      "id": "1629878879d81db9a9baa0-e32cb483eba771",
+      "name": "24 KITCHEN",
+      "country": "France",
+      "categories": ["Généralistes"],
+      "embed_url": "https://livewatch.top/embed/1629878879d81db9a9baa0-e32cb483eba771"
+    }
+  ]
+}

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Channel+ Premium • Démo 24h</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial,Helvetica,sans-serif;
+    }
+
+    body{
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:20px;
+      background:#050816;
+      color:white;
+    }
+
+    .box{
+      width:100%;
+      max-width:520px;
+      background:rgba(15,23,42,.88);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:28px;
+      padding:40px 30px;
+      text-align:center;
+      box-shadow:0 20px 50px rgba(0,0,0,.55);
+    }
+
+    h1{
+      color:#22d3ee;
+      margin-bottom:10px;
+    }
+
+    p{
+      color:#cbd5e1;
+      line-height:1.6;
+      margin-bottom:20px;
+    }
+
+    .timer{
+      background:#0b1220;
+      border-radius:22px;
+      padding:20px;
+      margin-bottom:24px;
+    }
+
+    .label{
+      color:#94a3b8;
+      margin-bottom:8px;
+    }
+
+    .value{
+      font-size:1.8rem;
+      font-weight:bold;
+      color:#22d3ee;
+    }
+
+    .btn{
+      width:100%;
+      display:block;
+      padding:15px;
+      border-radius:18px;
+      text-decoration:none;
+      font-weight:bold;
+      transition:.25s;
+      margin-top:12px;
+    }
+
+    .start{
+      background:linear-gradient(135deg,#22d3ee,#2563eb);
+      color:white;
+    }
+
+    .ticket{
+      background:#111827;
+      color:#e2e8f0;
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .hidden{
+      display:none;
+    }
+
+    .expired{
+      margin-top:22px;
+      padding:18px;
+      border-radius:20px;
+      background:rgba(239,68,68,.08);
+      border:1px solid rgba(239,68,68,.22);
+      display:none;
+    }
+
+    .expired h2{
+      color:#ef4444;
+      margin-bottom:10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box">
+
+    <h1>CHANNEL+ PREMIUM</h1>
+
+    <p>
+      Profitez d'un accès gratuit pendant <strong>24 heures</strong>.
+      Le compte à rebours commencera uniquement lorsque vous cliquerez sur le bouton.
+    </p>
+
+    <div class="timer">
+      <div class="label">Temps restant</div>
+      <div class="value" id="countdown">Pas encore commencé</div>
+    </div>
+
+    <!-- BOUTON DÉMO -->
+    <a href="site-multichaine.html"
+       id="startBtn"
+       class="btn start">
+      ▶ Commencer la démo
+    </a>
+
+    <!-- BOUTON TICKET -->
+    <a href="site-multichaine.html"
+       class="btn ticket">
+      🔑 Acheter un ticket premium
+    </a>
+
+    <div class="expired" id="expiredBox">
+
+      <h2>⛔ Démo expirée</h2>
+
+      <p>
+        Votre période d'essai gratuite est terminée.
+      </p>
+
+      <a href="site-multichaine.html"
+         class="btn ticket">
+        🔑 Obtenir un ticket
+      </a>
+    </div>
+
+  </div>
+
+  <script>
+
+    const DEMO_KEY = 'demoStartTime';
+
+    const DEMO_DURATION =
+      24 * 60 * 60 * 1000;
+
+    const countdown =
+      document.getElementById('countdown');
+
+    const startBtn =
+      document.getElementById('startBtn');
+
+    const expiredBox =
+      document.getElementById('expiredBox');
+
+    function format(ms){
+
+      const total =
+        Math.floor(ms / 1000);
+
+      const h =
+        Math.floor(total / 3600);
+
+      const m =
+        Math.floor((total % 3600) / 60);
+
+      const s =
+        total % 60;
+
+      return `${h}h ${m}m ${s}s`;
+    }
+
+    function update(){
+
+      const start =
+        Number(localStorage.getItem(DEMO_KEY));
+
+      if(!start){
+
+        countdown.textContent =
+          'Pas encore commencé';
+
+        return;
+      }
+
+      const remaining =
+        start + DEMO_DURATION - Date.now();
+
+      if(remaining <= 0){
+
+        countdown.textContent = 'Expiré';
+
+        startBtn.style.display = 'none';
+
+        expiredBox.style.display = 'block';
+
+        return;
+      }
+
+      countdown.textContent =
+        format(remaining);
+    }
+
+    // Démarrage AU CLIC
+    startBtn.addEventListener('click', e => {
+
+      e.preventDefault();
+
+      if(!localStorage.getItem(DEMO_KEY)){
+
+        localStorage.setItem(
+          DEMO_KEY,
+          Date.now()
+        );
+      }
+
+      // Aller vers ton vrai site
+      window.location.href =
+        'site-multichaine.html';
+    });
+
+    update();
+
+    setInterval(update, 1000);
+
+  </script>
+
+</body>
+</html>
+```
+

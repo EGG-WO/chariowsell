@@ -1,0 +1,152 @@
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accès par ticket</title>
+</head>
+<body style="background:#111;color:white;font-family:Arial;text-align:center;padding-top:50px;">
+
+  <h2>🎫 Entrer votre ticket</h2>
+
+  <input id="ticketInput"
+         placeholder="ABCD-1234-EFGH"
+         style="padding:10px;width:250px;">
+
+  <br><br>
+
+  <button id="btnVerifier"
+          style="padding:10px 20px;">
+    Vérifier
+  </button>
+
+  <p id="message"></p>
+
+  <script type="module">
+
+    function setCookie(name, value, days = 30) {
+  const d = new Date();
+  d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
+
+  document.cookie =
+    `${name}=${encodeURIComponent(value)};expires=${d.toUTCString()};path=/`;
+}
+
+function sauvegarderTicket(code) {
+  localStorage.setItem('ticketActif', code);
+  setCookie('ticketActif', code, 30);
+}
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+    import {
+      getFirestore,
+      doc,
+      getDoc,
+      updateDoc,
+      Timestamp
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+    const firebaseConfig = {
+
+      apiKey: "AIzaSyDPh3dJ37auy21L70Mekm_ikuIfeD8wCZU",
+
+      authDomain: "channelplus-8c219.firebaseapp.com",
+
+      projectId: "channelplus-8c219",
+
+      storageBucket: "channelplus-8c219.firebasestorage.app",
+
+      messagingSenderId: "178858225057",
+
+      appId: "1:178858225057:web:63c327bf23eb877f196fe0"
+    };
+
+
+    const app = initializeApp(firebaseConfig);
+
+    const db = getFirestore(app);
+
+
+    async function verifierTicket() {
+
+      const code =
+        document.getElementById("ticketInput")
+        .value.trim().toUpperCase();
+
+      const ref = doc(db, "tickets", code);
+
+      const snap = await getDoc(ref);
+
+
+      if (!snap.exists()) {
+
+        document.getElementById("message")
+          .textContent = "❌ Ticket introuvable";
+
+        return;
+      }
+
+
+      const data = snap.data();
+
+
+      // Vérifier expiration
+      if (data.expiresAt &&
+          data.expiresAt.toMillis() < Date.now()) {
+
+        document.getElementById("message")
+          .textContent = "⛔ Ticket expiré";
+
+        return;
+      }
+
+
+      // Première utilisation
+      if (!data.used) {
+
+        const now = new Date();
+
+        const expire = new Date(
+          now.getTime() + data.duration * 60 * 60 * 1000
+        );
+
+
+        await updateDoc(ref, {
+
+          used: true,
+
+          activatedAt: Timestamp.fromDate(now),
+
+          expiresAt: Timestamp.fromDate(expire)
+        });
+      }
+
+      // après activation réussie
+sauvegarderTicket(code);
+
+
+      document.getElementById("message")
+  .textContent = "✅ Accès autorisé";
+  
+
+// Enregistrer dans localStorage + cookie
+sauvegarderTicket(code);
+
+// Petite pause pour être sûr que c'est enregistré
+setTimeout(() => {
+  window.location.href = 'site-multichaine.html';
+}, 100);
+    }
+
+
+    document.getElementById("btnVerifier")
+      .addEventListener("click", verifierTicket);
+
+  </script>
+
+</body>
+</html>
+```
