@@ -1,12 +1,16 @@
+```html
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Channel+ Premium</title>
+
 <link rel="dns-prefetch" href="//livewatch.top">
 <link rel="preconnect" href="https://livewatch.top" crossorigin>
+
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
 body{background:#050816;color:#fff;min-height:100vh}
@@ -25,6 +29,7 @@ video{width:100%;aspect-ratio:16/9;display:block;background:#000}
 .channel h3{margin-bottom:16px;color:#e2e8f0;font-size:1rem}
 .channel button{width:100%;padding:12px;border:0;border-radius:14px;background:linear-gradient(135deg,#22d3ee,#2563eb);color:#fff;font-weight:bold;cursor:pointer}
 footer{text-align:center;padding:30px;color:#94a3b8}
+
 .chat-box{margin-top:30px;background:rgba(15,23,42,.85);border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:20px}
 .chat-box h3{margin-bottom:15px;color:#22d3ee}
 .messages{height:250px;overflow-y:auto;background:#0b1220;border-radius:16px;padding:12px;margin-bottom:12px}
@@ -33,257 +38,976 @@ footer{text-align:center;padding:30px;color:#94a3b8}
 .chat-input{display:flex;gap:8px;flex-wrap:wrap}
 .chat-input input{flex:1;min-width:120px;padding:10px 12px;border:0;border-radius:12px;background:#111827;color:#fff}
 .chat-input button{padding:10px 16px;border:0;border-radius:12px;background:linear-gradient(135deg,#22d3ee,#2563eb);color:#fff;font-weight:bold;cursor:pointer}
-#securityGate{position:fixed;inset:0;background:#050816;color:#fff;display:flex;align-items:center;justify-content:center;z-index:99999;text-align:center}
-@media(max-width:600px){header h1{font-size:1.4rem}.container{padding:0 12px}.channels{grid-template-columns:1fr;gap:16px}.channel{padding:16px}#search{font-size:16px}video{border-radius:18px}}
-@media(min-width:601px) and (max-width:1024px){.channels{grid-template-columns:repeat(2,1fr)}}
+
+#securityGate{
+position:fixed;
+inset:0;
+background:#050816;
+color:#fff;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:99999;
+text-align:center
+}
+
+#playerStatus{
+padding:10px;
+text-align:center;
+font-size:.9rem;
+color:#94a3b8;
+background:#020617;
+}
+
+@media(max-width:600px){
+header h1{font-size:1.4rem}
+.container{padding:0 12px}
+.channels{grid-template-columns:1fr;gap:16px}
+.channel{padding:16px}
+#search{font-size:16px}
+video{border-radius:18px}
+}
+
+@media(min-width:601px) and (max-width:1024px){
+.channels{grid-template-columns:repeat(2,1fr)}
+}
 </style>
 </head>
+
 <body>
 
-<div id="securityGate"><div>🔐 Vérification de l'accès...</div></div>
+<div id="securityGate">
+<div>🔐 Vérification de l'accès...</div>
+</div>
 
 <div id="protectedContent" style="display:none">
+
 <header>
 <h1>CHANNEL+ PREMIUM</h1>
 <p class="live">🔴 TV EN DIRECT</p>
 </header>
 
 <div class="container">
-<div class="player-box"><video id="video" controls autoplay muted playsinline></video></div>
+
+<div class="player-box">
+
+<video id="video"
+controls
+autoplay
+muted
+playsinline>
+</video>
+
+<div id="playerStatus">
+Sélectionnez une chaîne
+</div>
+
+</div>
 
 <div class="chat-box">
+
 <h3 id="chatTitle">💬 Chat Général</h3>
+
 <div id="messages" class="messages"></div>
+
 <div class="chat-input">
+
 <input id="username" placeholder="Ton pseudo">
-<input id="messageInput" placeholder="Écrire un message...">
-<button id="sendBtn">Envoyer</button>
-</div>
+
+<input id="messageInput"
+placeholder="Écrire un message...">
+
+<button id="sendBtn">
+Envoyer
+</button>
+
 </div>
 
-<input id="search" placeholder="Rechercher une chaîne...">
+</div>
+
+<input id="search"
+placeholder="Rechercher une chaîne...">
 
 <div class="channels" id="channels">
 
-<div class="channel"><img src="nolly.png" alt="NOLLYWOOD TV"><h3>NOLLYWOOD TV</h3>
-<button onclick="ouvrirEmbed('https://livewatch.top/embed/1562445425bf43cebd4faf-42294ead14e2b3')">▶ Regarder</button></div>
 
-<div class="channel"><img src="disney.png" alt="Disney Junior"><h3>Disney junior</h3>
-<button onclick="ouvrirEmbed('https://livewatch.top/embed/1762694647144af19e59b7-ba1042469cec01')">▶ Regarder</button></div>
+<!-- NOLLYWOOD -->
 
-<div class="channel"><img src="nik.png" alt="Nickelodeon"><h3>Nickeledeon</h3>
-<button onclick="ouvrirChat('Nickelodeon'); ouvrirEmbed('https://livewatch.top/embed/3562748294b2ebad358cbf-9150df941c43fe')">▶ Regarder</button></div>
+<div class="channel">
 
-<div class="channel"><img src="A+.jpg" alt="A+"><h3>A+</h3>
-<button onclick="ouvrirEmbed('https://livewatch.top/embed/594965518e7c95c9c8814-e956b99b20c6e1')">▶ Regarder</button></div>
+<img src="nolly.png" alt="NOLLYWOOD TV">
 
-<div class="channel"><img src="nov.png" alt="Novelas TV"><h3>novelas tv</h3>
-<button onclick="ouvrirEmbed('https://livewatch.top/embed/16260338528710828dbe45-351424000ae001')">▶ Regarder</button></div>
+<h3>NOLLYWOOD TV</h3>
 
-<div class="channel"><img src="c+1.png" alt="Canal+ Sport 1"><h3>Canal+Sport1</h3>
-<button onclick="ouvrirEmbed('https://livewatch.top/embed/1012399982f41e3c10e6d6-646c8f3e43249f')">▶ Regarder</button></div>
+<button onclick="ouvrirHLS('URL_HLS_NOLLYWOOD','NOLLYWOOD TV')">
+▶ Regarder
+</button>
 
-<div class="channel"><img src="infosport+.png" alt="Infosport+"><h3>infosport+</h3>
-<button onclick="ouvrirEmbed('https://livewatch.top/embed/14657608221ba582f5feb-c927a78429e447')">▶ Regarder</button></div>
+</div>
 
-<div class="channel"><img src="c+family.png" alt="Canal+ Family"><h3>canal+family</h3>
-<button onclick="ouvrirEmbed('https://livewatch.top/embed/4007062954bb448913d299-b72e5d5ebf8ade')">▶ Regarder</button></div>
 
-<div class="channel"><img src="tf1.jpg" alt="TF1"><h3>TF1</h3>
-<button onclick="ouvrirEmbed('https://livewatch.top/embed/1334669376bf508b8ed995-e1dc32893923cf')">▶ Regarder</button></div>
+<!-- DISNEY -->
 
-<div class="channel"><img src="piwi+.png" alt="Piwi+"><h3>piwi+</h3>
-<button onclick="ouvrirEmbed('https://livewatch.top/embed/2272423077184c1838f29c-7e205f90c233d3')">▶ Regarder</button></div>
+<div class="channel">
 
-<div class="channel"><img src="tfx.jpg" alt="TFX"><h3>TFX</h3>
-<button onclick="ouvrirEmbed('https://livewatch.top/embed/3794086467dcb3e9b1728b-037a336b29d3ba')">▶ Regarder</button></div>
+<img src="disney.png" alt="Disney Junior">
 
-<div class="channel"><img src="action.jpg" alt="action"><h3>Action</h3>
-<button onclick="ouvrirEmbed('https://livewatch.top/embed/3638789513f8ccd703cc28-dba0e03c0b6744')">▶ Regarder</button></div>
+<h3>Disney junior</h3>
 
-<div class="channel"><img src="teletoon.jpg" alt="tele"><h3>teletoon+</h3>
-<button onclick="ouvrirEmbed('https://livewatch.top/embed/231278062503478eaef59f-8867e6406b2968')">▶ Regarder</button></div>
-  
+<button onclick="ouvrirHLS('URL_HLS_DISNEY','Disney junior')">
+▶ Regarder
+</button>
+
+</div>
+
+
+<!-- NICKELODEON -->
+
+<div class="channel">
+
+<img src="nik.png" alt="Nickelodeon">
+
+<h3>Nickeledeon</h3>
+
+<button onclick="ouvrirChat('Nickelodeon'); ouvrirHLS('URL_HLS_NICKELODEON','Nickelodeon')">
+▶ Regarder
+</button>
+
+</div>
+
+
+<!-- A+ -->
+
+<div class="channel">
+
+<img src="A+.jpg" alt="A+">
+
+<h3>A+</h3>
+
+<button onclick="ouvrirHLS('N_m3u8DL-RE "https://livewatch.top/api/hls?t=MTc4NjIyNDQ0OXx8aHR0cHM6Ly90ZDN3YjFiY2hkdnNhaHAubmdvbHBka3lvY3RqY2RkeHNobGk0NjlyLm9yZy9zdW5zaGluZS9ZX3AtOTRPZFhDQmlQZnVlN1JSbmw0enZFckRmcXg5VktwMmVNOGFGdDZoZnlicHNqTUpMLUlQMDhqTnVBN1ZBNFVTZ1VRSzM3aTg1TUZYQThYb21NNTVybkc4MUMxQmZqTWRFM3VoamEyUkY1cUMwLVJBdzQwcENRRWVYTTB2YjN2RTlDSzdUTjVFVk1BOTN6WUZiV3RsWGZVTmNPX3ZlTHM3Y2ZMV2lWci1zUmdhNm90LUQyQTRENkdHWjZ4NC04cFJFeTkydy1XYXk2dE1LdFoxZWUzeWZtTkZlV1hDS0ZPSjZjdmdFajVUNkFzMC0yUWowOC1vZktFckFzTzZsZTc1QzBtVFpUY0pHNXRtOWlNa1AwMjU2UXFnRElUMzZGaDZIU3JNY1NTNC9obHMvaW5kZXgubTN1OHx8diugAd81wbJH2qOASlTtjA" --header "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:153.0) Gecko/20100101 Firefox/153.0" --header "Referer: https://livewatch.top/" --save-name "hls"','A+')">
+▶ Regarder
+</button>
+
+</div>
+
+
+<!-- NOVELAS -->
+
+<div class="channel">
+
+<img src="nov.png" alt="Novelas TV">
+
+<h3>novelas tv</h3>
+
+<button onclick="ouvrirHLS('URL_HLS_NOVELAS','novelas tv')">
+▶ Regarder
+</button>
+
+</div>
+
+
+<!-- CANAL SPORT -->
+
+<div class="channel">
+
+<img src="c+1.png" alt="Canal+ Sport 1">
+
+<h3>Canal+Sport1</h3>
+
+<button onclick="ouvrirHLS('URL_HLS_CANALSPORT','Canal+Sport1')">
+▶ Regarder
+</button>
+
+</div>
+
+
+<!-- INFOSPORT -->
+
+<div class="channel">
+
+<img src="infosport+.png" alt="Infosport+">
+
+<h3>infosport+</h3>
+
+<button onclick="ouvrirHLS('URL_HLS_INFOSPORT','infosport+')">
+▶ Regarder
+</button>
+
+</div>
+
+
+<!-- CANAL FAMILY -->
+
+<div class="channel">
+
+<img src="c+family.png" alt="Canal+ Family">
+
+<h3>canal+family</h3>
+
+<button onclick="ouvrirHLS('URL_HLS_FAMILY','canal+family')">
+▶ Regarder
+</button>
+
+</div>
+
+
+<!-- TF1 -->
+
+<div class="channel">
+
+<img src="tf1.jpg" alt="TF1">
+
+<h3>TF1</h3>
+
+<button onclick="ouvrirHLS('URL_HLS_TF1','TF1')">
+▶ Regarder
+</button>
+
+</div>
+
+
+<!-- PIWI -->
+
+<div class="channel">
+
+<img src="piwi+.png" alt="Piwi+">
+
+<h3>piwi+</h3>
+
+<button onclick="ouvrirHLS('URL_HLS_PIWI','piwi+')">
+▶ Regarder
+</button>
+
+</div>
+
+
+<!-- TFX -->
+
+<div class="channel">
+
+<img src="tfx.jpg" alt="TFX">
+
+<h3>TFX</h3>
+
+<button onclick="ouvrirHLS('URL_HLS_TFX','TFX')">
+▶ Regarder
+</button>
+
+</div>
+
+
+<!-- ACTION -->
+
+<div class="channel">
+
+<img src="action.jpg" alt="action">
+
+<h3>Action</h3>
+
+<button onclick="ouvrirHLS('URL_HLS_ACTION','Action')">
+▶ Regarder
+</button>
+
+</div>
+
+
+<!-- TELETOON -->
+
+<div class="channel">
+
+<img src="teletoon.jpg" alt="tele">
+
+<h3>teletoon+</h3>
+
+<button onclick="ouvrirHLS('URL_HLS_TELETOON','teletoon+')">
+▶ Regarder
+</button>
+
+</div>
+
 </div>
 </div>
 
-<footer>© 2026 Channel+ Premium</footer>
+<footer>
+© 2026 Channel+ Premium
+</footer>
+
 </div>
+
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, doc, getDoc, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+initializeApp
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getFirestore,
+doc,
+getDoc,
+collection,
+addDoc,
+query,
+orderBy,
+onSnapshot,
+serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDPh3dJ37uy21L70Mekm_ikuIfeD8wCZU",
-  authDomain: "channelplus-8c219.firebaseapp.com",
-  projectId: "channelplus-8c219",
-  storageBucket: "channelplus-8c219.firebasestorage.app",
-  messagingSenderId: "178858225057",
-  appId: "1:178858225057:web:63c327bf23eb877f196fe0"
+
+apiKey:"AIzaSyDPh3dJ37uy21L70Mekm_ikuIfeD8wCZU",
+
+authDomain:"channelplus-8c219.firebaseapp.com",
+
+projectId:"channelplus-8c219",
+
+storageBucket:"channelplus-8c219.firebasestorage.app",
+
+messagingSenderId:"178858225057",
+
+appId:"1:178858225057:web:63c327bf23eb877f196fe0"
+
 };
 
+
 const app = initializeApp(firebaseConfig);
+
 const db = getFirestore(app);
+
 const SESSION_KEY = "channelplus_session";
+
 let accessTicket = null;
+
 let hls = null;
+
 let currentChannel = "Général";
+
 let chatUnsubscribe = null;
 
-function deny() {
-  document.getElementById("securityGate").innerHTML =
-    "<div><h2 style='color:#ef4444'>⛔ Accès refusé</h2><p>Ouvrez ce service depuis la page de contrôle du ticket.</p></div>";
-  try {
-    window.parent.postMessage({type:"CHANNELPLUS_ACCESS_DENIED"}, window.location.origin);
-  } catch(e) {}
+
+/* =========================
+   SECURITE
+========================= */
+
+function deny(){
+
+document.getElementById("securityGate").innerHTML =
+
+"<div>" +
+"<h2 style='color:#ef4444'>⛔ Accès refusé</h2>" +
+"<p>Ouvrez ce service depuis la page de contrôle du ticket.</p>" +
+"</div>";
+
+try{
+
+window.parent.postMessage(
+{
+type:"CHANNELPLUS_ACCESS_DENIED"
+},
+window.location.origin
+);
+
+}catch(e){}
+
 }
 
-function validateSession(code) {
-  try {
-    const raw = sessionStorage.getItem(SESSION_KEY);
-    if (!raw) return false;
-    const data = JSON.parse(raw);
-    return data.ticket === code && Date.now() - Number(data.at) < 12*60*60*1000;
-  } catch(e) { return false; }
+
+function validateSession(code){
+
+try{
+
+const raw =
+sessionStorage.getItem(SESSION_KEY);
+
+if(!raw) return false;
+
+const data = JSON.parse(raw);
+
+return data.ticket === code &&
+Date.now() - Number(data.at) < 12*60*60*1000;
+
+}catch(e){
+
+return false;
+
 }
 
-async function validateTicket(code) {
-  const snap = await getDoc(doc(db, "tickets", code));
-  if (!snap.exists()) return false;
-  const data = snap.data();
-  if (data.expiresAt && typeof data.expiresAt.toMillis === "function" &&
-      data.expiresAt.toMillis() < Date.now()) return false;
-  return true;
 }
 
-async function authorize() {
-  const params = new URLSearchParams(location.search);
-  if (params.toString()) {
-    history.replaceState(null, "", location.pathname);
-  }
 
-  return new Promise(resolve => {
-    const timer = setTimeout(() => resolve(false), 8000);
+async function validateTicket(code){
 
-    function receive(e) {
-      if (e.origin !== window.location.origin) return;
-      if (e.data?.type !== "CHANNELPLUS_ACCESS") return;
+const snap =
+await getDoc(
+doc(db,"tickets",code)
+);
 
-      const code = String(e.data.ticket || "").trim().toUpperCase();
-      if (!code) return;
+if(!snap.exists())
+return false;
 
-      validateTicket(code).then(ok => {
-        if (ok && validateSession(code)) {
-          accessTicket = code;
-          sessionStorage.setItem(SESSION_KEY, JSON.stringify({ticket:code, at:Date.now()}));
-          clearTimeout(timer);
-          window.removeEventListener("message", receive);
-          resolve(true);
-        } else {
-          clearTimeout(timer);
-          window.removeEventListener("message", receive);
-          resolve(false);
-        }
-      }).catch(() => {
-        clearTimeout(timer);
-        window.removeEventListener("message", receive);
-        resolve(false);
-      });
-    }
+const data = snap.data();
 
-    window.addEventListener("message", receive);
-  });
+if(
+data.expiresAt &&
+typeof data.expiresAt.toMillis === "function" &&
+data.expiresAt.toMillis() < Date.now()
+)
+return false;
+
+return true;
+
 }
 
-const authorized = await authorize();
 
-if (!authorized) {
-  deny();
-} else {
-  document.getElementById("securityGate").style.display = "none";
-  document.getElementById("protectedContent").style.display = "block";
+async function authorize(){
 
-  const video = document.getElementById("video");
-  const adn = "https://d3b73b34o7cvkq.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-gz2sgqzp076kf/adn.m3u8";
+const params =
+new URLSearchParams(location.search);
 
-  function playChannel(url) {
-    if (hls) hls.destroy();
-    if (Hls.isSupported()) {
-      hls = new Hls();
-      hls.loadSource(url);
-      hls.attachMedia(video);
-      hls.on(Hls.Events.MANIFEST_PARSED, () => video.play().catch(()=>{}));
-    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-      video.src = url;
-      video.play().catch(()=>{});
-    }
-  }
+if(params.toString()){
 
-  playChannel(adn);
+history.replaceState(
+null,
+"",
+location.pathname
+);
 
-  window.ouvrirEmbed = function(url) {
-    const w = window.open("about:blank", "_blank");
-    if (w) {
-      w.document.write("<html><body style='margin:0;background:#000;color:#fff;display:flex;justify-content:center;align-items:center;height:100vh;font-family:Arial'>Chargement du direct...</body></html>");
-      setTimeout(() => w.location.replace(url), 300);
-    }
-  };
-
-  window.ouvrirChat = function(channelName) {
-    currentChannel = channelName;
-    document.getElementById("chatTitle").textContent = "💬 Chat • " + channelName;
-    if (chatUnsubscribe) chatUnsubscribe();
-
-    const q = query(collection(db, "chats", currentChannel, "messages"), orderBy("createdAt", "asc"));
-    chatUnsubscribe = onSnapshot(q, snapshot => {
-      const box = document.getElementById("messages");
-      box.innerHTML = "";
-      snapshot.forEach(d => {
-        const data = d.data();
-        const div = document.createElement("div");
-        div.className = "message";
-
-        const strong = document.createElement("strong");
-        strong.textContent = (data.user || "Anonyme") + ":";
-        div.appendChild(strong);
-        div.appendChild(document.createTextNode(" " + (data.text || "")));
-
-        box.appendChild(div);
-      });
-      box.scrollTop = box.scrollHeight;
-    });
-  };
-
-  document.getElementById("sendBtn").addEventListener("click", async () => {
-    const text = document.getElementById("messageInput").value.trim();
-    const user = document.getElementById("username").value.trim() || "Anonyme";
-    if (!text) return;
-
-    await addDoc(collection(db, "chats", currentChannel, "messages"), {
-      user, text, createdAt: serverTimestamp()
-    });
-
-    document.getElementById("messageInput").value = "";
-  });
-
-  document.getElementById("search").addEventListener("input", e => {
-    const q = e.target.value.toLowerCase();
-    document.querySelectorAll(".channel").forEach(card => {
-      const name = card.querySelector("h3").textContent.toLowerCase();
-      card.style.display = name.includes(q) ? "block" : "none";
-    });
-  });
-
-  window.ouvrirChat("Général");
-
-  // Contrôle périodique : si le ticket expire, le parent est informé.
-  setInterval(async () => {
-    if (accessTicket && !(await validateTicket(accessTicket))) {
-      deny();
-    }
-  }, 30000);
 }
+
+return new Promise(resolve => {
+
+const timer =
+setTimeout(
+()=>resolve(false),
+8000
+);
+
+
+function receive(e){
+
+if(e.origin !== window.location.origin)
+return;
+
+if(e.data?.type !== "CHANNELPLUS_ACCESS")
+return;
+
+const code =
+String(e.data.ticket || "")
+.trim()
+.toUpperCase();
+
+if(!code)
+return;
+
+
+validateTicket(code)
+
+.then(ok => {
+
+if(ok && validateSession(code)){
+
+accessTicket = code;
+
+sessionStorage.setItem(
+SESSION_KEY,
+JSON.stringify({
+ticket:code,
+at:Date.now()
+})
+);
+
+clearTimeout(timer);
+
+window.removeEventListener(
+"message",
+receive
+);
+
+resolve(true);
+
+}else{
+
+clearTimeout(timer);
+
+window.removeEventListener(
+"message",
+receive
+);
+
+resolve(false);
+
+}
+
+})
+
+.catch(()=>{
+
+clearTimeout(timer);
+
+window.removeEventListener(
+"message",
+receive
+);
+
+resolve(false);
+
+});
+
+}
+
+
+window.addEventListener(
+"message",
+receive
+);
+
+});
+
+}
+
+
+const authorized =
+await authorize();
+
+
+if(!authorized){
+
+deny();
+
+}else{
+
+document.getElementById(
+"securityGate"
+).style.display = "none";
+
+document.getElementById(
+"protectedContent"
+).style.display = "block";
+
+
+/* =========================
+   LECTEUR HLS
+========================= */
+
+const video =
+document.getElementById("video");
+
+const status =
+document.getElementById("playerStatus");
+
+
+function afficherStatus(message){
+
+status.textContent = message;
+
+}
+
+
+/*
+   Lecture d'une URL HLS
+
+   IMPORTANT :
+   l'URL doit être une URL HLS
+   accessible depuis le navigateur.
+*/
+
+window.ouvrirHLS =
+function(url, channelName){
+
+if(!url ||
+url.startsWith("URL_HLS_")){
+
+afficherStatus(
+"⚠️ URL HLS non configurée pour " +
+channelName
+);
+
+return;
+
+}
+
+
+afficherStatus(
+"⏳ Connexion à " +
+channelName + "..."
+);
+
+
+if(hls){
+
+hls.destroy();
+
+hls = null;
+
+}
+
+video.removeAttribute("src");
+
+video.load();
+
+
+if(Hls.isSupported()){
+
+hls = new Hls({
+
+enableWorker:true,
+
+lowLatencyMode:false,
+
+backBufferLength:30
+
+});
+
+
+hls.on(
+Hls.Events.MANIFEST_LOADING,
+()=>{
+
+afficherStatus(
+"⏳ Chargement du flux..."
+);
+
+});
+
+
+hls.on(
+Hls.Events.MANIFEST_PARSED,
+()=>{
+
+afficherStatus(
+"🟢 " +
+channelName +
+" — DIRECT"
+);
+
+video.play().catch(()=>{});
+
+});
+
+
+hls.on(
+Hls.Events.ERROR,
+(event,data)=>{
+
+console.error(
+"HLS ERROR:",
+data
+);
+
+
+if(!data.fatal)
+return;
+
+
+switch(data.type){
+
+case Hls.ErrorTypes.NETWORK_ERROR:
+
+afficherStatus(
+"❌ Erreur réseau / CORS / serveur"
+);
+
+break;
+
+
+case Hls.ErrorTypes.MEDIA_ERROR:
+
+afficherStatus(
+"❌ Erreur média HLS"
+);
+
+break;
+
+
+default:
+
+afficherStatus(
+"❌ Erreur HLS fatale"
+);
+
+break;
+
+}
+
+});
+
+hls.loadSource(url);
+
+hls.attachMedia(video);
+
+
+}else if(
+video.canPlayType(
+"application/vnd.apple.mpegurl"
+)
+){
+
+video.src = url;
+
+video.addEventListener(
+"loadedmetadata",
+()=>{
+
+afficherStatus(
+"🟢 " +
+channelName +
+" — DIRECT"
+);
+
+video.play().catch(()=>{});
+
+},
+{once:true}
+);
+
+}else{
+
+afficherStatus(
+"❌ Ce navigateur ne prend pas en charge HLS"
+);
+
+}
+
+};
+
+
+/* =========================
+   CHAT
+========================= */
+
+window.ouvrirChat =
+function(channelName){
+
+currentChannel =
+channelName;
+
+document.getElementById(
+"chatTitle"
+).textContent =
+"💬 Chat • " +
+channelName;
+
+
+if(chatUnsubscribe)
+chatUnsubscribe();
+
+
+const q =
+query(
+collection(
+db,
+"chats",
+currentChannel,
+"messages"
+),
+orderBy(
+"createdAt",
+"asc"
+)
+);
+
+
+chatUnsubscribe =
+onSnapshot(
+q,
+snapshot=>{
+
+const box =
+document.getElementById(
+"messages"
+);
+
+box.innerHTML = "";
+
+
+snapshot.forEach(d=>{
+
+const data =
+d.data();
+
+const div =
+document.createElement(
+"div"
+);
+
+div.className =
+"message";
+
+
+const strong =
+document.createElement(
+"strong"
+);
+
+strong.textContent =
+(data.user || "Anonyme") +
+":";
+
+
+div.appendChild(
+strong
+);
+
+div.appendChild(
+document.createTextNode(
+" " +
+(data.text || "")
+)
+);
+
+box.appendChild(
+div
+);
+
+});
+
+
+box.scrollTop =
+box.scrollHeight;
+
+});
+
+};
+
+
+/* =========================
+   ENVOI CHAT
+========================= */
+
+document
+.getElementById("sendBtn")
+.addEventListener(
+"click",
+async()=>{
+
+const text =
+document
+.getElementById("messageInput")
+.value
+.trim();
+
+const user =
+document
+.getElementById("username")
+.value
+.trim() ||
+"Anonyme";
+
+
+if(!text)
+return;
+
+
+await addDoc(
+collection(
+db,
+"chats",
+currentChannel,
+"messages"
+),
+{
+
+user,
+text,
+createdAt:
+serverTimestamp()
+
+}
+);
+
+
+document
+.getElementById(
+"messageInput"
+)
+.value = "";
+
+});
+
+
+/* =========================
+   RECHERCHE
+========================= */
+
+document
+.getElementById("search")
+.addEventListener(
+"input",
+e=>{
+
+const q =
+e.target.value
+.toLowerCase();
+
+
+document
+.querySelectorAll(
+".channel"
+)
+.forEach(card=>{
+
+const name =
+card
+.querySelector("h3")
+.textContent
+.toLowerCase();
+
+card.style.display =
+name.includes(q)
+? "block"
+: "none";
+
+});
+
+});
+
+
+window.ouvrirChat(
+"Général"
+);
+
+
+/* =========================
+   VERIFICATION TICKET
+========================= */
+
+setInterval(
+async()=>{
+
+if(
+accessTicket &&
+!(await validateTicket(accessTicket))
+){
+
+if(hls){
+
+hls.destroy();
+
+hls = null;
+
+}
+
+video.pause();
+
+video.removeAttribute("src");
+
+video.load();
+
+deny();
+
+}
+
+},
+30000
+);
+
+}
+
 </script>
+
 </body>
 </html>
+```
