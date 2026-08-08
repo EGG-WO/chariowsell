@@ -1,9 +1,9 @@
-```html
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Channel+ Premium</title>
 
 <link rel="dns-prefetch" href="//livewatch.top">
@@ -12,64 +12,254 @@
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
-body{background:#050816;color:#fff;min-height:100vh}
-header{background:#0f172a;padding:20px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.4);position:sticky;top:0;z-index:10}
-header h1{color:#22d3ee;font-size:2rem;margin-bottom:5px}
-.live{color:#ef4444;font-weight:bold}
-.container{max-width:1200px;margin:25px auto;padding:0 20px}
-.player-box{background:#000;border-radius:24px;overflow:hidden;border:1px solid rgba(255,255,255,.08);box-shadow:0 20px 40px rgba(0,0,0,.45)}
-video{width:100%;aspect-ratio:16/9;display:block;background:#000}
-#search{width:100%;padding:14px 18px;margin-top:24px;border:0;border-radius:16px;background:#111827;color:#fff;font-size:1rem;outline:none}
-.channels{margin-top:30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
-.channel{background:rgba(15,23,42,.75);border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:22px;text-align:center;transition:.25s;backdrop-filter:blur(12px)}
-.channel:hover{transform:translateY(-6px);box-shadow:0 14px 28px rgba(0,0,0,.3)}
-.channel img{width:100%;height:120px;object-fit:cover;margin-bottom:16px;border-radius:24px;background:#0b1220;padding:10px;box-shadow:0 8px 20px rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.08);transition:all .3s ease}
-.channel:hover img{transform:scale(1.04);box-shadow:0 14px 28px rgba(0,0,0,.45)}
-.channel h3{margin-bottom:16px;color:#e2e8f0;font-size:1rem}
-.channel button{width:100%;padding:12px;border:0;border-radius:14px;background:linear-gradient(135deg,#22d3ee,#2563eb);color:#fff;font-weight:bold;cursor:pointer}
-footer{text-align:center;padding:30px;color:#94a3b8}
-
-.chat-box{margin-top:30px;background:rgba(15,23,42,.85);border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:20px}
-.chat-box h3{margin-bottom:15px;color:#22d3ee}
-.messages{height:250px;overflow-y:auto;background:#0b1220;border-radius:16px;padding:12px;margin-bottom:12px}
-.message{margin-bottom:10px;padding:8px 10px;border-radius:12px;background:#111827}
-.message strong{color:#22d3ee}
-.chat-input{display:flex;gap:8px;flex-wrap:wrap}
-.chat-input input{flex:1;min-width:120px;padding:10px 12px;border:0;border-radius:12px;background:#111827;color:#fff}
-.chat-input button{padding:10px 16px;border:0;border-radius:12px;background:linear-gradient(135deg,#22d3ee,#2563eb);color:#fff;font-weight:bold;cursor:pointer}
-
-#securityGate{
-position:fixed;
-inset:0;
-background:#050816;
-color:#fff;
-display:flex;
-align-items:center;
-justify-content:center;
-z-index:99999;
-text-align:center
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,Helvetica,sans-serif
 }
 
-#playerStatus{
-padding:10px;
-text-align:center;
-font-size:.9rem;
-color:#94a3b8;
-background:#020617;
+body{
+  background:#050816;
+  color:#fff;
+  min-height:100vh
+}
+
+header{
+  background:#0f172a;
+  padding:20px;
+  text-align:center;
+  box-shadow:0 4px 20px rgba(0,0,0,.4);
+  position:sticky;
+  top:0;
+  z-index:10
+}
+
+header h1{
+  color:#22d3ee;
+  font-size:2rem;
+  margin-bottom:5px
+}
+
+.live{
+  color:#ef4444;
+  font-weight:bold
+}
+
+.container{
+  max-width:1200px;
+  margin:25px auto;
+  padding:0 20px
+}
+
+.player-box{
+  background:#000;
+  border-radius:24px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 20px 40px rgba(0,0,0,.45)
+}
+
+video{
+  width:100%;
+  aspect-ratio:16/9;
+  display:block;
+  background:#000
+}
+
+.player-status{
+  padding:10px 15px;
+  background:#080d1d;
+  color:#94a3b8;
+  font-size:.9rem;
+  text-align:center
+}
+
+.player-status.error{
+  color:#ef4444
+}
+
+#search{
+  width:100%;
+  padding:14px 18px;
+  margin-top:24px;
+  border:0;
+  border-radius:16px;
+  background:#111827;
+  color:#fff;
+  font-size:1rem;
+  outline:none
+}
+
+.channels{
+  margin-top:30px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px
+}
+
+.channel{
+  background:rgba(15,23,42,.75);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:22px;
+  padding:22px;
+  text-align:center;
+  transition:.25s;
+  backdrop-filter:blur(12px)
+}
+
+.channel:hover{
+  transform:translateY(-6px);
+  box-shadow:0 14px 28px rgba(0,0,0,.3)
+}
+
+.channel img{
+  width:100%;
+  height:120px;
+  object-fit:cover;
+  margin-bottom:16px;
+  border-radius:24px;
+  background:#0b1220;
+  padding:10px;
+  box-shadow:0 8px 20px rgba(0,0,0,.35);
+  border:1px solid rgba(255,255,255,.08);
+  transition:all .3s ease
+}
+
+.channel:hover img{
+  transform:scale(1.04);
+  box-shadow:0 14px 28px rgba(0,0,0,.45)
+}
+
+.channel h3{
+  margin-bottom:16px;
+  color:#e2e8f0;
+  font-size:1rem
+}
+
+.channel button{
+  width:100%;
+  padding:12px;
+  border:0;
+  border-radius:14px;
+  background:linear-gradient(135deg,#22d3ee,#2563eb);
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer
+}
+
+.channel button:hover{
+  opacity:.9
+}
+
+footer{
+  text-align:center;
+  padding:30px;
+  color:#94a3b8
+}
+
+.chat-box{
+  margin-top:30px;
+  background:rgba(15,23,42,.85);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:24px;
+  padding:20px
+}
+
+.chat-box h3{
+  margin-bottom:15px;
+  color:#22d3ee
+}
+
+.messages{
+  height:250px;
+  overflow-y:auto;
+  background:#0b1220;
+  border-radius:16px;
+  padding:12px;
+  margin-bottom:12px
+}
+
+.message{
+  margin-bottom:10px;
+  padding:8px 10px;
+  border-radius:12px;
+  background:#111827
+}
+
+.message strong{
+  color:#22d3ee
+}
+
+.chat-input{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap
+}
+
+.chat-input input{
+  flex:1;
+  min-width:120px;
+  padding:10px 12px;
+  border:0;
+  border-radius:12px;
+  background:#111827;
+  color:#fff
+}
+
+.chat-input button{
+  padding:10px 16px;
+  border:0;
+  border-radius:12px;
+  background:linear-gradient(135deg,#22d3ee,#2563eb);
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer
+}
+
+#securityGate{
+  position:fixed;
+  inset:0;
+  background:#050816;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:99999;
+  text-align:center
 }
 
 @media(max-width:600px){
-header h1{font-size:1.4rem}
-.container{padding:0 12px}
-.channels{grid-template-columns:1fr;gap:16px}
-.channel{padding:16px}
-#search{font-size:16px}
-video{border-radius:18px}
+  header h1{
+    font-size:1.4rem
+  }
+
+  .container{
+    padding:0 12px
+  }
+
+  .channels{
+    grid-template-columns:1fr;
+    gap:16px
+  }
+
+  .channel{
+    padding:16px
+  }
+
+  #search{
+    font-size:16px
+  }
+
+  video{
+    border-radius:18px
+  }
 }
 
 @media(min-width:601px) and (max-width:1024px){
-.channels{grid-template-columns:repeat(2,1fr)}
+  .channels{
+    grid-template-columns:repeat(2,1fr)
+  }
 }
 </style>
 </head>
@@ -77,259 +267,254 @@ video{border-radius:18px}
 <body>
 
 <div id="securityGate">
-<div>🔐 Vérification de l'accès...</div>
+  <div>🔐 Vérification de l'accès...</div>
 </div>
 
 <div id="protectedContent" style="display:none">
 
 <header>
-<h1>CHANNEL+ PREMIUM</h1>
-<p class="live">🔴 TV EN DIRECT</p>
+  <h1>CHANNEL+ PREMIUM</h1>
+  <p class="live">🔴 TV EN DIRECT</p>
 </header>
 
 <div class="container">
 
-<div class="player-box">
+  <!-- LECTEUR -->
+  <div class="player-box">
 
-<video id="video"
-controls
-autoplay
-muted
-playsinline>
-</video>
+    <video
+      id="video"
+      controls
+      autoplay
+      muted
+      playsinline>
+    </video>
 
-<div id="playerStatus">
-Sélectionnez une chaîne
-</div>
+    <div id="playerStatus" class="player-status">
+      Sélectionnez une chaîne
+    </div>
 
-</div>
+  </div>
 
-<div class="chat-box">
+  <!-- CHAT -->
+  <div class="chat-box">
 
-<h3 id="chatTitle">💬 Chat Général</h3>
+    <h3 id="chatTitle">💬 Chat Général</h3>
 
-<div id="messages" class="messages"></div>
+    <div id="messages" class="messages"></div>
 
-<div class="chat-input">
+    <div class="chat-input">
 
-<input id="username" placeholder="Ton pseudo">
+      <input
+        id="username"
+        placeholder="Ton pseudo">
 
-<input id="messageInput"
-placeholder="Écrire un message...">
+      <input
+        id="messageInput"
+        placeholder="Écrire un message...">
 
-<button id="sendBtn">
-Envoyer
-</button>
+      <button id="sendBtn">
+        Envoyer
+      </button>
 
-</div>
+    </div>
 
-</div>
+  </div>
 
-<input id="search"
-placeholder="Rechercher une chaîne...">
+  <!-- RECHERCHE -->
+  <input
+    id="search"
+    placeholder="Rechercher une chaîne...">
 
-<div class="channels" id="channels">
+  <!-- CHAÎNES -->
+  <div class="channels" id="channels">
 
+    <div class="channel"
+         data-hls="COLLE_ICI_URL_HLS_NOLLYWOOD">
 
-<!-- NOLLYWOOD -->
+      <img src="nolly.png" alt="NOLLYWOOD TV">
 
-<div class="channel">
+      <h3>NOLLYWOOD TV</h3>
 
-<img src="nolly.png" alt="NOLLYWOOD TV">
+      <button onclick="regarder(this)">
+        ▶ Regarder
+      </button>
 
-<h3>NOLLYWOOD TV</h3>
+    </div>
 
-<button onclick="ouvrirHLS('URL_HLS_NOLLYWOOD','NOLLYWOOD TV')">
-▶ Regarder
-</button>
 
-</div>
+    <div class="channel"
+         data-hls="COLLE_ICI_URL_HLS_DISNEY">
 
+      <img src="disney.png" alt="Disney Junior">
 
-<!-- DISNEY -->
+      <h3>Disney junior</h3>
 
-<div class="channel">
+      <button onclick="regarder(this)">
+        ▶ Regarder
+      </button>
 
-<img src="disney.png" alt="Disney Junior">
+    </div>
 
-<h3>Disney junior</h3>
 
-<button onclick="ouvrirHLS('URL_HLS_DISNEY','Disney junior')">
-▶ Regarder
-</button>
+    <div class="channel"
+         data-hls="COLLE_ICI_URL_HLS_NICKELodeon">
 
-</div>
+      <img src="nik.png" alt="Nickelodeon">
 
+      <h3>Nickeledeon</h3>
 
-<!-- NICKELODEON -->
+      <button onclick="regarder(this); ouvrirChat('Nickelodeon')">
+        ▶ Regarder
+      </button>
 
-<div class="channel">
+    </div>
 
-<img src="nik.png" alt="Nickelodeon">
 
-<h3>Nickeledeon</h3>
+    <div class="channel"
+         data-hls="https://livewatch.top/api/hls?t=MTc4NjIyNDQ0OXx8aHR0cHM6Ly90ZDN3YjFiY2hkdnNhaHAubmdvbHBka3lvY3RqY2RkeHNobGk0NjlyLm9yZy9zdW5zaGluZS9ZX3AtOTRPZFhDQmlQZnVlN1JSbmw0enZFckRmcXg5VktwMmVNOGFGdDZoZnlicHNqTUpMLUlQMDhqTnVBN1ZBNFVTZ1VRSzM3aTg1TUZYQThYb21NNTVybkc4MUMxQmZqTWRFM3VoamEyUkY1cUMwLVJBdzQwcENRRWVYTTB2YjN2RTlDSzdUTjVFVk1BOTN6WUZiV3RsWGZVTmNPX3ZlTHM3Y2ZMV2lWci1zUmdhNm90LUQyQTRENkdHWjZ4NC04cFJFeTkydy1XYXk2dE1LdFoxZWUzeWZtTkZlV1hDS0ZPSjZjdmdFajVUNkFzMC0yUWowOC1vZktFckFzTzZsZTc1QzBtVFpUY0pHNXRtOWlNa1AwMjU2UXFnRElUMzZGaDZIU3JNY1NTNC9obHMvaW5kZXgubTN1OHx8diugAd81wbJH2qOASlTtjA">
 
-<button onclick="ouvrirChat('Nickelodeon'); ouvrirHLS('URL_HLS_NICKELODEON','Nickelodeon')">
-▶ Regarder
-</button>
+      <img src="A+.jpg" alt="A+">
 
-</div>
+      <h3>A+</h3>
 
+      <button onclick="regarder(this)">
+        ▶ Regarder
+      </button>
 
-<!-- A+ -->
+    </div>
 
-<div class="channel">
 
-<img src="A+.jpg" alt="A+">
+    <div class="channel"
+         data-hls="COLLE_ICI_URL_HLS_NOVELAS">
 
-<h3>A+</h3>
+      <img src="nov.png" alt="Novelas TV">
 
-<button onclick="ouvrirHLS('https://livewatch.top/api/hls?t=MTc4NjIyNDQ0OXx8aHR0cHM6Ly90ZDN3YjFiY2hkdnNhaHAubmdvbHBka3lvY3RqY2RkeHNobGk0NjlyLm9yZy9zdW5zaGluZS9ZX3AtOTRPZFhDQmlQZnVlN1JSbmw0enZFckRmcXg5VktwMmVNOGFGdDZoZnlicHNqTUpMLUlQMDhqTnVBN1ZBNFVTZ1VRSzM3aTg1TUZYQThYb21NNTVybkc4MUMxQmZqTWRFM3VoamEyUkY1cUMwLVJBdzQwcENRRWVYTTB2YjN2RTlDSzdUTjVFVk1BOTN6WUZiV3RsWGZVTmNPX3ZlTHM3Y2ZMV2lWci1zUmdhNm90LUQyQTRENkdHWjZ4NC04cFJFeTkydy1XYXk2dE1LdFoxZWUzeWZtTkZlV1hDS0ZPSjZjdmdFajVUNkFzMC0yUWowOC1vZktFckFzTzZsZTc1QzBtVFpUY0pHNXRtOWlNa1AwMjU2UXFnRElUMzZGaDZIU3JNY1NTNC9obHMvaW5kZXgubTN1OHx8diugAd81wbJH2qOASlTtjA')">
-▶ Regarder
-</button>
+      <h3>novelas tv</h3>
 
-</div>
+      <button onclick="regarder(this)">
+        ▶ Regarder
+      </button>
 
+    </div>
 
-<!-- NOVELAS -->
 
-<div class="channel">
+    <div class="channel"
+         data-hls="COLLE_ICI_URL_HLS_CANAL_SPORT">
 
-<img src="nov.png" alt="Novelas TV">
+      <img src="c+1.png" alt="Canal+ Sport 1">
 
-<h3>novelas tv</h3>
+      <h3>Canal+Sport1</h3>
 
-<button onclick="ouvrirHLS('URL_HLS_NOVELAS','novelas tv')">
-▶ Regarder
-</button>
+      <button onclick="regarder(this)">
+        ▶ Regarder
+      </button>
 
-</div>
+    </div>
 
 
-<!-- CANAL SPORT -->
+    <div class="channel"
+         data-hls="COLLE_ICI_URL_HLS_INFOSPORT">
 
-<div class="channel">
+      <img src="infosport+.png" alt="Infosport+">
 
-<img src="c+1.png" alt="Canal+ Sport 1">
+      <h3>infosport+</h3>
 
-<h3>Canal+Sport1</h3>
+      <button onclick="regarder(this)">
+        ▶ Regarder
+      </button>
 
-<button onclick="ouvrirHLS('URL_HLS_CANALSPORT','Canal+Sport1')">
-▶ Regarder
-</button>
+    </div>
 
-</div>
 
+    <div class="channel"
+         data-hls="COLLE_ICI_URL_HLS_FAMILY">
 
-<!-- INFOSPORT -->
+      <img src="c+family.png" alt="Canal+ Family">
 
-<div class="channel">
+      <h3>canal+family</h3>
 
-<img src="infosport+.png" alt="Infosport+">
+      <button onclick="regarder(this)">
+        ▶ Regarder
+      </button>
 
-<h3>infosport+</h3>
+    </div>
 
-<button onclick="ouvrirHLS('URL_HLS_INFOSPORT','infosport+')">
-▶ Regarder
-</button>
 
-</div>
+    <div class="channel"
+         data-hls="COLLE_ICI_URL_HLS_TF1">
 
+      <img src="tf1.jpg" alt="TF1">
 
-<!-- CANAL FAMILY -->
+      <h3>TF1</h3>
 
-<div class="channel">
+      <button onclick="regarder(this)">
+        ▶ Regarder
+      </button>
 
-<img src="c+family.png" alt="Canal+ Family">
+    </div>
 
-<h3>canal+family</h3>
 
-<button onclick="ouvrirHLS('URL_HLS_FAMILY','canal+family')">
-▶ Regarder
-</button>
+    <div class="channel"
+         data-hls="COLLE_ICI_URL_HLS_PIWI">
 
-</div>
+      <img src="piwi+.png" alt="Piwi+">
 
+      <h3>piwi+</h3>
 
-<!-- TF1 -->
+      <button onclick="regarder(this)">
+        ▶ Regarder
+      </button>
 
-<div class="channel">
+    </div>
 
-<img src="tf1.jpg" alt="TF1">
 
-<h3>TF1</h3>
+    <div class="channel"
+         data-hls="COLLE_ICI_URL_HLS_TFX">
 
-<button onclick="ouvrirHLS('URL_HLS_TF1','TF1')">
-▶ Regarder
-</button>
+      <img src="tfx.jpg" alt="TFX">
 
-</div>
+      <h3>TFX</h3>
 
+      <button onclick="regarder(this)">
+        ▶ Regarder
+      </button>
 
-<!-- PIWI -->
+    </div>
 
-<div class="channel">
 
-<img src="piwi+.png" alt="Piwi+">
+    <div class="channel"
+         data-hls="COLLE_ICI_URL_HLS_ACTION">
 
-<h3>piwi+</h3>
+      <img src="action.jpg" alt="action">
 
-<button onclick="ouvrirHLS('URL_HLS_PIWI','piwi+')">
-▶ Regarder
-</button>
+      <h3>Action</h3>
 
-</div>
+      <button onclick="regarder(this)">
+        ▶ Regarder
+      </button>
 
+    </div>
 
-<!-- TFX -->
 
-<div class="channel">
+    <div class="channel"
+         data-hls="COLLE_ICI_URL_HLS_TELETOON">
 
-<img src="tfx.jpg" alt="TFX">
+      <img src="teletoon.jpg" alt="tele">
 
-<h3>TFX</h3>
+      <h3>teletoon+</h3>
 
-<button onclick="ouvrirHLS('URL_HLS_TFX','TFX')">
-▶ Regarder
-</button>
+      <button onclick="regarder(this)">
+        ▶ Regarder
+      </button>
 
-</div>
+    </div>
 
-
-<!-- ACTION -->
-
-<div class="channel">
-
-<img src="action.jpg" alt="action">
-
-<h3>Action</h3>
-
-<button onclick="ouvrirHLS('URL_HLS_ACTION','Action')">
-▶ Regarder
-</button>
-
-</div>
-
-
-<!-- TELETOON -->
-
-<div class="channel">
-
-<img src="teletoon.jpg" alt="tele">
-
-<h3>teletoon+</h3>
-
-<button onclick="ouvrirHLS('URL_HLS_TELETOON','teletoon+')">
-▶ Regarder
-</button>
-
-</div>
-
-</div>
+  </div>
 </div>
 
 <footer>
-© 2026 Channel+ Premium
+  © 2026 Channel+ Premium
 </footer>
 
 </div>
@@ -338,37 +523,45 @@ placeholder="Rechercher une chaîne...">
 <script type="module">
 
 import {
-initializeApp
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
-getFirestore,
-doc,
-getDoc,
-collection,
-addDoc,
-query,
-orderBy,
-onSnapshot,
-serverTimestamp
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  getFirestore,
+  doc,
+  getDoc,
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  onSnapshot,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+
+/* =========================
+   FIREBASE
+========================= */
 
 const firebaseConfig = {
 
-apiKey:"AIzaSyDPh3dJ37uy21L70Mekm_ikuIfeD8wCZU",
+  apiKey:
+    "AIzaSyDPh3dJ37uy21L70Mekm_ikuIfeD8wCZU",
 
-authDomain:"channelplus-8c219.firebaseapp.com",
+  authDomain:
+    "channelplus-8c219.firebaseapp.com",
 
-projectId:"channelplus-8c219",
+  projectId:
+    "channelplus-8c219",
 
-storageBucket:"channelplus-8c219.firebasestorage.app",
+  storageBucket:
+    "channelplus-8c219.firebasestorage.app",
 
-messagingSenderId:"178858225057",
+  messagingSenderId:
+    "178858225057",
 
-appId:"1:178858225057:web:63c327bf23eb877f196fe0"
+  appId:
+    "1:178858225057:web:63c327bf23eb877f196fe0"
 
 };
 
@@ -377,7 +570,9 @@ const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
-const SESSION_KEY = "channelplus_session";
+const SESSION_KEY =
+  "channelplus_session";
+
 
 let accessTicket = null;
 
@@ -389,620 +584,705 @@ let chatUnsubscribe = null;
 
 
 /* =========================
-   SECURITE
+   REFUS D'ACCÈS
 ========================= */
 
 function deny(){
 
-document.getElementById("securityGate").innerHTML =
+  document.getElementById(
+    "securityGate"
+  ).innerHTML =
 
-"<div>" +
-"<h2 style='color:#ef4444'>⛔ Accès refusé</h2>" +
-"<p>Ouvrez ce service depuis la page de contrôle du ticket.</p>" +
-"</div>";
+  `
+  <div>
+    <h2 style="color:#ef4444">
+      ⛔ Accès refusé
+    </h2>
 
-try{
+    <p>
+      Ouvrez ce service depuis la page de contrôle du ticket.
+    </p>
+  </div>
+  `;
 
-window.parent.postMessage(
-{
-type:"CHANNELPLUS_ACCESS_DENIED"
-},
-window.location.origin
-);
+  try{
 
-}catch(e){}
+    window.parent.postMessage(
+      {
+        type:"CHANNELPLUS_ACCESS_DENIED"
+      },
+      window.location.origin
+    );
+
+  }catch(e){}
 
 }
 
+
+/* =========================
+   SESSION
+========================= */
 
 function validateSession(code){
 
-try{
+  try{
 
-const raw =
-sessionStorage.getItem(SESSION_KEY);
+    const raw =
+      sessionStorage.getItem(SESSION_KEY);
 
-if(!raw) return false;
+    if(!raw)
+      return false;
 
-const data = JSON.parse(raw);
+    const data =
+      JSON.parse(raw);
 
-return data.ticket === code &&
-Date.now() - Number(data.at) < 12*60*60*1000;
+    return (
+      data.ticket === code &&
+      Date.now() - Number(data.at)
+      < 12 * 60 * 60 * 1000
+    );
 
-}catch(e){
+  }catch(e){
 
-return false;
+    return false;
+
+  }
 
 }
 
-}
 
+/* =========================
+   TICKET FIREBASE
+========================= */
 
 async function validateTicket(code){
 
-const snap =
-await getDoc(
-doc(db,"tickets",code)
-);
+  const snap =
+    await getDoc(
+      doc(db,"tickets",code)
+    );
 
-if(!snap.exists())
-return false;
+  if(!snap.exists())
+    return false;
 
-const data = snap.data();
+  const data =
+    snap.data();
 
-if(
-data.expiresAt &&
-typeof data.expiresAt.toMillis === "function" &&
-data.expiresAt.toMillis() < Date.now()
-)
-return false;
+  if(
+    data.expiresAt &&
+    typeof data.expiresAt.toMillis === "function" &&
+    data.expiresAt.toMillis() < Date.now()
+  ){
 
-return true;
+    return false;
+
+  }
+
+  return true;
 
 }
 
+
+/* =========================
+   AUTORISATION
+========================= */
 
 async function authorize(){
 
-const params =
-new URLSearchParams(location.search);
+  const params =
+    new URLSearchParams(location.search);
 
-if(params.toString()){
+  if(params.toString()){
 
-history.replaceState(
-null,
-"",
-location.pathname
-);
+    history.replaceState(
+      null,
+      "",
+      location.pathname
+    );
+
+  }
+
+
+  return new Promise(resolve => {
+
+    const timer =
+      setTimeout(
+        () => resolve(false),
+        8000
+      );
+
+
+    function receive(e){
+
+      if(
+        e.origin !==
+        window.location.origin
+      )
+        return;
+
+
+      if(
+        e.data?.type !==
+        "CHANNELPLUS_ACCESS"
+      )
+        return;
+
+
+      const code =
+        String(
+          e.data.ticket || ""
+        )
+        .trim()
+        .toUpperCase();
+
+
+      if(!code)
+        return;
+
+
+      validateTicket(code)
+
+      .then(ok => {
+
+        if(
+          ok &&
+          validateSession(code)
+        ){
+
+          accessTicket = code;
+
+          sessionStorage.setItem(
+            SESSION_KEY,
+            JSON.stringify({
+              ticket:code,
+              at:Date.now()
+            })
+          );
+
+          clearTimeout(timer);
+
+          window.removeEventListener(
+            "message",
+            receive
+          );
+
+          resolve(true);
+
+        }else{
+
+          clearTimeout(timer);
+
+          window.removeEventListener(
+            "message",
+            receive
+          );
+
+          resolve(false);
+
+        }
+
+      })
+
+      .catch(() => {
+
+        clearTimeout(timer);
+
+        window.removeEventListener(
+          "message",
+          receive
+        );
+
+        resolve(false);
+
+      });
+
+    }
+
+
+    window.addEventListener(
+      "message",
+      receive
+    );
+
+  });
 
 }
 
-return new Promise(resolve => {
 
-const timer =
-setTimeout(
-()=>resolve(false),
-8000
-);
-
-
-function receive(e){
-
-if(e.origin !== window.location.origin)
-return;
-
-if(e.data?.type !== "CHANNELPLUS_ACCESS")
-return;
-
-const code =
-String(e.data.ticket || "")
-.trim()
-.toUpperCase();
-
-if(!code)
-return;
-
-
-validateTicket(code)
-
-.then(ok => {
-
-if(ok && validateSession(code)){
-
-accessTicket = code;
-
-sessionStorage.setItem(
-SESSION_KEY,
-JSON.stringify({
-ticket:code,
-at:Date.now()
-})
-);
-
-clearTimeout(timer);
-
-window.removeEventListener(
-"message",
-receive
-);
-
-resolve(true);
-
-}else{
-
-clearTimeout(timer);
-
-window.removeEventListener(
-"message",
-receive
-);
-
-resolve(false);
-
-}
-
-})
-
-.catch(()=>{
-
-clearTimeout(timer);
-
-window.removeEventListener(
-"message",
-receive
-);
-
-resolve(false);
-
-});
-
-}
-
-
-window.addEventListener(
-"message",
-receive
-);
-
-});
-
-}
-
+/* =========================
+   AUTORISATION PRINCIPALE
+========================= */
 
 const authorized =
-await authorize();
+  await authorize();
 
 
 if(!authorized){
 
-deny();
+  deny();
 
 }else{
 
-document.getElementById(
-"securityGate"
-).style.display = "none";
+  document.getElementById(
+    "securityGate"
+  ).style.display = "none";
 
-document.getElementById(
-"protectedContent"
-).style.display = "block";
 
+  document.getElementById(
+    "protectedContent"
+  ).style.display = "block";
 
-/* =========================
-   LECTEUR HLS
-========================= */
 
-const video =
-document.getElementById("video");
+  const video =
+    document.getElementById("video");
 
-const status =
-document.getElementById("playerStatus");
+  const status =
+    document.getElementById(
+      "playerStatus"
+    );
 
 
-function afficherStatus(message){
+  /* =========================
+     LECTEUR HLS
+  ========================= */
 
-status.textContent = message;
+  window.playChannel =
+    function(url){
 
-}
+      if(!url){
 
+        status.textContent =
+          "❌ Aucun flux HLS configuré";
 
-/*
-   Lecture d'une URL HLS
+        status.className =
+          "player-status error";
 
-   IMPORTANT :
-   l'URL doit être une URL HLS
-   accessible depuis le navigateur.
-*/
+        return;
 
-window.ouvrirHLS =
-function(url, channelName){
+      }
 
-if(!url ||
-url.startsWith("URL_HLS_")){
 
-afficherStatus(
-"⚠️ URL HLS non configurée pour " +
-channelName
-);
+      if(hls){
 
-return;
+        hls.destroy();
 
-}
+        hls = null;
 
+      }
 
-afficherStatus(
-"⏳ Connexion à " +
-channelName + "..."
-);
 
+      video.removeAttribute("src");
 
-if(hls){
+      status.className =
+        "player-status";
 
-hls.destroy();
+      status.textContent =
+        "⏳ Chargement du direct...";
 
-hls = null;
 
-}
+      if(Hls.isSupported()){
 
-video.removeAttribute("src");
+        hls = new Hls({
 
-video.load();
+          enableWorker:true,
 
+          lowLatencyMode:true
 
-if(Hls.isSupported()){
+        });
 
-hls = new Hls({
 
-enableWorker:true,
+        hls.loadSource(url);
 
-lowLatencyMode:false,
+        hls.attachMedia(video);
 
-backBufferLength:30
 
-});
+        hls.on(
+          Hls.Events.MANIFEST_PARSED,
+          () => {
 
+            status.textContent =
+              "🟢 Direct chargé";
 
-hls.on(
-Hls.Events.MANIFEST_LOADING,
-()=>{
+            video.play()
+              .catch(() => {});
 
-afficherStatus(
-"⏳ Chargement du flux..."
-);
+          }
+        );
 
-});
 
+        hls.on(
+          Hls.Events.ERROR,
+          (event,data) => {
 
-hls.on(
-Hls.Events.MANIFEST_PARSED,
-()=>{
+            console.error(
+              "Erreur HLS:",
+              data
+            );
 
-afficherStatus(
-"🟢 " +
-channelName +
-" — DIRECT"
-);
 
-video.play().catch(()=>{});
+            if(!data.fatal)
+              return;
 
-});
 
+            let message =
+              "❌ Erreur HLS";
 
-hls.on(
-Hls.Events.ERROR,
-(event,data)=>{
 
-console.error(
-"HLS ERROR:",
-data
-);
+            if(
+              data.type ===
+              Hls.ErrorTypes.NETWORK_ERROR
+            ){
 
+              message =
+                "❌ Erreur réseau / CORS / serveur";
 
-if(!data.fatal)
-return;
+            }
 
 
-switch(data.type){
+            else if(
+              data.type ===
+              Hls.ErrorTypes.MEDIA_ERROR
+            ){
 
-case Hls.ErrorTypes.NETWORK_ERROR:
+              message =
+                "❌ Erreur du média HLS";
 
-afficherStatus(
-"❌ Erreur réseau / CORS / serveur"
-);
+            }
 
-break;
 
+            status.textContent =
+              message;
 
-case Hls.ErrorTypes.MEDIA_ERROR:
+            status.className =
+              "player-status error";
 
-afficherStatus(
-"❌ Erreur média HLS"
-);
+          }
+        );
 
-break;
 
+      }
 
-default:
+      else if(
+        video.canPlayType(
+          "application/vnd.apple.mpegurl"
+        )
+      ){
 
-afficherStatus(
-"❌ Erreur HLS fatale"
-);
+        video.src = url;
 
-break;
+        video.addEventListener(
+          "loadedmetadata",
+          () => {
 
-}
+            status.textContent =
+              "🟢 Direct chargé";
 
-});
+            video.play()
+              .catch(() => {});
 
-hls.loadSource(url);
+          },
+          {once:true}
+        );
 
-hls.attachMedia(video);
 
+      }
 
-}else if(
-video.canPlayType(
-"application/vnd.apple.mpegurl"
-)
-){
+      else{
 
-video.src = url;
+        status.textContent =
+          "❌ Ce navigateur ne supporte pas HLS";
 
-video.addEventListener(
-"loadedmetadata",
-()=>{
+        status.className =
+          "player-status error";
 
-afficherStatus(
-"🟢 " +
-channelName +
-" — DIRECT"
-);
+      }
 
-video.play().catch(()=>{});
+    };
 
-},
-{once:true}
-);
 
-}else{
+  /* =========================
+     BOUTON REGARDER
+  ========================= */
 
-afficherStatus(
-"❌ Ce navigateur ne prend pas en charge HLS"
-);
+  window.regarder =
+    function(button){
 
-}
+      const card =
+        button.closest(".channel");
 
-};
+      if(!card)
+        return;
 
 
-/* =========================
-   CHAT
-========================= */
+      const url =
+        card.dataset.hls;
 
-window.ouvrirChat =
-function(channelName){
 
-currentChannel =
-channelName;
+      const name =
+        card.querySelector("h3")
+        ?.textContent
+        || "Chaîne";
 
-document.getElementById(
-"chatTitle"
-).textContent =
-"💬 Chat • " +
-channelName;
 
+      currentChannel = name;
 
-if(chatUnsubscribe)
-chatUnsubscribe();
+      document.getElementById(
+        "chatTitle"
+      ).textContent =
+        "💬 Chat • " + name;
 
 
-const q =
-query(
-collection(
-db,
-"chats",
-currentChannel,
-"messages"
-),
-orderBy(
-"createdAt",
-"asc"
-)
-);
+      playChannel(url);
 
 
-chatUnsubscribe =
-onSnapshot(
-q,
-snapshot=>{
+      document.querySelector(
+        ".player-box"
+      ).scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+      });
 
-const box =
-document.getElementById(
-"messages"
-);
+    };
 
-box.innerHTML = "";
 
+  /* =========================
+     CHAT
+  ========================= */
 
-snapshot.forEach(d=>{
+  window.ouvrirChat =
+    function(channelName){
 
-const data =
-d.data();
+      currentChannel =
+        channelName;
 
-const div =
-document.createElement(
-"div"
-);
 
-div.className =
-"message";
+      document.getElementById(
+        "chatTitle"
+      ).textContent =
+        "💬 Chat • " +
+        channelName;
 
 
-const strong =
-document.createElement(
-"strong"
-);
+      if(chatUnsubscribe)
+        chatUnsubscribe();
 
-strong.textContent =
-(data.user || "Anonyme") +
-":";
 
+      const q =
+        query(
+          collection(
+            db,
+            "chats",
+            currentChannel,
+            "messages"
+          ),
+          orderBy(
+            "createdAt",
+            "asc"
+          )
+        );
 
-div.appendChild(
-strong
-);
 
-div.appendChild(
-document.createTextNode(
-" " +
-(data.text || "")
-)
-);
+      chatUnsubscribe =
+        onSnapshot(
+          q,
+          snapshot => {
 
-box.appendChild(
-div
-);
+            const box =
+              document.getElementById(
+                "messages"
+              );
 
-});
 
+            box.innerHTML = "";
 
-box.scrollTop =
-box.scrollHeight;
 
-});
+            snapshot.forEach(d => {
 
-};
+              const data =
+                d.data();
 
 
-/* =========================
-   ENVOI CHAT
-========================= */
+              const div =
+                document.createElement(
+                  "div"
+                );
 
-document
-.getElementById("sendBtn")
-.addEventListener(
-"click",
-async()=>{
+              div.className =
+                "message";
 
-const text =
-document
-.getElementById("messageInput")
-.value
-.trim();
 
-const user =
-document
-.getElementById("username")
-.value
-.trim() ||
-"Anonyme";
+              const strong =
+                document.createElement(
+                  "strong"
+                );
 
 
-if(!text)
-return;
+              strong.textContent =
+                (data.user ||
+                "Anonyme") + ":";
 
 
-await addDoc(
-collection(
-db,
-"chats",
-currentChannel,
-"messages"
-),
-{
+              div.appendChild(
+                strong
+              );
 
-user,
-text,
-createdAt:
-serverTimestamp()
 
-}
-);
+              div.appendChild(
+                document.createTextNode(
+                  " " +
+                  (data.text || "")
+                )
+              );
 
 
-document
-.getElementById(
-"messageInput"
-)
-.value = "";
+              box.appendChild(div);
 
-});
+            });
 
 
-/* =========================
-   RECHERCHE
-========================= */
+            box.scrollTop =
+              box.scrollHeight;
 
-document
-.getElementById("search")
-.addEventListener(
-"input",
-e=>{
+          }
+        );
 
-const q =
-e.target.value
-.toLowerCase();
+    };
 
 
-document
-.querySelectorAll(
-".channel"
-)
-.forEach(card=>{
+  /* =========================
+     ENVOI CHAT
+  ========================= */
 
-const name =
-card
-.querySelector("h3")
-.textContent
-.toLowerCase();
+  document.getElementById(
+    "sendBtn"
+  ).addEventListener(
+    "click",
+    async () => {
 
-card.style.display =
-name.includes(q)
-? "block"
-: "none";
+      const text =
+        document.getElementById(
+          "messageInput"
+        )
+        .value
+        .trim();
 
-});
 
-});
+      const user =
+        document.getElementById(
+          "username"
+        )
+        .value
+        .trim()
+        ||
+        "Anonyme";
 
 
-window.ouvrirChat(
-"Général"
-);
+      if(!text)
+        return;
 
 
-/* =========================
-   VERIFICATION TICKET
-========================= */
+      await addDoc(
+        collection(
+          db,
+          "chats",
+          currentChannel,
+          "messages"
+        ),
+        {
+          user,
+          text,
+          createdAt:
+            serverTimestamp()
+        }
+      );
 
-setInterval(
-async()=>{
 
-if(
-accessTicket &&
-!(await validateTicket(accessTicket))
-){
+      document.getElementById(
+        "messageInput"
+      ).value = "";
 
-if(hls){
+    }
+  );
 
-hls.destroy();
 
-hls = null;
+  /* =========================
+     RECHERCHE
+  ========================= */
 
-}
+  document.getElementById(
+    "search"
+  ).addEventListener(
+    "input",
+    e => {
 
-video.pause();
+      const q =
+        e.target.value
+        .toLowerCase();
 
-video.removeAttribute("src");
 
-video.load();
+      document
+        .querySelectorAll(
+          ".channel"
+        )
+        .forEach(card => {
 
-deny();
+          const name =
+            card.querySelector(
+              "h3"
+            )
+            .textContent
+            .toLowerCase();
 
-}
 
-},
-30000
-);
+          card.style.display =
+            name.includes(q)
+            ? "block"
+            : "none";
+
+        });
+
+    }
+  );
+
+
+  /* =========================
+     CHAT GÉNÉRAL
+  ========================= */
+
+  ouvrirChat("Général");
+
+
+  /* =========================
+     SURVEILLANCE DU TICKET
+  ========================= */
+
+  setInterval(
+    async () => {
+
+      if(
+        accessTicket &&
+        !(await validateTicket(
+          accessTicket
+        ))
+      ){
+
+        if(hls){
+
+          hls.destroy();
+
+          hls = null;
+
+        }
+
+        video.pause();
+
+        deny();
+
+      }
+
+    },
+    30000
+  );
 
 }
 
@@ -1010,4 +1290,3 @@ deny();
 
 </body>
 </html>
-```
