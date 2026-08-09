@@ -272,9 +272,9 @@ footer{text-align:center;padding:30px;color:#94a3b8}
 </div>
 <script>
     // ====================================================================
-    // CONFIGURATION : REMPLACEZ LES 32 CARACTÈRES CI-DESSOUS PAR VOTRE CLÉ
+    // CONFIGURATION : VOTRE CLÉ API COURTE (32 CARACTÈRES) EXTRAITE ET INJECTÉE
     // ====================================================================
-    const TMDB_KEY = "06354a15a14cc265415b0c276e601be0"; // Collez votre clé courte de 32 caractères ici
+    const TMDB_KEY = "06354a15a14cc265415b0c276e601be0"; 
     const MCU_COLLECTION_ID = 131296; 
 
     const box = document.getElementById("channels");
@@ -290,37 +290,40 @@ footer{text-align:center;padding:30px;color:#94a3b8}
         chargerCatalogueTMDB();
     }, 1500);
 
-    // Nouvelle fonction de connexion simplifiée et ultra-fiable
+    // Connexion directe et dynamique à l'infrastructure de TMDB
     function chargerCatalogueTMDB() {
-        if(TMDB_KEY.includes("VOTRE_CLE")) {
-            box.innerHTML = "<p style='color:#ef4444; grid-column:1/-1;'>⚠️ Veuillez coller votre clé API TMDB courte dans le code.</p>";
-            return;
-        }
-
+        // CORRECTION DE L'URL : Utilisation du sous-domaine 'api.' obligatoire pour les requêtes
         fetch(`https://themoviedb.org{MCU_COLLECTION_ID}?api_key=${TMDB_KEY}&language=fr-FR`)
             .then(res => {
-                if(!res.ok) throw new Error("Clé API refusée par TMDB");
+                if(!res.ok) throw new Error("Réponse réseau incorrecte ou clé refusée");
                 return res.json();
             })
             .then(data => {
+                // Filtrer les films pour ne garder que ceux qui ont une date de sortie
                 tousLesFilms = data.parts.filter(m => m.release_date);
+                
+                // Tri chronologique du plus ancien au plus récent
                 tousLesFilms.sort((a, b) => new Date(a.release_date) - new Date(b.release_date));
 
+                // Lancement automatique du premier film de la liste (Iron Man) par défaut au démarrage
                 if(tousLesFilms.length > 0) {
-                    player.src = `https://vidsrc.cc`;
+                    player.src = `https://vidsrc.cc{tousLesFilms[0].id}?poster=true`;
+                    document.getElementById("chatTitle").innerHTML = `💬 Chat : ${tousLesFilms[0].title}`;
                 }
+                
+                // Génération visuelle de la grille
                 afficherFilms(tousLesFilms);
             })
             .catch(err => {
-                console.error(err);
-                box.innerHTML = "<p style='color:#ef4444; grid-column:1/-1;'>⚠️ Clé API invalide. Allez dans TMDB > Paramètres > API et copiez la Clé de l'API (v3 auth).</p>";
+                console.error("Erreur de liaison TMDB :", err);
+                box.innerHTML = "<p style='color:#ef4444; grid-column:1/-1;'>⚠️ Impossible de charger le catalogue depuis l'API TMDB. Vérifiez votre connexion internet ou la validité de la clé v3.</p>";
             });
     }
 
     function afficherFilms(liste) {
         box.innerHTML = "";
         if(liste.length === 0) {
-            box.innerHTML = "<p style='color:#94a3b8; grid-column:1/-1;'>Aucun résultat.</p>";
+            box.innerHTML = "<p style='color:#94a3b8; grid-column:1/-1;'>Aucun film Marvel ne correspond à cette recherche.</p>";
             return;
         }
 
@@ -328,6 +331,7 @@ footer{text-align:center;padding:30px;color:#94a3b8}
             const card = document.createElement("div");
             card.className = "channel";
 
+            // CORRECTION DE L'IMAGE : Utilisation du CDN officiel d'images de TMDB
             const poster = movie.poster_path 
                 ? `https://tmdb.org{movie.poster_path}`
                 : 'https://placeholder.com';
@@ -348,18 +352,21 @@ footer{text-align:center;padding:30px;color:#94a3b8}
         });
     }
 
+    // Le moteur de streaming universel basé sur l'ID récupéré en direct de TMDB
     function lireFilm(titreOriginal, idTMDB) {
         player.src = `https://vidsrc.cc{idTMDB}?poster=true`;
         document.getElementById("chatTitle").innerHTML = `💬 Chat : ${titreOriginal}`;
         window.scrollTo({ top:0, behavior:'smooth' });
     }
 
+    // Moteur de recherche de texte en temps réel
     searchInput.addEventListener("input", (e) => {
         const recherche = e.target.value.toLowerCase();
         const resultats = tousLesFilms.filter(m => m.title.toLowerCase().includes(recherche));
         afficherFilms(resultats);
     });
 
+    // Gestion du Chat local
     function envoyerMessage() {
         const pseudo = document.getElementById("username").value || "Anonyme";
         const input = document.getElementById("messageInput");
@@ -382,4 +389,3 @@ footer{text-align:center;padding:30px;color:#94a3b8}
 </script>
 </body>
 </html>
-
