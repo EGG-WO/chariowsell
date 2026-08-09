@@ -1,1025 +1,385 @@
+## `index.html`
+
 ```html
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Channel+ Premium</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Channel+ Premium</title>
 
-<link rel="dns-prefetch" href="//livewatch.top">
-<link rel="preconnect" href="https://livewatch.top" crossorigin>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial,Helvetica,sans-serif
+    }
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
-body{background:#050816;color:#fff;min-height:100vh}
+    body{
+      background:#050816;
+      color:#fff;
+      min-height:100vh
+    }
 
-header{
-    background:#0f172a;
-    padding:20px;
-    text-align:center;
-    box-shadow:0 4px 20px rgba(0,0,0,.4);
-    position:sticky;
-    top:0;
-    z-index:10
-}
+    header{
+      background:#0f172a;
+      padding:20px;
+      text-align:center;
+      position:sticky;
+      top:0;
+      z-index:10;
+      box-shadow:0 4px 20px rgba(0,0,0,.4)
+    }
 
-header h1{color:#22d3ee;font-size:2rem;margin-bottom:5px}
-.live{color:#ef4444;font-weight:bold}
+    header h1{
+      color:#22d3ee;
+      font-size:2rem
+    }
 
-.container{
-    max-width:1200px;
-    margin:25px auto;
-    padding:0 20px
-}
+    .live{
+      color:#ef4444;
+      font-weight:bold
+    }
 
-/* =========================
-   LECTEUR
-   ========================= */
+    .container{
+      max-width:1200px;
+      margin:25px auto;
+      padding:0 16px
+    }
 
-.player-box{
-    background:#000;
-    border-radius:24px;
-    overflow:hidden;
-    border:1px solid rgba(255,255,255,.08);
-    box-shadow:0 20px 40px rgba(0,0,0,.45)
-}
+    .player-box{
+      background:#000;
+      border-radius:24px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.08)
+    }
 
-video{
-    width:100%;
-    aspect-ratio:16/9;
-    display:block;
-    background:#000
-}
+    video,
+    iframe{
+      width:100%;
+      aspect-ratio:16/9;
+      border:0;
+      display:block;
+      background:#000
+    }
 
-/* Nouveau lecteur pour les embeds */
+    iframe{
+      display:none
+    }
 
-#embedFrame{
-    width:100%;
-    aspect-ratio:16/9;
-    display:none;
-    border:0;
-    background:#000
-}
+    #search{
+      width:100%;
+      margin:24px 0;
+      padding:14px 18px;
+      border-radius:16px;
+      border:0;
+      background:#111827;
+      color:#fff;
+      font-size:1rem;
+      outline:none
+    }
 
-#playerLoading{
-    display:none;
-    width:100%;
-    aspect-ratio:16/9;
-    background:#000;
-    align-items:center;
-    justify-content:center;
-    color:#94a3b8;
-    font-size:1rem
-}
+    .channels{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:20px
+    }
 
-#search{
-    width:100%;
-    padding:14px 18px;
-    margin-top:24px;
-    border:0;
-    border-radius:16px;
-    background:#111827;
-    color:#fff;
-    font-size:1rem;
-    outline:none
-}
+    .channel{
+      background:#0f172acc;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:22px;
+      padding:18px;
+      text-align:center;
+      transition:.25s
+    }
 
-.channels{
-    margin-top:30px;
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:20px
-}
+    .channel:hover{
+      transform:translateY(-6px)
+    }
 
-.channel{
-    background:rgba(15,23,42,.75);
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:22px;
-    padding:22px;
-    text-align:center;
-    transition:.25s;
-    backdrop-filter:blur(12px)
-}
+    .channel img{
+      width:100%;
+      height:120px;
+      object-fit:cover;
+      border-radius:20px;
+      margin-bottom:14px;
+      background:#111827
+    }
 
-.channel:hover{
-    transform:translateY(-6px);
-    box-shadow:0 14px 28px rgba(0,0,0,.3)
-}
+    .channel h3{
+      margin-bottom:14px;
+      color:#e2e8f0
+    }
 
-.channel img{
-    width:100%;
-    height:120px;
-    object-fit:cover;
-    margin-bottom:16px;
-    border-radius:24px;
-    background:#0b1220;
-    padding:10px;
-    box-shadow:0 8px 20px rgba(0,0,0,.35);
-    border:1px solid rgba(255,255,255,.08);
-    transition:all .3s ease
-}
+    .channel button{
+      width:100%;
+      padding:12px;
+      border:0;
+      border-radius:14px;
+      background:linear-gradient(135deg,#22d3ee,#2563eb);
+      color:#fff;
+      font-weight:bold;
+      cursor:pointer
+    }
 
-.channel:hover img{
-    transform:scale(1.04);
-    box-shadow:0 14px 28px rgba(0,0,0,.45)
-}
+    footer{
+      text-align:center;
+      padding:30px;
+      color:#94a3b8
+    }
 
-.channel h3{
-    margin-bottom:16px;
-    color:#e2e8f0;
-    font-size:1rem
-}
+    @media(max-width:600px){
+      header h1{
+        font-size:1.4rem
+      }
 
-.channel button{
-    width:100%;
-    padding:12px;
-    border:0;
-    border-radius:14px;
-    background:linear-gradient(135deg,#22d3ee,#2563eb);
-    color:#fff;
-    font-weight:bold;
-    cursor:pointer
-}
-
-footer{
-    text-align:center;
-    padding:30px;
-    color:#94a3b8
-}
-
-.chat-box{
-    margin-top:30px;
-    background:rgba(15,23,42,.85);
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:24px;
-    padding:20px
-}
-
-.chat-box h3{
-    margin-bottom:15px;
-    color:#22d3ee
-}
-
-.messages{
-    height:250px;
-    overflow-y:auto;
-    background:#0b1220;
-    border-radius:16px;
-    padding:12px;
-    margin-bottom:12px
-}
-
-.message{
-    margin-bottom:10px;
-    padding:8px 10px;
-    border-radius:12px;
-    background:#111827
-}
-
-.message strong{color:#22d3ee}
-
-.chat-input{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap
-}
-
-.chat-input input{
-    flex:1;
-    min-width:120px;
-    padding:10px 12px;
-    border:0;
-    border-radius:12px;
-    background:#111827;
-    color:#fff
-}
-
-.chat-input button{
-    padding:10px 16px;
-    border:0;
-    border-radius:12px;
-    background:linear-gradient(135deg,#22d3ee,#2563eb);
-    color:#fff;
-    font-weight:bold;
-    cursor:pointer
-}
-
-#securityGate{
-    position:fixed;
-    inset:0;
-    background:#050816;
-    color:#fff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:99999;
-    text-align:center
-}
-
-@media(max-width:600px){
-    header h1{font-size:1.4rem}
-    .container{padding:0 12px}
-    .channels{grid-template-columns:1fr;gap:16px}
-    .channel{padding:16px}
-    #search{font-size:16px}
-    video,#embedFrame,#playerLoading{border-radius:18px}
-}
-
-@media(min-width:601px) and (max-width:1024px){
-    .channels{grid-template-columns:repeat(2,1fr)}
-}
-</style>
+      .channels{
+        grid-template-columns:1fr
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div id="securityGate">
-    <div>🔐 Vérification de l'accès...</div>
-</div>
-
-<div id="protectedContent" style="display:none">
-
-<header>
+  <header>
     <h1>CHANNEL+ PREMIUM</h1>
     <p class="live">🔴 TV EN DIRECT</p>
-</header>
+  </header>
 
-<div class="container">
+  <div class="container">
 
-    <!-- LECTEUR -->
     <div class="player-box">
-
-        <!-- Lecteur HLS existant -->
-        <video id="video" controls autoplay muted playsinline></video>
-
-        <!-- Lecteur des embeds -->
-        <iframe
-            id="embedFrame"
-            allow="autoplay; fullscreen"
-            allowfullscreen
-            referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
-
-        <!-- Chargement -->
-        <div id="playerLoading">
-            Chargement du direct...
-        </div>
-
+      <video id="video" controls autoplay muted playsinline></video>
+      <iframe id="embedFrame" allow="autoplay; fullscreen" allowfullscreen></iframe>
     </div>
 
-
-    <div class="chat-box">
-
-        <h3 id="chatTitle">💬 Chat Général</h3>
-
-        <div id="messages" class="messages"></div>
-
-        <div class="chat-input">
-            <input id="username" placeholder="Ton pseudo">
-            <input id="messageInput" placeholder="Écrire un message...">
-            <button id="sendBtn">Envoyer</button>
-        </div>
-
-    </div>
-
-
-    <input
-        id="search"
-        placeholder="Rechercher une chaîne..."
-    >
-
+    <input id="search" placeholder="Rechercher une chaîne..." />
 
     <div class="channels" id="channels">
-
-        <div class="channel">
-            <img src="nolly.png" alt="NOLLYWOOD TV">
-            <h3>NOLLYWOOD TV</h3>
-            <button onclick="ouvrirEmbed('https://livewatch.top/embed/1562445425bf43cebd4faf-42294ead14e2b3')">
-                ▶ Regarder
-            </button>
-        </div>
-
-        <div class="channel">
-            <img src="disney.png" alt="Disney Junior">
-            <h3>Disney junior</h3>
-            <button onclick="ouvrirEmbed('https://livewatch.top/embed/1762694647144af19e59b7-ba1042469cec01')">
-                ▶ Regarder
-            </button>
-        </div>
-
-        <div class="channel">
-            <img src="nik.png" alt="Nickelodeon">
-            <h3>Nickeledeon</h3>
-            <button onclick="ouvrirChat('Nickelodeon'); ouvrirEmbed('https://livewatch.top/embed/3562748294b2ebad358cbf-9150df941c43fe')">
-                ▶ Regarder
-            </button>
-        </div>
-
-        <div class="channel">
-            <img src="A+.jpg" alt="A+">
-            <h3>A+</h3>
-            <button onclick="ouvrirEmbed('https://livewatch.top/embed/594965518e7c95c9c8814-e956b99b20c6e1')">
-                ▶ Regarder
-            </button>
-        </div>
-
-        <div class="channel">
-            <img src="nov.png" alt="Novelas TV">
-            <h3>novelas tv</h3>
-            <button onclick="ouvrirEmbed('https://livewatch.top/embed/16260338528710828dbe45-351424000ae001')">
-                ▶ Regarder
-            </button>
-        </div>
-
-        <div class="channel">
-            <img src="c+1.png" alt="Canal+ Sport 1">
-            <h3>Canal+Sport1</h3>
-            <button onclick="ouvrirEmbed('https://livewatch.top/embed/1012399982f41e3c10e6d6-646c8f3e43249f')">
-                ▶ Regarder
-            </button>
-        </div>
-
-        <div class="channel">
-            <img src="infosport+.png" alt="Infosport+">
-            <h3>infosport+</h3>
-            <button onclick="ouvrirEmbed('https://livewatch.top/embed/14657608221ba582f5feb-c927a78429e447')">
-                ▶ Regarder
-            </button>
-        </div>
-
-        <div class="channel">
-            <img src="c+family.png" alt="Canal+ Family">
-            <h3>canal+family</h3>
-            <button onclick="ouvrirEmbed('https://livewatch.top/embed/4007062954bb448913d299-b72e5d5ebf8ade')">
-                ▶ Regarder
-            </button>
-        </div>
-
-        <div class="channel">
-            <img src="tf1.jpg" alt="TF1">
-            <h3>TF1</h3>
-            <button onclick="ouvrirEmbed('https://livewatch.top/embed/1334669376bf508b8ed995-e1dc32893923cf')">
-                ▶ Regarder
-            </button>
-        </div>
-
-        <div class="channel">
-            <img src="piwi+.png" alt="Piwi+">
-            <h3>piwi+</h3>
-            <button onclick="ouvrirEmbed('https://livewatch.top/embed/2272423077184c1838f29c-7e205f90c233d3')">
-                ▶ Regarder
-            </button>
-        </div>
-
-        <div class="channel">
-            <img src="tfx.jpg" alt="TFX">
-            <h3>TFX</h3>
-            <button onclick="ouvrirEmbed('https://livewatch.top/embed/3794086467dcb3e9b1728b-037a336b29d3ba')">
-                ▶ Regarder
-            </button>
-        </div>
-
-        <div class="channel">
-            <img src="action.jpg" alt="action">
-            <h3>Action</h3>
-            <button onclick="ouvrirEmbed('https://livewatch.top/embed/3638789513f8ccd703cc28-dba0e03c0b6744')">
-                ▶ Regarder
-            </button>
-        </div>
-
-        <div class="channel">
-            <img src="teletoon.jpg" alt="tele">
-            <h3>teletoon+</h3>
-            <button onclick="ouvrirEmbed('https://livewatch.top/embed/231278062503478eaef59f-8867e6406b2968')">
-                ▶ Regarder
-            </button>
-        </div>
-
+      <p style="text-align:center;color:#94a3b8">
+        Chargement des chaînes...
+      </p>
     </div>
-</div>
 
-<footer>
+  </div>
+
+  <footer>
     © 2026 Channel+ Premium
-</footer>
+  </footer>
 
-</div>
+  <script>
 
+    // =========================
+    // CONFIG API
+    // =========================
 
-<script type="module">
+    const API_TOKEN =
+      "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNjM1NGExNWExNGNjMjY1NDE1YjBjMjc2ZTYwMWJlMCIsIm5iZiI6MTc4NjMwNDM4Ni4zMjYwMDAyLCJzdWIiOiI2YTc4ZDc4MjRlNDkxZDg5MTVmNTc0MzYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.JZ43tSYxr-LYBLsJWgVZsABk-3EAAYo2Br4UuhhCTjo";
 
-import {
-    initializeApp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    const API_URL =
+      "https://livewatch.top/api/v1/public/all";
 
-import {
-    getFirestore,
-    doc,
-    getDoc,
-    collection,
-    addDoc,
-    query,
-    orderBy,
-    onSnapshot,
-    serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-
-const firebaseConfig = {
-    apiKey: "AIzaSyDPh3dJ37uy21L70Mekm_ikuIfeD8wCZU",
-    authDomain: "channelplus-8c219.firebaseapp.com",
-    projectId: "channelplus-8c219",
-    storageBucket: "channelplus-8c219.firebasestorage.app",
-    messagingSenderId: "178858225057",
-    appId: "1:178858225057:web:63c327bf23eb877f196fe0"
-};
-
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-const SESSION_KEY = "channelplus_session";
-
-let accessTicket = null;
-let hls = null;
-let currentChannel = "Général";
-let chatUnsubscribe = null;
-
-
-/* =========================
-   SECURITE
-   ========================= */
-
-function deny() {
-
-    document.getElementById("securityGate").innerHTML =
-        "<div><h2 style='color:#ef4444'>⛔ Accès refusé</h2>" +
-        "<p>Ouvrez ce service depuis la page de contrôle du ticket.</p></div>";
-
-    try {
-
-        window.parent.postMessage(
-            {type:"CHANNELPLUS_ACCESS_DENIED"},
-            window.location.origin
-        );
-
-    } catch(e) {}
-}
-
-
-function validateSession(code) {
-
-    try {
-
-        const raw =
-            sessionStorage.getItem(SESSION_KEY);
-
-        if (!raw) return false;
-
-        const data =
-            JSON.parse(raw);
-
-        return data.ticket === code &&
-            Date.now() - Number(data.at) <
-            12 * 60 * 60 * 1000;
-
-    } catch(e) {
-
-        return false;
-
-    }
-}
-
-
-async function validateTicket(code) {
-
-    const snap =
-        await getDoc(
-            doc(db, "tickets", code)
-        );
-
-    if (!snap.exists())
-        return false;
-
-    const data = snap.data();
-
-    if (
-        data.expiresAt &&
-        typeof data.expiresAt.toMillis === "function" &&
-        data.expiresAt.toMillis() < Date.now()
-    )
-        return false;
-
-    return true;
-}
-
-
-async function authorize() {
-
-    const params =
-        new URLSearchParams(location.search);
-
-    if (params.toString()) {
-
-        history.replaceState(
-            null,
-            "",
-            location.pathname
-        );
-
-    }
-
-
-    return new Promise(resolve => {
-
-        const timer =
-            setTimeout(
-                () => resolve(false),
-                8000
-            );
-
-
-        function receive(e) {
-
-            if (e.origin !== window.location.origin)
-                return;
-
-            if (e.data?.type !== "CHANNELPLUS_ACCESS")
-                return;
-
-
-            const code =
-                String(
-                    e.data.ticket || ""
-                )
-                .trim()
-                .toUpperCase();
-
-
-            if (!code)
-                return;
-
-
-            validateTicket(code)
-                .then(ok => {
-
-                    if (ok && validateSession(code)) {
-
-                        accessTicket = code;
-
-                        sessionStorage.setItem(
-                            SESSION_KEY,
-                            JSON.stringify({
-                                ticket: code,
-                                at: Date.now()
-                            })
-                        );
-
-                        clearTimeout(timer);
-
-                        window.removeEventListener(
-                            "message",
-                            receive
-                        );
-
-                        resolve(true);
-
-                    } else {
-
-                        clearTimeout(timer);
-
-                        window.removeEventListener(
-                            "message",
-                            receive
-                        );
-
-                        resolve(false);
-
-                    }
-
-                })
-                .catch(() => {
-
-                    clearTimeout(timer);
-
-                    window.removeEventListener(
-                        "message",
-                        receive
-                    );
-
-                    resolve(false);
-
-                });
-
-        }
-
-
-        window.addEventListener(
-            "message",
-            receive
-        );
-
-    });
-}
-
-
-const authorized = await authorize();
-
-
-if (!authorized) {
-
-    deny();
-
-} else {
-
-    document.getElementById(
-        "securityGate"
-    ).style.display = "none";
-
-
-    document.getElementById(
-        "protectedContent"
-    ).style.display = "block";
-
+    // =========================
+    // LECTEUR
+    // =========================
 
     const video =
-        document.getElementById("video");
+      document.getElementById("video");
 
     const embedFrame =
-        document.getElementById("embedFrame");
+      document.getElementById("embedFrame");
 
-    const playerLoading =
-        document.getElementById("playerLoading");
-
-
-    const adn =
-        "https://d3b73b34o7cvkq.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-gz2sgqzp076kf/adn.m3u8";
+    let hls = null;
 
 
-    /* =========================
-       LECTEUR HLS EXISTANT
-       ========================= */
+    function playChannel(url){
 
-    function playChannel(url) {
+      embedFrame.style.display = "none";
+      embedFrame.src = "";
 
-        /*
-        On cache l'iframe
-        */
+      video.style.display = "block";
 
-        embedFrame.style.display = "none";
-        embedFrame.src = "";
+      if(hls) hls.destroy();
 
-        playerLoading.style.display = "none";
+      if(Hls.isSupported()){
 
-        video.style.display = "block";
+        hls = new Hls();
 
+        hls.loadSource(url);
 
-        if (hls)
-            hls.destroy();
+        hls.attachMedia(video);
 
+        hls.on(
+          Hls.Events.MANIFEST_PARSED,
+          () => video.play().catch(()=>{})
+        );
 
-        if (Hls.isSupported()) {
+      }else{
 
-            hls = new Hls();
+        video.src = url;
 
-            hls.loadSource(url);
-
-            hls.attachMedia(video);
-
-            hls.on(
-                Hls.Events.MANIFEST_PARSED,
-                () => video.play().catch(()=>{})
-            );
-
-        } else if (
-            video.canPlayType(
-                "application/vnd.apple.mpegurl"
-            )
-        ) {
-
-            video.src = url;
-
-            video.play().catch(()=>{});
-
-        }
+      }
 
     }
 
 
-    /*
-    ==================================================
-    NOUVELLE FONCTION :
-    EMBED SUR LA MEME PAGE
-    ==================================================
-    */
+    function ouvrirEmbed(url){
 
-    window.ouvrirEmbed = function(url) {
+      if(hls){
 
-        /*
-        Arrête le lecteur HLS actuel
-        */
+        hls.destroy();
+        hls = null;
 
-        if (hls) {
+      }
 
-            hls.destroy();
-            hls = null;
+      video.pause();
 
-        }
+      video.style.display = "none";
 
-        video.pause();
+      embedFrame.src = url;
 
-        video.removeAttribute("src");
+      embedFrame.style.display = "block";
 
-        video.style.display = "none";
-
-
-        /*
-        Affiche le chargement
-        */
-
-        embedFrame.style.display = "none";
-
-        playerLoading.style.display = "flex";
-
-
-        /*
-        Charge l'embed dans la page actuelle
-        */
-
-        embedFrame.src = url;
-
-
-        embedFrame.onload = function() {
-
-            playerLoading.style.display = "none";
-
-            embedFrame.style.display = "block";
-
-        };
-
-
-        /*
-        Reste sur la même page
-        */
-
-        document.querySelector(
-            ".player-box"
-        ).scrollIntoView({
-            behavior: "smooth",
-            block: "start"
+      document.querySelector(".player-box")
+        .scrollIntoView({
+          behavior:"smooth"
         });
 
-    };
+    }
 
 
-    /*
-    ==================================================
-    CHAT
-    ==================================================
-    */
+    // =========================
+    // CHARGEMENT DES CHAINES
+    // =========================
 
-    window.ouvrirChat = function(channelName) {
+    async function chargerChaines(){
 
-        currentChannel = channelName;
+      const container =
+        document.getElementById("channels");
 
-        document.getElementById(
-            "chatTitle"
-        ).textContent =
-            "💬 Chat • " + channelName;
+      try{
 
+        const response = await fetch(API_URL,{
+          headers:{
+            "Authorization":`Bearer ${API_TOKEN}`,
+            "Accept":"application/json"
+          }
+        });
 
-        if (chatUnsubscribe)
-            chatUnsubscribe();
+        const data =
+          await response.json();
 
+        const channels =
+          Array.isArray(data)
+            ? data
+            : (data.channels || []);
 
-        const q = query(
-            collection(
-                db,
-                "chats",
-                currentChannel,
-                "messages"
-            ),
-            orderBy(
-                "createdAt",
-                "asc"
-            )
-        );
+        container.innerHTML = "";
 
+        channels.forEach(channel => {
 
-        chatUnsubscribe =
-            onSnapshot(
-                q,
-                snapshot => {
+          const name =
+            channel.name || "Chaîne";
 
-                    const box =
-                        document.getElementById(
-                            "messages"
-                        );
+          const logo =
+            channel.logo ||
+            channel.logo_url ||
+            "https://via.placeholder.com/300x120?text=TV";
 
-                    box.innerHTML = "";
+          const stream =
+            channel.embed_url ||
+            channel.url ||
+            channel.stream_url;
 
+          if(!stream) return;
 
-                    snapshot.forEach(d => {
+          const card =
+            document.createElement("div");
 
-                        const data =
-                            d.data();
+          card.className = "channel";
 
+          card.innerHTML = `
+            <img src="${logo}" alt="${name}">
+            <h3>${name}</h3>
+            <button>▶ Regarder</button>
+          `;
 
-                        const div =
-                            document.createElement(
-                                "div"
-                            );
+          card.querySelector("button")
+            .onclick = () => {
 
-                        div.className =
-                            "message";
+              if(stream.includes("/embed/")){
 
+                ouvrirEmbed(stream);
 
-                        const strong =
-                            document.createElement(
-                                "strong"
-                            );
+              }else{
 
-                        strong.textContent =
-                            (data.user ||
-                            "Anonyme") + ":";
+                playChannel(stream);
 
+              }
 
-                        div.appendChild(
-                            strong
-                        );
+            };
 
+          container.appendChild(card);
 
-                        div.appendChild(
-                            document.createTextNode(
-                                " " +
-                                (data.text || "")
-                            )
-                        );
+        });
 
+      }catch(err){
 
-                        box.appendChild(div);
+        console.error(err);
 
-                    });
+        container.innerHTML = `
+          <p style="text-align:center;color:#ef4444">
+            ❌ Impossible de charger les chaînes
+          </p>
+        `;
+      }
 
-
-                    box.scrollTop =
-                        box.scrollHeight;
-
-                }
-            );
-
-    };
+    }
 
 
-    /*
-    ==================================================
-    ENVOI CHAT
-    ==================================================
-    */
+    // =========================
+    // RECHERCHE
+    // =========================
 
     document
-        .getElementById("sendBtn")
-        .addEventListener(
-            "click",
-            async () => {
+      .getElementById("search")
+      .addEventListener("input",e => {
 
-                const text =
-                    document
-                    .getElementById(
-                        "messageInput"
-                    )
-                    .value
-                    .trim();
+        const q =
+          e.target.value.toLowerCase();
 
+        document
+          .querySelectorAll(".channel")
+          .forEach(card => {
 
-                const user =
-                    document
-                    .getElementById(
-                        "username"
-                    )
-                    .value
-                    .trim()
-                    ||
-                    "Anonyme";
+            const name =
+              card.querySelector("h3")
+                .textContent
+                .toLowerCase();
 
+            card.style.display =
+              name.includes(q)
+                ? "block"
+                : "none";
 
-                if (!text)
-                    return;
+          });
+
+      });
 
 
-                await addDoc(
-                    collection(
-                        db,
-                        "chats",
-                        currentChannel,
-                        "messages"
-                    ),
-                    {
-                        user,
-                        text,
-                        createdAt:
-                            serverTimestamp()
-                    }
-                );
+    // =========================
+    // DEMARRAGE
+    // =========================
 
+    chargerChaines();
 
-                document
-                    .getElementById(
-                        "messageInput"
-                    )
-                    .value = "";
-
-            }
-        );
-
-
-    /*
-    ==================================================
-    RECHERCHE
-    ==================================================
-    */
-
-    document
-        .getElementById("search")
-        .addEventListener(
-            "input",
-            e => {
-
-                const q =
-                    e.target.value
-                    .toLowerCase();
-
-
-                document
-                    .querySelectorAll(
-                        ".channel"
-                    )
-                    .forEach(card => {
-
-                        const name =
-                            card
-                            .querySelector("h3")
-                            .textContent
-                            .toLowerCase();
-
-
-                        card.style.display =
-                            name.includes(q)
-                            ? "block"
-                            : "none";
-
-                    });
-
-            }
-        );
-
-
-    /*
-    ==================================================
-    CHAT GENERAL
-    ==================================================
-    */
-
-    window.ouvrirChat("Général");
-
-
-    /*
-    ==================================================
-    LECTEUR INITIAL
-    ==================================================
-    */
-
-    playChannel(adn);
-
-
-    /*
-    ==================================================
-    CONTROLE PERIODIQUE DU TICKET
-    ==================================================
-    */
-
-    setInterval(
-        async () => {
-
-            if (
-                accessTicket &&
-                !(await validateTicket(
-                    accessTicket
-                ))
-            ) {
-
-                deny();
-
-            }
-
-        },
-        30000
-    );
-
-}
-
-</script>
+  </script>
 
 </body>
 </html>
