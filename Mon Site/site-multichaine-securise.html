@@ -47,17 +47,6 @@ header h1{color:#22d3ee;font-size:2rem;margin-bottom:5px}
     background:#000
 }
 
-#playerLoading{
-    display:none;
-    width:100%;
-    aspect-ratio:16/9;
-    background:#000;
-    align-items:center;
-    justify-content:center;
-    color:#94a3b8;
-    font-size:1rem
-}
-
 #search{
     width:100%;
     padding:14px 18px;
@@ -108,10 +97,7 @@ header h1{color:#22d3ee;font-size:2rem;margin-bottom:5px}
     background:#0b1220;
     box-shadow:0 8px 20px rgba(0,0,0,.35);
     border:1px solid rgba(255,255,255,.08);
-    transition:all .3s ease
 }
-
-.channel:hover img{transform:scale(1.03)}
 
 .channel h3{
     margin-bottom:10px;
@@ -223,7 +209,7 @@ footer{text-align:center;padding:30px;color:#94a3b8}
 <body>
 
 <div id="securityGate">
-    <div>🔐 Vérification de l'accès au catalogue...</div>
+    <div>🔐 Initialisation de votre espace cinéma Marvel...</div>
 </div>
 
 <div id="protectedContent" style="display:none">
@@ -248,7 +234,7 @@ footer{text-align:center;padding:30px;color:#94a3b8}
     <div class="chat-box">
         <h3 id="chatTitle">💬 Chat Univers Marvel</h3>
         <div id="messages" class="messages">
-            <div class="message"><strong>Système :</strong> Bienvenue sur votre plateforme Marvel privée !</div>
+            <div class="message"><strong>Système :</strong> Bienvenue sur votre catalogue Marvel privé !</div>
         </div>
         <div class="chat-input">
             <input id="username" placeholder="Ton pseudo" value="FanMarvel">
@@ -257,74 +243,50 @@ footer{text-align:center;padding:30px;color:#94a3b8}
         </div>
     </div>
 
-    <input id="search" placeholder="Rechercher un film Marvel...">
+    <input id="search" placeholder="Rechercher un film Marvel dans la liste...">
 
     <div class="channels" id="channels">
-        <!-- Chargé par l'API TMDB -->
+        <!-- Rempli instantanément par le script local -->
     </div>
 
 </div>
 
 <footer>
-    <p>© 2026 Channel+ Premium - Moteur indépendant autonome</p>
+    <p>© 2026 Channel+ Premium - Base de données Marvel intégrée</p>
 </footer>
 
 </div>
 <script>
-    // ==========================================
-    // CONFIGURATION : VOTRE NOUVELLE CLÉ VALIDE INJECTÉE
-    // ==========================================
-    const TMDB_KEY = "95b5eb01d6332e6214402fcb9c18830a"; 
-    const MCU_COLLECTION_ID = 131296; 
+    const tousLesFilms = [
+        {"id": 1726, "title": "Iron Man", "poster": "https://tmdb.org", "annee": "2008", "note": "7.6"},
+        {"id": 10138, "title": "Iron Man 2", "poster": "https://tmdb.org", "annee": "2010", "note": "6.8"},
+        {"id": 10195, "title": "Thor", "poster": "https://tmdb.org", "annee": "2011", "note": "6.8"},
+        {"id": 1771, "title": "Captain America", "poster": "https://tmdb.org", "annee": "2011", "note": "7.0"},
+        {"id": 24428, "title": "Avengers", "poster": "https://tmdb.org", "annee": "2012", "note": "7.7"},
+        {"id": 68721, "title": "Iron Man 3", "poster": "https://tmdb.org", "annee": "2013", "note": "6.9"},
+        {"id": 76338, "title": "Thor : Le Monde des ténèbres", "poster": "https://tmdb.org", "annee": "2013", "note": "6.5"},
+        {"id": 100402, "title": "Captain America : Le Soldat de l'hiver", "poster": "https://tmdb.org", "annee": "2014", "note": "7.7"},
+        {"id": 118340, "title": "Les Gardiens de la Galaxie", "poster": "https://tmdb.org", "annee": "2014", "note": "7.9"},
+        {"id": 99861, "title": "Avengers : L'Ère d'Ultron", "poster": "https://tmdb.org", "annee": "2015", "note": "7.3"}
+    ];
 
     const box = document.getElementById("channels");
     const player = document.getElementById("embedFrame");
     const searchInput = document.getElementById("search");
-    
-    let tousLesFilms = []; 
 
-    // Rideau de chargement initial (1,5 seconde)
     setTimeout(() => {
         document.getElementById("securityGate").style.display = "none";
         document.getElementById("protectedContent").style.display = "block";
-        chargerCatalogueTMDB();
-    }, 1500);
+        
+        player.src = `https://vidsrc.cc`;
+        
+        afficherFilms(tousLesFilms);
+    }, 1000);
 
-    // Connexion dynamique à l'API de TMDB
-    function chargerCatalogueTMDB() {
-        // CORRECTION DE L'URL : L'adresse est maintenant 100% propre et valide
-        fetch(`https://themoviedb.org{MCU_COLLECTION_ID}?api_key=${TMDB_KEY}&language=fr-FR`)
-            .then(res => {
-                if(!res.ok) throw new Error("Clé refusée ou problème réseau");
-                return res.json();
-            })
-            .then(data => {
-                // On filtre pour enlever les films qui n'ont pas encore de date de sortie
-                tousLesFilms = data.parts.filter(m => m.release_date);
-                
-                // Tri chronologique du plus ancien au plus récent
-                tousLesFilms.sort((a, b) => new Date(a.release_date) - new Date(b.release_date));
-
-                // CORRECTION DU DÉMARRAGE : Charge correctement Iron Man (le 1er film de la liste)
-                if(tousLesFilms.length > 0) {
-                    player.src = `https://vidsrc.cc{tousLesFilms[0].id}?poster=true`;
-                    document.getElementById("chatTitle").innerHTML = `💬 Chat : ${tousLesFilms[0].title}`;
-                }
-
-                // Génération visuelle de votre grille style Netflix
-                afficherFilms(tousLesFilms);
-            })
-            .catch(err => {
-                console.error("Erreur API :", err);
-                box.innerHTML = "<p style='color:#ef4444; grid-column: 1/-1;'>⚠️ Erreur de chargement du catalogue TMDB. Vérifiez la clé v3 ou votre connexion.</p>";
-            });
-    }
-
-    // Génération graphique de la grille
     function afficherFilms(liste) {
         box.innerHTML = "";
         if(liste.length === 0) {
-            box.innerHTML = "<p style='color:#94a3b8; grid-column:1/-1;'>Aucun film Marvel ne correspond à cette recherche.</p>";
+            box.innerHTML = "<p style='color:#94a3b8; grid-column:1/-1;'>Aucun film ne correspond à votre recherche.</p>";
             return;
         }
 
@@ -332,20 +294,12 @@ footer{text-align:center;padding:30px;color:#94a3b8}
             const card = document.createElement("div");
             card.className = "channel";
 
-            // Utilisation du serveur d'images officiel sécurisé de TMDB
-            const poster = movie.poster_path 
-                ? `https://tmdb.org{movie.poster_path}`
-                : 'https://placeholder.com';
-
-            const annee = movie.release_date.split("-")[0];
-            const note = movie.vote_average ? movie.vote_average.toFixed(1) : "N/A";
-
             card.innerHTML = `
-                <img src="${poster}" alt="${movie.title}">
+                <img src="${movie.poster}" alt="${movie.title}">
                 <h3>${movie.title}</h3>
                 <div class="meta">
-                    <span>📅 ${annee}</span>
-                    <span class="rating">⭐ ${note}</span>
+                    <span>📅 ${movie.annee}</span>
+                    <span class="rating">⭐ ${movie.note}</span>
                 </div>
                 <button onclick="lireFilm('${movie.title.replace(/'/g, "\\'")}', '${movie.id}')">▶ Regarder</button>
             `;
@@ -353,21 +307,18 @@ footer{text-align:center;padding:30px;color:#94a3b8}
         });
     }
 
-    // Le moteur de streaming universel basé sur l'ID numérique officiel
     function lireFilm(titreOriginal, idTMDB) {
         player.src = `https://vidsrc.cc{idTMDB}?poster=true`;
         document.getElementById("chatTitle").innerHTML = `💬 Chat : ${titreOriginal}`;
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top:0, behavior:'smooth' });
     }
 
-    // Moteur de recherche de texte en temps réel
     searchInput.addEventListener("input", (e) => {
         const recherche = e.target.value.toLowerCase();
         const resultats = tousLesFilms.filter(m => m.title.toLowerCase().includes(recherche));
         afficherFilms(resultats);
     });
 
-    // Gestion de la messagerie du Chat
     function envoyerMessage() {
         const pseudo = document.getElementById("username").value || "Anonyme";
         const input = document.getElementById("messageInput");
@@ -390,4 +341,3 @@ footer{text-align:center;padding:30px;color:#94a3b8}
 </script>
 </body>
 </html>
-
