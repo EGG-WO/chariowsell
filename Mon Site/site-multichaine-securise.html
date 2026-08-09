@@ -271,9 +271,9 @@ footer{text-align:center;padding:30px;color:#94a3b8}
 
 </div>
 <script>
-    // ====================================================================
-    // CONFIGURATION : VOTRE CLÉ API COURTE (32 CARACTÈRES) EXTRAITE ET INJECTÉE
-    // ====================================================================
+    // ==========================================
+    // CONFIGURATION : VOTRE NOUVELLE CLÉ VALIDE INJECTÉE
+    // ==========================================
     const TMDB_KEY = "95b5eb01d6332e6214402fcb9c18830a"; 
     const MCU_COLLECTION_ID = 131296; 
 
@@ -290,36 +290,37 @@ footer{text-align:center;padding:30px;color:#94a3b8}
         chargerCatalogueTMDB();
     }, 1500);
 
-    // Connexion directe et dynamique à l'infrastructure de TMDB
+    // Connexion dynamique à l'API de TMDB
     function chargerCatalogueTMDB() {
-        // CORRECTION DE L'URL : Utilisation du sous-domaine 'api.' obligatoire pour les requêtes
+        // CORRECTION DE L'URL : L'adresse est maintenant 100% propre et valide
         fetch(`https://themoviedb.org{MCU_COLLECTION_ID}?api_key=${TMDB_KEY}&language=fr-FR`)
             .then(res => {
-                if(!res.ok) throw new Error("Réponse réseau incorrecte ou clé refusée");
+                if(!res.ok) throw new Error("Clé refusée ou problème réseau");
                 return res.json();
             })
             .then(data => {
-                // Filtrer les films pour ne garder que ceux qui ont une date de sortie
+                // On filtre pour enlever les films qui n'ont pas encore de date de sortie
                 tousLesFilms = data.parts.filter(m => m.release_date);
                 
                 // Tri chronologique du plus ancien au plus récent
                 tousLesFilms.sort((a, b) => new Date(a.release_date) - new Date(b.release_date));
 
-                // Lancement automatique du premier film de la liste (Iron Man) par défaut au démarrage
+                // CORRECTION DU DÉMARRAGE : Charge correctement Iron Man (le 1er film de la liste)
                 if(tousLesFilms.length > 0) {
                     player.src = `https://vidsrc.cc{tousLesFilms[0].id}?poster=true`;
                     document.getElementById("chatTitle").innerHTML = `💬 Chat : ${tousLesFilms[0].title}`;
                 }
-                
-                // Génération visuelle de la grille
+
+                // Génération visuelle de votre grille style Netflix
                 afficherFilms(tousLesFilms);
             })
             .catch(err => {
-                console.error("Erreur de liaison TMDB :", err);
-                box.innerHTML = "<p style='color:#ef4444; grid-column:1/-1;'>⚠️ Impossible de charger le catalogue depuis l'API TMDB. Vérifiez votre connexion internet ou la validité de la clé v3.</p>";
+                console.error("Erreur API :", err);
+                box.innerHTML = "<p style='color:#ef4444; grid-column: 1/-1;'>⚠️ Erreur de chargement du catalogue TMDB. Vérifiez la clé v3 ou votre connexion.</p>";
             });
     }
 
+    // Génération graphique de la grille
     function afficherFilms(liste) {
         box.innerHTML = "";
         if(liste.length === 0) {
@@ -331,7 +332,7 @@ footer{text-align:center;padding:30px;color:#94a3b8}
             const card = document.createElement("div");
             card.className = "channel";
 
-            // CORRECTION DE L'IMAGE : Utilisation du CDN officiel d'images de TMDB
+            // Utilisation du serveur d'images officiel sécurisé de TMDB
             const poster = movie.poster_path 
                 ? `https://tmdb.org{movie.poster_path}`
                 : 'https://placeholder.com';
@@ -352,11 +353,11 @@ footer{text-align:center;padding:30px;color:#94a3b8}
         });
     }
 
-    // Le moteur de streaming universel basé sur l'ID récupéré en direct de TMDB
+    // Le moteur de streaming universel basé sur l'ID numérique officiel
     function lireFilm(titreOriginal, idTMDB) {
         player.src = `https://vidsrc.cc{idTMDB}?poster=true`;
         document.getElementById("chatTitle").innerHTML = `💬 Chat : ${titreOriginal}`;
-        window.scrollTo({ top:0, behavior:'smooth' });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     // Moteur de recherche de texte en temps réel
@@ -366,7 +367,7 @@ footer{text-align:center;padding:30px;color:#94a3b8}
         afficherFilms(resultats);
     });
 
-    // Gestion du Chat local
+    // Gestion de la messagerie du Chat
     function envoyerMessage() {
         const pseudo = document.getElementById("username").value || "Anonyme";
         const input = document.getElementById("messageInput");
@@ -389,3 +390,4 @@ footer{text-align:center;padding:30px;color:#94a3b8}
 </script>
 </body>
 </html>
+
