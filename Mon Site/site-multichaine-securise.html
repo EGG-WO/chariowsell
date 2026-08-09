@@ -257,7 +257,7 @@ footer{text-align:center;padding:30px;color:#94a3b8}
 
 </div>
 <script>
-    // BASE DE DONNÉES MARVEL INTÉGRÉE (En local)
+    // BASE DE DONNÉES MARVEL INTERNE
     const tousLesFilms = [
         {"id": 1726, "title": "Iron Man", "poster": "https://tmdb.org", "annee": "2008", "note": "7.6"},
         {"id": 10138, "title": "Iron Man 2", "poster": "https://tmdb.org", "annee": "2010", "note": "6.8"},
@@ -275,13 +275,13 @@ footer{text-align:center;padding:30px;color:#94a3b8}
     const player = document.getElementById("embedFrame");
     const searchInput = document.getElementById("search");
 
-    // Chargement initial au démarrage
+    // Chargement initial
     setTimeout(() => {
         document.getElementById("securityGate").style.display = "none";
         document.getElementById("protectedContent").style.display = "block";
         
-        // CONFIGURATION : URL de démarrage configurée sur l'API active de VidSrc.to (vidsrc.xyz)
-        player.src = `https://vidsrc.xyz`;
+        // CORRECTION : Utilisation du domaine fonctionnel vidsrc.pm pour l'initialisation
+        player.src = "https://vidsrc.pm";
         
         afficherFilms(tousLesFilms);
     }, 1000);
@@ -310,14 +310,12 @@ footer{text-align:center;padding:30px;color:#94a3b8}
         });
     }
 
-    // MOTEUR DE CONFIGURATION LECTEUR VIDSRC.TO (vidsrc.xyz)
+    // CORRECTION : Fonction de lecture nettoyée avec la bonne syntaxe d'injection de l'ID
     function lireFilm(titreOriginal, idTMDB) {
-        // Cette URL appelle la structure officielle de l'API VidSrc.to
-        const urlVidSrcTo = `https://vidsrc.xyz{idTMDB}`;
+        // Changement de domaine vers vidsrc.pm (alternative ultra-stable de vidsrc.to)
+        const urlVidSrc = "https://vidsrc.pm" + idTMDB;
         
-        // Injection immédiate dans l'Iframe
-        player.src = urlVidSrcTo;
-        
+        player.src = urlVidSrc;
         document.getElementById("chatTitle").innerHTML = `💬 Chat : ${titreOriginal}`;
         window.scrollTo({ top:0, behavior:'smooth' });
     }
