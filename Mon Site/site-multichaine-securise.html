@@ -257,6 +257,7 @@ footer{text-align:center;padding:30px;color:#94a3b8}
 
 </div>
 <script>
+    // BASE DE DONNÉES MARVEL INTÉGRÉE (En local)
     const tousLesFilms = [
         {"id": 1726, "title": "Iron Man", "poster": "https://tmdb.org", "annee": "2008", "note": "7.6"},
         {"id": 10138, "title": "Iron Man 2", "poster": "https://tmdb.org", "annee": "2010", "note": "6.8"},
@@ -274,11 +275,13 @@ footer{text-align:center;padding:30px;color:#94a3b8}
     const player = document.getElementById("embedFrame");
     const searchInput = document.getElementById("search");
 
+    // Chargement initial au démarrage
     setTimeout(() => {
         document.getElementById("securityGate").style.display = "none";
         document.getElementById("protectedContent").style.display = "block";
         
-        player.src = `https://vidsrc.cc`;
+        // CONFIGURATION : URL de démarrage configurée sur l'API active de VidSrc.to (vidsrc.xyz)
+        player.src = `https://vidsrc.xyz`;
         
         afficherFilms(tousLesFilms);
     }, 1000);
@@ -307,18 +310,26 @@ footer{text-align:center;padding:30px;color:#94a3b8}
         });
     }
 
+    // MOTEUR DE CONFIGURATION LECTEUR VIDSRC.TO (vidsrc.xyz)
     function lireFilm(titreOriginal, idTMDB) {
-        player.src = `https://vidsrc.cc{idTMDB}?poster=true`;
+        // Cette URL appelle la structure officielle de l'API VidSrc.to
+        const urlVidSrcTo = `https://vidsrc.xyz{idTMDB}`;
+        
+        // Injection immédiate dans l'Iframe
+        player.src = urlVidSrcTo;
+        
         document.getElementById("chatTitle").innerHTML = `💬 Chat : ${titreOriginal}`;
         window.scrollTo({ top:0, behavior:'smooth' });
     }
 
+    // Moteur de recherche local instantané
     searchInput.addEventListener("input", (e) => {
         const recherche = e.target.value.toLowerCase();
         const resultats = tousLesFilms.filter(m => m.title.toLowerCase().includes(recherche));
         afficherFilms(resultats);
     });
 
+    // Gestion du Chat local
     function envoyerMessage() {
         const pseudo = document.getElementById("username").value || "Anonyme";
         const input = document.getElementById("messageInput");
