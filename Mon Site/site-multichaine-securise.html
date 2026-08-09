@@ -271,7 +271,10 @@ footer{text-align:center;padding:30px;color:#94a3b8}
 
 </div>
 <script>
-    const TMDB_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNjM1NGExNWExNGNjMjY1NDE1YjBjMjc2ZTYwMWJlMCIsIm5iZiI6MTc4NjMwNDM4Ni4zMjYwMDAyLCJzdWIiOiI2YTc4ZDc4MjRlNDkxZDg5MTVmNTc0MzYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.JZ43tSYxr-LYBLsJWgVZsABk-3EAAYo2Br4UuhhCTjo";
+    // ====================================================================
+    // CONFIGURATION : REMPLACEZ LES 32 CARACTÈRES CI-DESSOUS PAR VOTRE CLÉ
+    // ====================================================================
+    const TMDB_KEY = "06354a15a14cc265415b0c276e601be0"; // Collez votre clé courte de 32 caractères ici
     const MCU_COLLECTION_ID = 131296; 
 
     const box = document.getElementById("channels");
@@ -280,24 +283,23 @@ footer{text-align:center;padding:30px;color:#94a3b8}
     
     let tousLesFilms = []; 
 
+    // Rideau de chargement initial (1,5 seconde)
     setTimeout(() => {
         document.getElementById("securityGate").style.display = "none";
         document.getElementById("protectedContent").style.display = "block";
         chargerCatalogueTMDB();
     }, 1500);
 
+    // Nouvelle fonction de connexion simplifiée et ultra-fiable
     function chargerCatalogueTMDB() {
-        const options = {
-            method: 'GET',
-            headers: {
-                accept: 'application/json',
-                Authorization: `Bearer ${TMDB_TOKEN}`
-            }
-        };
+        if(TMDB_KEY.includes("VOTRE_CLE")) {
+            box.innerHTML = "<p style='color:#ef4444; grid-column:1/-1;'>⚠️ Veuillez coller votre clé API TMDB courte dans le code.</p>";
+            return;
+        }
 
-        fetch(`https://themoviedb.org{MCU_COLLECTION_ID}?language=fr-FR`, options)
+        fetch(`https://themoviedb.org{MCU_COLLECTION_ID}?api_key=${TMDB_KEY}&language=fr-FR`)
             .then(res => {
-                if(!res.ok) throw new Error("Erreur Jeton");
+                if(!res.ok) throw new Error("Clé API refusée par TMDB");
                 return res.json();
             })
             .then(data => {
@@ -310,7 +312,8 @@ footer{text-align:center;padding:30px;color:#94a3b8}
                 afficherFilms(tousLesFilms);
             })
             .catch(err => {
-                box.innerHTML = "<p style='color:#ef4444; grid-column:1/-1;'>⚠️ Erreur de chargement du catalogue TMDB.</p>";
+                console.error(err);
+                box.innerHTML = "<p style='color:#ef4444; grid-column:1/-1;'>⚠️ Clé API invalide. Allez dans TMDB > Paramètres > API et copiez la Clé de l'API (v3 auth).</p>";
             });
     }
 
@@ -379,3 +382,4 @@ footer{text-align:center;padding:30px;color:#94a3b8}
 </script>
 </body>
 </html>
+
