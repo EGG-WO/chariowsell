@@ -8,68 +8,675 @@
 <link rel="preconnect" href="https://livewatch.top" crossorigin>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
-body{background:#050816;color:#fff;min-height:100vh}
-header{background:#0f172a;padding:20px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.4);position:sticky;top:0;z-index:10}
-header h1{color:#22d3ee;font-size:2rem;margin-bottom:5px}
-.live{color:#ef4444;font-weight:bold}
-.container{max-width:1200px;margin:25px auto;padding:0 20px}
-.player-box{background:#000;border-radius:24px;overflow:hidden;border:1px solid rgba(255,255,255,.08);box-shadow:0 20px 40px rgba(0,0,0,.45)}
-video{width:100%;aspect-ratio:16/9;display:block;background:#000}
-#search{width:100%;padding:14px 18px;margin-top:24px;border:0;border-radius:16px;background:#111827;color:#fff;font-size:1rem;outline:none}
-.channels{margin-top:30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
-.channel{background:rgba(15,23,42,.75);border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:22px;text-align:center;transition:.25s;backdrop-filter:blur(12px)}
-.channel:hover{transform:translateY(-6px);box-shadow:0 14px 28px rgba(0,0,0,.3)}
-.channel img{width:100%;height:120px;object-fit:cover;margin-bottom:16px;border-radius:24px;background:#0b1220;padding:10px;box-shadow:0 8px 20px rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.08);transition:all .3s ease}
-.channel:hover img{transform:scale(1.04);box-shadow:0 14px 28px rgba(0,0,0,.45)}
-.channel h3{margin-bottom:16px;color:#e2e8f0;font-size:1rem}
-.channel button{width:100%;padding:12px;border:0;border-radius:14px;background:linear-gradient(135deg,#22d3ee,#2563eb);color:#fff;font-weight:bold;cursor:pointer}
-footer{text-align:center;padding:30px;color:#94a3b8}
-.chat-box{margin-top:30px;background:rgba(15,23,42,.85);border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:20px}
-.chat-box h3{margin-bottom:15px;color:#22d3ee}
-.messages{height:250px;overflow-y:auto;background:#0b1220;border-radius:16px;padding:12px;margin-bottom:12px}
-.message{margin-bottom:10px;padding:8px 10px;border-radius:12px;background:#111827}
-.message strong{color:#22d3ee}
-.chat-input{display:flex;gap:8px;flex-wrap:wrap}
-.chat-input input{flex:1;min-width:120px;padding:10px 12px;border:0;border-radius:12px;background:#111827;color:#fff}
-.chat-input button{padding:10px 16px;border:0;border-radius:12px;background:linear-gradient(135deg,#22d3ee,#2563eb);color:#fff;font-weight:bold;cursor:pointer}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-/* ===== Overlay iframe player ===== */
-#overlayPlayer{display:none;position:fixed;inset:0;z-index:5000;background:#000;flex-direction:column}
-#overlayBar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#0f172a;border-bottom:1px solid rgba(255,255,255,.08);gap:12px}
-#overlayBar span{color:#22d3ee;font-weight:bold;font-size:1.1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#overlayBar .actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
-#overlayBar button{border:0;border-radius:10px;padding:8px 14px;color:#fff;font-weight:bold;cursor:pointer;font-size:.9rem}
-#btnClose{background:#ef4444}
-#btnNewTab{background:#2563eb}
-#overlayFrame{flex:1;width:100%;border:none;background:#000}
-#overlayError{display:none;padding:30px;text-align:center;color:#ef4444}
+:root {
+  --primary: #00f0ff;
+  --secondary: #7b2dff;
+  --accent: #ff006e;
+  --glass: rgba(15, 23, 42, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --neon-glow: 0 0 20px rgba(0, 240, 255, 0.3), 0 0 40px rgba(0, 240, 255, 0.1);
+}
 
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter', Arial, sans-serif}
+
+body{
+  background:#02040a;
+  color:#fff;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ===== Animated Background ===== */
+.bg-mesh {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: 
+    radial-gradient(ellipse at 20% 20%, rgba(0, 240, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(123, 45, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(255, 0, 110, 0.04) 0%, transparent 60%);
+  animation: meshMove 15s ease-in-out infinite alternate;
+}
+
+@keyframes meshMove {
+  0% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.1) rotate(2deg); }
+  100% { transform: scale(1) rotate(-2deg); }
+}
+
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+}
+
+/* Floating particles */
+.particles {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--primary);
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: floatUp linear infinite;
+  box-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(100vh) scale(0); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(-100px) scale(1); opacity: 0; }
+}
+
+/* ===== Header ===== */
+header{
+  background: linear-gradient(180deg, rgba(15,23,42,0.95) 0%, rgba(15,23,42,0.8) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 25px 20px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+header h1{
+  font-size: 2.4rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #fff 0%, var(--primary) 50%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -1px;
+  animation: titleShine 3s ease-in-out infinite;
+  text-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
+}
+
+@keyframes titleShine {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.2); }
+}
+
+header p.live {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-top: 8px;
+  color: #ff4444;
+  text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+}
+
+header p.live::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  background: #ff4444;
+  border-radius: 50%;
+  box-shadow: 0 0 15px #ff4444, 0 0 30px #ff4444;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.5; }
+}
+
+/* ===== Main Container ===== */
+.container {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== Player Box ===== */
+.player-box {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4), var(--neon-glow);
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.player-box:hover {
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 30px rgba(0, 240, 255, 0.15), 0 0 60px rgba(0, 240, 255, 0.05);
+  transform: translateY(-2px);
+}
+
+.player-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(0,240,255,0.3), rgba(123,45,255,0.3), transparent 60%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.player-box:hover::before {
+  opacity: 1;
+}
+
+video {
+  width: 100%;
+  aspect-ratio: 16/9;
+  display: block;
+  background: #000;
+}
+
+/* ===== Search Bar ===== */
+#search {
+  width: 100%;
+  padding: 16px 24px;
+  margin-top: 28px;
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+#search:focus {
+  border-color: rgba(0, 240, 255, 0.4);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.1), 0 4px 15px rgba(0,0,0,0.2);
+  background: rgba(15, 23, 42, 0.8);
+}
+
+#search::placeholder {
+  color: rgba(255,255,255,0.4);
+}
+
+/* ===== Channels Grid ===== */
+.channels {
+  margin-top: 35px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.channel {
+  background: var(--glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 24px;
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.channel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  padding: 1.5px;
+  background: linear-gradient(135deg, rgba(0,240,255,0.5), rgba(123,45,255,0.3), transparent 70%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.channel:hover::before {
+  opacity: 1;
+}
+
+.channel:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 30px rgba(0, 240, 255, 0.1);
+  border-color: rgba(0, 240, 255, 0.2);
+}
+
+.channel img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  margin-bottom: 18px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #0b1220, #1a1a2e);
+  padding: 8px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.channel:hover img {
+  transform: scale(1.05) rotate(1deg);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.4), 0 0 20px rgba(0, 240, 255, 0.1);
+  border-color: rgba(0, 240, 255, 0.2);
+}
+
+.channel h3 {
+  margin-bottom: 18px;
+  color: #e2e8f0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.channel:hover h3 {
+  color: var(--primary);
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+}
+
+/* ===== Animated Button ===== */
+.channel button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #00f0ff, #7b2dff);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(0, 240, 255, 0.2);
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+}
+
+.channel button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s;
+}
+
+.channel button:hover::before {
+  left: 100%;
+}
+
+.channel button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 240, 255, 0.3), 0 0 40px rgba(0, 240, 255, 0.1);
+  filter: brightness(1.1);
+}
+
+.channel button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* ===== Chat Box ===== */
+.chat-box {
+  margin-top: 35px;
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.chat-box::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(0,240,255,0.02), transparent);
+  animation: shimmer 6s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+.chat-box h3 {
+  margin-bottom: 18px;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chat-box h3::before {
+  content: '💬';
+  filter: drop-shadow(0 0 5px rgba(0, 240, 255, 0.5));
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.messages {
+  height: 280px;
+  overflow-y: auto;
+  background: rgba(11, 18, 32, 0.6);
+  border-radius: 16px;
+  padding: 14px;
+  margin-bottom: 14px;
+  border: 1px solid rgba(255,255,255,0.05);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 240, 255, 0.3) transparent;
+}
+
+.messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.messages::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.3);
+  border-radius: 10px;
+}
+
+.message {
+  margin-bottom: 12px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(17, 24, 39, 0.8), rgba(17, 24, 39, 0.6));
+  border: 1px solid rgba(255,255,255,0.05);
+  transition: all 0.3s;
+  animation: fadeInUp 0.3s ease-out;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.message:hover {
+  border-color: rgba(0, 240, 255, 0.1);
+  transform: translateX(4px);
+}
+
+.message strong {
+  color: var(--primary);
+  font-weight: 600;
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.2);
+}
+
+.chat-input {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+.chat-input input {
+  flex: 1;
+  min-width: 120px;
+  padding: 12px 16px;
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  background: rgba(17, 24, 39, 0.8);
+  color: #fff;
+  transition: all 0.3s;
+  outline: none;
+}
+
+.chat-input input:focus {
+  border-color: rgba(0, 240, 255, 0.4);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.08);
+  background: rgba(17, 24, 39, 0.95);
+}
+
+.chat-input button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #00f0ff, #7b2dff);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(0, 240, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.chat-input button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s;
+}
+
+.chat-input button:hover::before {
+  left: 100%;
+}
+
+.chat-input button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 240, 255, 0.3);
+}
+
+/* ===== Footer ===== */
+footer {
+  text-align: center;
+  padding: 40px 20px;
+  color: rgba(148, 163, 184, 0.7);
+  font-size: 0.9rem;
+  position: relative;
+  z-index: 1;
+}
+
+footer::before {
+  content: '';
+  display: block;
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  margin: 0 auto 20px;
+  opacity: 0.5;
+}
+
+/* ===== Overlay Player ===== */
+#overlayPlayer {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  background: rgba(2, 4, 10, 0.98);
+  backdrop-filter: blur(30px);
+  flex-direction: column;
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+#overlayBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: linear-gradient(180deg, rgba(15,23,42,0.95) 0%, rgba(15,23,42,0.8) 100%);
+  border-bottom: 1px solid var(--glass-border);
+  gap: 14px;
+  backdrop-filter: blur(20px);
+}
+
+#overlayBar span {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 1.15rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+}
+
+#overlayBar .actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+#overlayBar button {
+  border: none;
+  border-radius: 12px;
+  padding: 10px 18px;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+#btnClose {
+  background: linear-gradient(135deg, #ff4444, #cc0000);
+  box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+}
+
+#btnClose:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 68, 68, 0.4);
+  filter: brightness(1.1);
+}
+
+#overlayFrame {
+  flex: 1;
+  width: 100%;
+  border: none;
+  background: #000;
+}
+
+#overlayError {
+  display: none;
+  padding: 40px;
+  text-align: center;
+  color: #ff4444;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+/* ===== Scroll Reveal Animation ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== Loading Skeleton for images ===== */
+.channel img {
+  position: relative;
+}
+
+.channel img::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  animation: shimmer-skeleton 2s infinite;
+}
+
+@keyframes shimmer-skeleton {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ===== Responsive ===== */
 @media(max-width:600px){
-  header h1{font-size:1.4rem}
-  .container{padding:0 12px}
-  .channels{grid-template-columns:1fr;gap:16px}
-  .channel{padding:16px}
+  header h1{font-size: 1.8rem}
+  .container{padding:0 14px}
+  .channels{grid-template-columns:1fr;gap:18px}
+  .channel{padding:18px}
   #search{font-size:16px}
   video{border-radius:18px}
   #overlayBar{flex-direction:column;align-items:flex-start}
   #overlayBar .actions{width:100%;justify-content:flex-end}
 }
+
 @media(min-width:601px) and (max-width:1024px){.channels{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
 
+<!-- Animated Background -->
+<div class="bg-mesh"></div>
+<div class="bg-grid"></div>
+<div class="particles" id="particles"></div>
+
 <header>
 <h1>CHANNEL+ PREMIUM</h1>
-<p class="live">🔴 TV EN DIRECT</p>
+<p class="live">TV EN DIRECT</p>
 </header>
 
 <div class="container">
-<div class="player-box"><video id="video" controls autoplay muted playsinline></video></div>
+<div class="player-box reveal"><video id="video" controls autoplay muted playsinline></video></div>
 
-<div class="chat-box">
-<h3 id="chatTitle">💬 Chat Général</h3>
+<div class="chat-box reveal">
+<h3 id="chatTitle">Chat Général</h3>
 <div id="messages" class="messages"></div>
 <div class="chat-input">
 <input id="username" placeholder="Ton pseudo">
@@ -78,47 +685,47 @@ footer{text-align:center;padding:30px;color:#94a3b8}
 </div>
 </div>
 
-<input id="search" placeholder="Rechercher une chaîne...">
+<input id="search" class="reveal" placeholder="Rechercher une chaîne...">
 
 <div class="channels" id="channels">
 
-<div class="channel"><img src="nolly.png" alt="NOLLYWOOD TV"><h3>NOLLYWOOD TV</h3>
+<div class="channel reveal"><img src="nolly.png" alt="NOLLYWOOD TV"><h3>NOLLYWOOD TV</h3>
 <button onclick="ouvrirEmbed('https://livewatch.top/embed/1562445425bf43cebd4faf-42294ead14e2b3')">▶ Regarder</button></div>
 
-<div class="channel"><img src="disney.png" alt="Disney Junior"><h3>Disney junior</h3>
+<div class="channel reveal"><img src="disney.png" alt="Disney Junior"><h3>Disney junior</h3>
 <button onclick="ouvrirEmbed('https://livewatch.top/embed/1762694647144af19e59b7-ba1042469cec01')">▶ Regarder</button></div>
 
-<div class="channel"><img src="nik.png" alt="Nickelodeon"><h3>Nickeledeon</h3>
+<div class="channel reveal"><img src="nik.png" alt="Nickelodeon"><h3>Nickeledeon</h3>
 <button onclick="ouvrirChat('Nickelodeon'); ouvrirEmbed('https://livewatch.top/embed/3562748294b2ebad358cbf-9150df941c43fe')">▶ Regarder</button></div>
 
-<div class="channel"><img src="A+.jpg" alt="A+"><h3>A+</h3>
+<div class="channel reveal"><img src="A+.jpg" alt="A+"><h3>A+</h3>
 <button onclick="ouvrirEmbed('https://livewatch.top/embed/594965518e7c95c9c8814-e956b99b20c6e1')">▶ Regarder</button></div>
 
-<div class="channel"><img src="nov.png" alt="Novelas TV"><h3>novelas tv</h3>
+<div class="channel reveal"><img src="nov.png" alt="Novelas TV"><h3>novelas tv</h3>
 <button onclick="ouvrirEmbed('https://livewatch.top/embed/16260338528710828dbe45-351424000ae001')">▶ Regarder</button></div>
 
-<div class="channel"><img src="c+1.png" alt="Canal+ Sport 1"><h3>Canal+Sport1</h3>
+<div class="channel reveal"><img src="c+1.png" alt="Canal+ Sport 1"><h3>Canal+Sport1</h3>
 <button onclick="ouvrirEmbed('https://livewatch.top/embed/1012399982f41e3c10e6d6-646c8f3e43249f')">▶ Regarder</button></div>
 
-<div class="channel"><img src="infosport+.png" alt="Infosport+"><h3>infosport+</h3>
+<div class="channel reveal"><img src="infosport+.png" alt="Infosport+"><h3>infosport+</h3>
 <button onclick="ouvrirEmbed('https://livewatch.top/embed/14657608221ba582f5feb-c927a78429e447')">▶ Regarder</button></div>
 
-<div class="channel"><img src="c+family.png" alt="Canal+ Family"><h3>canal+family</h3>
+<div class="channel reveal"><img src="c+family.png" alt="Canal+ Family"><h3>canal+family</h3>
 <button onclick="ouvrirEmbed('https://livewatch.top/embed/4007062954bb448913d299-b72e5d5ebf8ade')">▶ Regarder</button></div>
 
-<div class="channel"><img src="tf1.jpg" alt="TF1"><h3>TF1</h3>
+<div class="channel reveal"><img src="tf1.jpg" alt="TF1"><h3>TF1</h3>
 <button onclick="ouvrirEmbed('https://livewatch.top/embed/1334669376bf508b8ed995-e1dc32893923cf')">▶ Regarder</button></div>
 
-<div class="channel"><img src="piwi+.png" alt="Piwi+"><h3>piwi+</h3>
+<div class="channel reveal"><img src="piwi+.png" alt="Piwi+"><h3>piwi+</h3>
 <button onclick="ouvrirEmbed('https://livewatch.top/embed/2272423077184c1838f29c-7e205f90c233d3')">▶ Regarder</button></div>
 
-<div class="channel"><img src="tfx.jpg" alt="TFX"><h3>TFX</h3>
+<div class="channel reveal"><img src="tfx.jpg" alt="TFX"><h3>TFX</h3>
 <button onclick="ouvrirEmbed('https://livewatch.top/embed/3794086467dcb3e9b1728b-037a336b29d3ba')">▶ Regarder</button></div>
 
-<div class="channel"><img src="action.jpg" alt="action"><h3>Action</h3>
+<div class="channel reveal"><img src="action.jpg" alt="action"><h3>Action</h3>
 <button onclick="ouvrirEmbed('https://livewatch.top/embed/3638789513f8ccd703cc28-dba0e03c0b6744')">▶ Regarder</button></div>
 
-<div class="channel"><img src="teletoon.jpg" alt="tele"><h3>teletoon+</h3>
+<div class="channel reveal"><img src="teletoon.jpg" alt="tele"><h3>teletoon+</h3>
 <button onclick="ouvrirEmbed('https://livewatch.top/embed/231278062503478eaef59f-8867e6406b2968')">▶ Regarder</button></div>
 
 </div>
@@ -126,7 +733,7 @@ footer{text-align:center;padding:30px;color:#94a3b8}
 
 <footer>© 2026 Channel+ Premium</footer>
 
-<!-- ===== Overlay iframe intégré ===== -->
+<!-- Overlay Player -->
 <div id="overlayPlayer">
   <div id="overlayBar">
     <span id="overlayTitle">📺 Lecture en cours</span>
@@ -164,7 +771,41 @@ function playChannel(url) {
 
 playChannel(adn);
 
-// ===== Overlay iframe =====
+// ===== Generate floating particles =====
+function createParticles() {
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = (Math.random() * 15 + 10) + 's';
+    p.style.animationDelay = (Math.random() * 10) + 's';
+    p.style.width = (Math.random() * 3 + 2) + 'px';
+    p.style.height = p.style.width;
+    const colors = ['#00f0ff', '#7b2dff', '#ff006e', '#00ff88'];
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+    p.style.boxShadow = `0 0 ${Math.random() * 10 + 5}px ${p.style.background}`;
+    container.appendChild(p);
+  }
+}
+createParticles();
+
+// ===== Scroll Reveal =====
+function revealOnScroll() {
+  const reveals = document.querySelectorAll('.reveal');
+  reveals.forEach((el, i) => {
+    const windowHeight = window.innerHeight;
+    const elementTop = el.getBoundingClientRect().top;
+    const elementVisible = 100;
+    if (elementTop < windowHeight - elementVisible) {
+      setTimeout(() => el.classList.add('active'), i * 100);
+    }
+  });
+}
+window.addEventListener('scroll', revealOnScroll);
+window.addEventListener('load', revealOnScroll);
+
+// ===== Overlay =====
 const overlay = document.getElementById("overlayPlayer");
 const iframe = document.getElementById("overlayFrame");
 const overlayTitle = document.getElementById("overlayTitle");
@@ -201,17 +842,13 @@ window.fermerOverlay = function() {
   currentEmbedUrl = "";
 };
 
-window.ouvrirNouvelOnglet = function() {
-  if (currentEmbedUrl) window.open(currentEmbedUrl, "_blank");
-};
-
 document.addEventListener("keydown", e => {
   if (e.key === "Escape" && overlay.style.display === "flex") {
     fermerOverlay();
   }
 });
 
-// ===== Chat (local, sans Firebase) =====
+// ===== Chat =====
 const messagesBox = document.getElementById("messages");
 const chatTitle = document.getElementById("chatTitle");
 
@@ -241,7 +878,7 @@ document.getElementById("sendBtn").addEventListener("click", () => {
   document.getElementById("messageInput").value = "";
 });
 
-// ===== Recherche =====
+// ===== Search =====
 document.getElementById("search").addEventListener("input", e => {
   const q = e.target.value.toLowerCase();
   document.querySelectorAll(".channel").forEach(card => {
