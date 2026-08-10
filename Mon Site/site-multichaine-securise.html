@@ -33,16 +33,33 @@ footer{text-align:center;padding:30px;color:#94a3b8}
 .chat-input{display:flex;gap:8px;flex-wrap:wrap}
 .chat-input input{flex:1;min-width:120px;padding:10px 12px;border:0;border-radius:12px;background:#111827;color:#fff}
 .chat-input button{padding:10px 16px;border:0;border-radius:12px;background:linear-gradient(135deg,#22d3ee,#2563eb);color:#fff;font-weight:bold;cursor:pointer}
-#securityGate{position:fixed;inset:0;background:#050816;color:#fff;display:flex;align-items:center;justify-content:center;z-index:99999;text-align:center}
-@media(max-width:600px){header h1{font-size:1.4rem}.container{padding:0 12px}.channels{grid-template-columns:1fr;gap:16px}.channel{padding:16px}#search{font-size:16px}video{border-radius:18px}}
+
+/* ===== Overlay iframe player ===== */
+#overlayPlayer{display:none;position:fixed;inset:0;z-index:5000;background:#000;flex-direction:column}
+#overlayBar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#0f172a;border-bottom:1px solid rgba(255,255,255,.08);gap:12px}
+#overlayBar span{color:#22d3ee;font-weight:bold;font-size:1.1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#overlayBar .actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+#overlayBar button{border:0;border-radius:10px;padding:8px 14px;color:#fff;font-weight:bold;cursor:pointer;font-size:.9rem}
+#btnClose{background:#ef4444}
+#btnNewTab{background:#2563eb}
+#overlayFrame{flex:1;width:100%;border:none;background:#000}
+#overlayError{display:none;padding:30px;text-align:center;color:#ef4444}
+
+@media(max-width:600px){
+  header h1{font-size:1.4rem}
+  .container{padding:0 12px}
+  .channels{grid-template-columns:1fr;gap:16px}
+  .channel{padding:16px}
+  #search{font-size:16px}
+  video{border-radius:18px}
+  #overlayBar{flex-direction:column;align-items:flex-start}
+  #overlayBar .actions{width:100%;justify-content:flex-end}
+}
 @media(min-width:601px) and (max-width:1024px){.channels{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
 
-<div id="securityGate"><div>🔐 Vérification de l'accès...</div></div>
-
-<div id="protectedContent" style="display:none">
 <header>
 <h1>CHANNEL+ PREMIUM</h1>
 <p class="live">🔴 TV EN DIRECT</p>
@@ -103,187 +120,137 @@ footer{text-align:center;padding:30px;color:#94a3b8}
 
 <div class="channel"><img src="teletoon.jpg" alt="tele"><h3>teletoon+</h3>
 <button onclick="ouvrirEmbed('https://livewatch.top/embed/231278062503478eaef59f-8867e6406b2968')">▶ Regarder</button></div>
-  
+
 </div>
 </div>
 
 <footer>© 2026 Channel+ Premium</footer>
+
+<!-- ===== Overlay iframe intégré ===== -->
+<div id="overlayPlayer">
+  <div id="overlayBar">
+    <span id="overlayTitle">📺 Lecture en cours</span>
+    <div class="actions">
+      <button id="btnClose" onclick="fermerOverlay()">✕ Fermer</button>
+    </div>
+  </div>
+  <iframe id="overlayFrame" src="" sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-presentation" referrerpolicy="no-referrer" allow="fullscreen; autoplay; encrypted-media; picture-in-picture" loading="eager"></iframe>
+  <div id="overlayError">
+    <h2>⚠️ Impossible d'afficher le flux ici</h2>
+    <p>Le site bloque l'affichage en iframe. Retente dans quelques secondes ou choisis un autre flux.</p>
+  </div>
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, doc, getDoc, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDPh3dJ37uy21L70Mekm_ikuIfeD8wCZU",
-  authDomain: "channelplus-8c219.firebaseapp.com",
-  projectId: "channelplus-8c219",
-  storageBucket: "channelplus-8c219.firebasestorage.app",
-  messagingSenderId: "178858225057",
-  appId: "1:178858225057:web:63c327bf23eb877f196fe0"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const SESSION_KEY = "channelplus_session";
-let accessTicket = null;
+<script>
 let hls = null;
 let currentChannel = "Général";
-let chatUnsubscribe = null;
+let currentEmbedUrl = "";
 
-function deny() {
-  document.getElementById("securityGate").innerHTML =
-    "<div><h2 style='color:#ef4444'>⛔ Accès refusé</h2><p>Ouvrez ce service depuis la page de contrôle du ticket.</p></div>";
-  try {
-    window.parent.postMessage({type:"CHANNELPLUS_ACCESS_DENIED"}, window.location.origin);
-  } catch(e) {}
-}
+const video = document.getElementById("video");
+const adn = "https://d3b73b34o7cvkq.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-gz2sgqzp076kf/adn.m3u8";
 
-function validateSession(code) {
-  try {
-    const raw = sessionStorage.getItem(SESSION_KEY);
-    if (!raw) return false;
-    const data = JSON.parse(raw);
-    return data.ticket === code && Date.now() - Number(data.at) < 12*60*60*1000;
-  } catch(e) { return false; }
-}
-
-async function validateTicket(code) {
-  const snap = await getDoc(doc(db, "tickets", code));
-  if (!snap.exists()) return false;
-  const data = snap.data();
-  if (data.expiresAt && typeof data.expiresAt.toMillis === "function" &&
-      data.expiresAt.toMillis() < Date.now()) return false;
-  return true;
-}
-
-async function authorize() {
-  const params = new URLSearchParams(location.search);
-  if (params.toString()) {
-    history.replaceState(null, "", location.pathname);
+function playChannel(url) {
+  if (hls) hls.destroy();
+  if (Hls.isSupported()) {
+    hls = new Hls();
+    hls.loadSource(url);
+    hls.attachMedia(video);
+    hls.on(Hls.Events.MANIFEST_PARSED, () => video.play().catch(()=>{}));
+  } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+    video.src = url;
+    video.play().catch(()=>{});
   }
-
-  return new Promise(resolve => {
-    const timer = setTimeout(() => resolve(false), 8000);
-
-    function receive(e) {
-      if (e.origin !== window.location.origin) return;
-      if (e.data?.type !== "CHANNELPLUS_ACCESS") return;
-
-      const code = String(e.data.ticket || "").trim().toUpperCase();
-      if (!code) return;
-
-      validateTicket(code).then(ok => {
-        if (ok && validateSession(code)) {
-          accessTicket = code;
-          sessionStorage.setItem(SESSION_KEY, JSON.stringify({ticket:code, at:Date.now()}));
-          clearTimeout(timer);
-          window.removeEventListener("message", receive);
-          resolve(true);
-        } else {
-          clearTimeout(timer);
-          window.removeEventListener("message", receive);
-          resolve(false);
-        }
-      }).catch(() => {
-        clearTimeout(timer);
-        window.removeEventListener("message", receive);
-        resolve(false);
-      });
-    }
-
-    window.addEventListener("message", receive);
-  });
 }
 
-const authorized = await authorize();
+playChannel(adn);
 
-if (!authorized) {
-  deny();
-} else {
-  document.getElementById("securityGate").style.display = "none";
-  document.getElementById("protectedContent").style.display = "block";
+// ===== Overlay iframe =====
+const overlay = document.getElementById("overlayPlayer");
+const iframe = document.getElementById("overlayFrame");
+const overlayTitle = document.getElementById("overlayTitle");
+const overlayError = document.getElementById("overlayError");
 
-  const video = document.getElementById("video");
-  const adn = "https://d3b73b34o7cvkq.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-gz2sgqzp076kf/adn.m3u8";
+window.ouvrirEmbed = function(url) {
+  currentEmbedUrl = url;
+  overlayTitle.textContent = "📺 Chargement…";
+  overlayError.style.display = "none";
+  iframe.style.display = "block";
+  iframe.src = url;
+  overlay.style.display = "flex";
+  document.body.style.overflow = "hidden";
 
-  function playChannel(url) {
-    if (hls) hls.destroy();
-    if (Hls.isSupported()) {
-      hls = new Hls();
-      hls.loadSource(url);
-      hls.attachMedia(video);
-      hls.on(Hls.Events.MANIFEST_PARSED, () => video.play().catch(()=>{}));
-    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-      video.src = url;
-      video.play().catch(()=>{});
+  setTimeout(() => {
+    try {
+      const loc = iframe.contentWindow.location.href;
+      if (loc === "about:blank" || loc === window.location.href) {
+        overlayError.style.display = "block";
+        iframe.style.display = "none";
+      }
+    } catch(e) {
+      overlayTitle.textContent = "📺 Lecture en cours";
     }
+  }, 3500);
+};
+
+window.fermerOverlay = function() {
+  iframe.src = "about:blank";
+  overlay.style.display = "none";
+  overlayError.style.display = "none";
+  iframe.style.display = "block";
+  document.body.style.overflow = "";
+  currentEmbedUrl = "";
+};
+
+window.ouvrirNouvelOnglet = function() {
+  if (currentEmbedUrl) window.open(currentEmbedUrl, "_blank");
+};
+
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && overlay.style.display === "flex") {
+    fermerOverlay();
   }
+});
 
-  playChannel(adn);
+// ===== Chat (local, sans Firebase) =====
+const messagesBox = document.getElementById("messages");
+const chatTitle = document.getElementById("chatTitle");
 
-  window.ouvrirEmbed = function(url) {
-    const w = window.open("about:blank", "_blank");
-    if (w) {
-      w.document.write("<html><body style='margin:0;background:#000;color:#fff;display:flex;justify-content:center;align-items:center;height:100vh;font-family:Arial'>Chargement du direct...</body></html>");
-      setTimeout(() => w.location.replace(url), 300);
-    }
-  };
-
-  window.ouvrirChat = function(channelName) {
-    currentChannel = channelName;
-    document.getElementById("chatTitle").textContent = "💬 Chat • " + channelName;
-    if (chatUnsubscribe) chatUnsubscribe();
-
-    const q = query(collection(db, "chats", currentChannel, "messages"), orderBy("createdAt", "asc"));
-    chatUnsubscribe = onSnapshot(q, snapshot => {
-      const box = document.getElementById("messages");
-      box.innerHTML = "";
-      snapshot.forEach(d => {
-        const data = d.data();
-        const div = document.createElement("div");
-        div.className = "message";
-
-        const strong = document.createElement("strong");
-        strong.textContent = (data.user || "Anonyme") + ":";
-        div.appendChild(strong);
-        div.appendChild(document.createTextNode(" " + (data.text || "")));
-
-        box.appendChild(div);
-      });
-      box.scrollTop = box.scrollHeight;
-    });
-  };
-
-  document.getElementById("sendBtn").addEventListener("click", async () => {
-    const text = document.getElementById("messageInput").value.trim();
-    const user = document.getElementById("username").value.trim() || "Anonyme";
-    if (!text) return;
-
-    await addDoc(collection(db, "chats", currentChannel, "messages"), {
-      user, text, createdAt: serverTimestamp()
-    });
-
-    document.getElementById("messageInput").value = "";
-  });
-
-  document.getElementById("search").addEventListener("input", e => {
-    const q = e.target.value.toLowerCase();
-    document.querySelectorAll(".channel").forEach(card => {
-      const name = card.querySelector("h3").textContent.toLowerCase();
-      card.style.display = name.includes(q) ? "block" : "none";
-    });
-  });
-
-  window.ouvrirChat("Général");
-
-  // Contrôle périodique : si le ticket expire, le parent est informé.
-  setInterval(async () => {
-    if (accessTicket && !(await validateTicket(accessTicket))) {
-      deny();
-    }
-  }, 30000);
+function renderMessage(user, text) {
+  const div = document.createElement("div");
+  div.className = "message";
+  const strong = document.createElement("strong");
+  strong.textContent = user + ":";
+  div.appendChild(strong);
+  div.appendChild(document.createTextNode(" " + text));
+  messagesBox.appendChild(div);
+  messagesBox.scrollTop = messagesBox.scrollHeight;
 }
+
+window.ouvrirChat = function(channelName) {
+  currentChannel = channelName;
+  chatTitle.textContent = "💬 Chat • " + channelName;
+  messagesBox.innerHTML = "";
+  renderMessage("Système", "Bienvenue dans le chat " + channelName + " !");
+};
+
+document.getElementById("sendBtn").addEventListener("click", () => {
+  const text = document.getElementById("messageInput").value.trim();
+  const user = document.getElementById("username").value.trim() || "Anonyme";
+  if (!text) return;
+  renderMessage(user, text);
+  document.getElementById("messageInput").value = "";
+});
+
+// ===== Recherche =====
+document.getElementById("search").addEventListener("input", e => {
+  const q = e.target.value.toLowerCase();
+  document.querySelectorAll(".channel").forEach(card => {
+    const name = card.querySelector("h3").textContent.toLowerCase();
+    card.style.display = name.includes(q) ? "block" : "none";
+  });
+});
+
+window.ouvrirChat("Général");
 </script>
 </body>
 </html>
