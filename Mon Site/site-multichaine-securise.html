@@ -11,54 +11,85 @@
 <title>Channel+ Premium</title>
 
 <link rel="dns-prefetch" href="//livewatch.top">
-<link rel="preconnect" href="https://livewatch.top" crossorigin>
+
+<link rel="preconnect"
+      href="https://livewatch.top"
+      crossorigin>
 
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
+
 <style>
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url(
+'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap'
+);
+
 
 :root {
+
   --primary:#00f0ff;
+
   --secondary:#7b2dff;
+
   --accent:#ff006e;
+
   --glass:rgba(15,23,42,.6);
-  --glass-border:rgba(255,255,255,.1);
-  --neon-glow:
-    0 0 20px rgba(0,240,255,.3),
-    0 0 40px rgba(0,240,255,.1);
+
+  --glass-border:
+    rgba(255,255,255,.1);
+
 }
 
+
 * {
+
   margin:0;
   padding:0;
+
   box-sizing:border-box;
-  font-family:'Inter',Arial,sans-serif;
+
+  font-family:
+    'Inter',
+    Arial,
+    sans-serif;
+
 }
+
 
 html,
 body {
+
   margin:0;
+
   padding:0;
+
   background:#02040a;
+
   color:#fff;
+
   min-height:100vh;
+
   overflow-x:hidden;
+
 }
 
+
 body {
+
   position:relative;
+
 }
 
 
 /* =====================================================
-   ÉCRAN DE VÉRIFICATION
+   PROTECTION
 ===================================================== */
 
 #accessChecking {
 
   position:fixed;
+
   inset:0;
 
   z-index:999999;
@@ -66,34 +97,75 @@ body {
   display:flex;
 
   align-items:center;
+
   justify-content:center;
 
   background:#02040a;
-
-  color:#fff;
-
-  font-size:18px;
-  font-weight:700;
 
   text-align:center;
 
 }
 
-#accessChecking div {
-  padding:30px;
+
+.accessBox {
+
+  padding:35px;
+
 }
 
-#accessChecking span {
 
-  display:block;
+.spinner {
+
+  width:50px;
+
+  height:50px;
+
+  margin:
+    0 auto 20px;
+
+  border:
+    4px solid
+    rgba(255,255,255,.1);
+
+  border-top-color:
+    var(--primary);
+
+  border-radius:50%;
+
+  animation:
+    spin .8s linear infinite;
+
+}
+
+
+@keyframes spin {
+
+  to {
+
+    transform:
+      rotate(360deg);
+
+  }
+
+}
+
+
+#accessMessage {
+
+  font-size:18px;
+
+  font-weight:700;
+
+}
+
+
+#accessSub {
 
   margin-top:12px;
 
   color:#94a3b8;
 
   font-size:14px;
-
-  font-weight:400;
 
 }
 
@@ -105,58 +177,43 @@ body {
 .bg-mesh {
 
   position:fixed;
+
   inset:0;
 
   z-index:0;
 
   background:
+
     radial-gradient(
       ellipse at 20% 20%,
-      rgba(0,240,255,.08) 0%,
+      rgba(0,240,255,.08),
       transparent 50%
     ),
+
     radial-gradient(
       ellipse at 80% 80%,
-      rgba(123,45,255,.08) 0%,
+      rgba(123,45,255,.08),
       transparent 50%
-    ),
-    radial-gradient(
-      ellipse at 50% 50%,
-      rgba(255,0,110,.04) 0%,
-      transparent 60%
     );
 
-  animation:meshMove 15s ease-in-out infinite alternate;
 }
 
-@keyframes meshMove {
-
-  0% {
-    transform:scale(1) rotate(0deg);
-  }
-
-  50% {
-    transform:scale(1.1) rotate(2deg);
-  }
-
-  100% {
-    transform:scale(1) rotate(-2deg);
-  }
-
-}
 
 .bg-grid {
 
   position:fixed;
+
   inset:0;
 
   z-index:0;
 
   background-image:
+
     linear-gradient(
       rgba(255,255,255,.03) 1px,
       transparent 1px
     ),
+
     linear-gradient(
       90deg,
       rgba(255,255,255,.03) 1px,
@@ -164,20 +221,6 @@ body {
     );
 
   background-size:60px 60px;
-
-  mask-image:
-    radial-gradient(
-      ellipse at center,
-      black 30%,
-      transparent 70%
-    );
-
-  -webkit-mask-image:
-    radial-gradient(
-      ellipse at center,
-      black 30%,
-      transparent 70%
-    );
 
 }
 
@@ -189,6 +232,7 @@ body {
 .particles {
 
   position:fixed;
+
   inset:0;
 
   z-index:0;
@@ -199,45 +243,58 @@ body {
 
 }
 
+
 .particle {
 
   position:absolute;
 
   width:4px;
+
   height:4px;
 
-  background:var(--primary);
+  background:
+    var(--primary);
 
   border-radius:50%;
 
   opacity:.6;
 
-  animation:floatUp linear infinite;
-
-  box-shadow:
-    0 0 10px var(--primary),
-    0 0 20px var(--primary);
+  animation:
+    floatUp linear infinite;
 
 }
 
+
 @keyframes floatUp {
 
-  0% {
-    transform:translateY(100vh) scale(0);
+  from {
+
+    transform:
+      translateY(100vh);
+
     opacity:0;
+
   }
 
   10% {
+
     opacity:.6;
+
   }
 
   90% {
+
     opacity:.6;
+
   }
 
-  100% {
-    transform:translateY(-100px) scale(1);
+  to {
+
+    transform:
+      translateY(-100px);
+
     opacity:0;
+
   }
 
 }
@@ -250,27 +307,27 @@ body {
 header {
 
   background:
-    linear-gradient(
-      180deg,
-      rgba(15,23,42,.95) 0%,
-      rgba(15,23,42,.8) 100%
-    );
+    rgba(15,23,42,.9);
 
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
+  backdrop-filter:
+    blur(20px);
 
   padding:25px 20px;
 
   text-align:center;
 
   position:sticky;
+
   top:0;
 
   z-index:100;
 
-  border-bottom:1px solid var(--glass-border);
+  border-bottom:
+    1px solid
+    var(--glass-border);
 
 }
+
 
 header h1 {
 
@@ -279,37 +336,22 @@ header h1 {
   font-weight:800;
 
   background:
+
     linear-gradient(
       135deg,
-      #fff 0%,
-      var(--primary) 50%,
-      var(--secondary) 100%
+      #fff,
+      var(--primary),
+      var(--secondary)
     );
 
   -webkit-background-clip:text;
+
   -webkit-text-fill-color:transparent;
 
-  background-clip:text;
-
-  letter-spacing:-1px;
-
-  animation:titleShine 3s ease-in-out infinite;
-
 }
 
-@keyframes titleShine {
 
-  0%,100% {
-    filter:brightness(1);
-  }
-
-  50% {
-    filter:brightness(1.2);
-  }
-
-}
-
-header p.live {
+header .live {
 
   display:inline-flex;
 
@@ -317,21 +359,21 @@ header p.live {
 
   gap:8px;
 
-  font-weight:700;
-
-  font-size:1rem;
-
   margin-top:8px;
 
   color:#ff4444;
 
+  font-weight:700;
+
 }
 
-header p.live::before {
+
+header .live::before {
 
   content:'';
 
   width:10px;
+
   height:10px;
 
   background:#ff4444;
@@ -339,24 +381,7 @@ header p.live::before {
   border-radius:50%;
 
   box-shadow:
-    0 0 15px #ff4444,
-    0 0 30px #ff4444;
-
-  animation:pulse 1.5s ease-in-out infinite;
-
-}
-
-@keyframes pulse {
-
-  0%,100% {
-    transform:scale(1);
-    opacity:1;
-  }
-
-  50% {
-    transform:scale(1.5);
-    opacity:.5;
-  }
+    0 0 15px #ff4444;
 
 }
 
@@ -386,37 +411,26 @@ header p.live::before {
 
 .player-box {
 
-  background:var(--glass);
+  background:
+    var(--glass);
 
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
+  backdrop-filter:
+    blur(20px);
 
   border-radius:24px;
 
   overflow:hidden;
 
-  border:1px solid var(--glass-border);
+  border:
+    1px solid
+    var(--glass-border);
 
   box-shadow:
-    0 8px 32px rgba(0,0,0,.4),
-    var(--neon-glow);
-
-  position:relative;
-
-  transition:all .4s;
+    0 8px 32px
+    rgba(0,0,0,.4);
 
 }
 
-.player-box:hover {
-
-  box-shadow:
-    0 12px 40px rgba(0,0,0,.5),
-    0 0 30px rgba(0,240,255,.15),
-    0 0 60px rgba(0,240,255,.05);
-
-  transform:translateY(-2px);
-
-}
 
 video {
 
@@ -443,13 +457,14 @@ video {
 
   margin-top:28px;
 
-  border:1px solid var(--glass-border);
+  border:
+    1px solid
+    var(--glass-border);
 
   border-radius:16px;
 
-  background:var(--glass);
-
-  backdrop-filter:blur(12px);
+  background:
+    var(--glass);
 
   color:#fff;
 
@@ -459,18 +474,11 @@ video {
 
 }
 
-#search:focus {
-
-  border-color:rgba(0,240,255,.4);
-
-  box-shadow:
-    0 0 20px rgba(0,240,255,.1);
-
-}
 
 #search::placeholder {
 
-  color:rgba(255,255,255,.4);
+  color:
+    rgba(255,255,255,.4);
 
 }
 
@@ -492,14 +500,18 @@ video {
 
 }
 
+
 .channel {
 
-  background:var(--glass);
+  background:
+    var(--glass);
 
-  backdrop-filter:blur(16px);
-  -webkit-backdrop-filter:blur(16px);
+  backdrop-filter:
+    blur(16px);
 
-  border:1px solid var(--glass-border);
+  border:
+    1px solid
+    var(--glass-border);
 
   border-radius:24px;
 
@@ -507,27 +519,23 @@ video {
 
   text-align:center;
 
-  transition:all .4s;
-
-  position:relative;
-
-  overflow:hidden;
+  transition:.3s;
 
   cursor:pointer;
 
 }
 
+
 .channel:hover {
 
-  transform:translateY(-8px) scale(1.02);
+  transform:
+    translateY(-6px);
 
-  box-shadow:
-    0 20px 40px rgba(0,0,0,.4),
-    0 0 30px rgba(0,240,255,.1);
-
-  border-color:rgba(0,240,255,.2);
+  border-color:
+    rgba(0,240,255,.3);
 
 }
+
 
 .channel img {
 
@@ -541,25 +549,12 @@ video {
 
   border-radius:20px;
 
-  background:
-    linear-gradient(
-      135deg,
-      #0b1220,
-      #1a1a2e
-    );
+  background:#111827;
 
   padding:8px;
 
-  box-shadow:
-    0 8px 25px rgba(0,0,0,.3);
-
 }
 
-.channel:hover img {
-
-  transform:scale(1.05) rotate(1deg);
-
-}
 
 .channel h3 {
 
@@ -567,11 +562,8 @@ video {
 
   color:#e2e8f0;
 
-  font-size:1.05rem;
-
-  font-weight:600;
-
 }
+
 
 .channel button {
 
@@ -584,19 +576,18 @@ video {
   border-radius:14px;
 
   background:
+
     linear-gradient(
       135deg,
       #00f0ff,
       #7b2dff
     );
 
-  color:#fff;
+  color:white;
 
   font-weight:700;
 
   cursor:pointer;
-
-  font-size:.95rem;
 
 }
 
@@ -609,12 +600,12 @@ video {
 
   margin-top:35px;
 
-  background:var(--glass);
+  background:
+    var(--glass);
 
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
-
-  border:1px solid var(--glass-border);
+  border:
+    1px solid
+    var(--glass-border);
 
   border-radius:24px;
 
@@ -622,15 +613,16 @@ video {
 
 }
 
+
 .chat-box h3 {
 
   margin-bottom:18px;
 
-  color:var(--primary);
-
-  font-weight:700;
+  color:
+    var(--primary);
 
 }
+
 
 .messages {
 
@@ -638,7 +630,8 @@ video {
 
   overflow-y:auto;
 
-  background:rgba(11,18,32,.6);
+  background:
+    rgba(11,18,32,.6);
 
   border-radius:16px;
 
@@ -648,6 +641,7 @@ video {
 
 }
 
+
 .message {
 
   margin-bottom:12px;
@@ -656,15 +650,19 @@ video {
 
   border-radius:14px;
 
-  background:rgba(17,24,39,.8);
+  background:
+    rgba(17,24,39,.8);
 
 }
+
 
 .message strong {
 
-  color:var(--primary);
+  color:
+    var(--primary);
 
 }
+
 
 .chat-input {
 
@@ -676,6 +674,7 @@ video {
 
 }
 
+
 .chat-input input {
 
   flex:1;
@@ -684,17 +683,21 @@ video {
 
   padding:12px 16px;
 
-  border:1px solid var(--glass-border);
+  border:
+    1px solid
+    var(--glass-border);
 
   border-radius:14px;
 
-  background:rgba(17,24,39,.8);
+  background:
+    rgba(17,24,39,.8);
 
-  color:#fff;
+  color:white;
 
   outline:none;
 
 }
+
 
 .chat-input button {
 
@@ -705,34 +708,16 @@ video {
   border-radius:14px;
 
   background:
+
     linear-gradient(
       135deg,
       #00f0ff,
       #7b2dff
     );
 
-  color:#fff;
+  color:white;
 
   font-weight:700;
-
-  cursor:pointer;
-
-}
-
-
-/* =====================================================
-   FOOTER
-===================================================== */
-
-footer {
-
-  text-align:center;
-
-  padding:40px 20px;
-
-  color:rgba(148,163,184,.7);
-
-  font-size:.9rem;
 
 }
 
@@ -751,13 +736,13 @@ footer {
 
   z-index:5000;
 
-  background:rgba(2,4,10,.98);
-
-  backdrop-filter:blur(30px);
+  background:
+    rgba(2,4,10,.98);
 
   flex-direction:column;
 
 }
+
 
 #overlayBar {
 
@@ -769,19 +754,21 @@ footer {
 
   padding:16px 24px;
 
-  background:rgba(15,23,42,.95);
-
-  border-bottom:1px solid var(--glass-border);
+  background:
+    rgba(15,23,42,.95);
 
 }
 
-#overlayBar span {
 
-  color:var(--primary);
+#overlayTitle {
+
+  color:
+    var(--primary);
 
   font-weight:700;
 
 }
+
 
 #btnClose {
 
@@ -792,19 +779,16 @@ footer {
   padding:10px 18px;
 
   background:
-    linear-gradient(
-      135deg,
-      #ff4444,
-      #cc0000
-    );
+    #dc2626;
 
-  color:#fff;
+  color:white;
 
   font-weight:700;
 
   cursor:pointer;
 
 }
+
 
 #overlayFrame {
 
@@ -818,44 +802,24 @@ footer {
 
 }
 
-#overlayError {
 
-  display:none;
+/* =====================================================
+   FOOTER
+===================================================== */
 
-  padding:40px;
+footer {
 
   text-align:center;
 
-  color:#ff4444;
+  padding:40px 20px;
+
+  color:#64748b;
 
 }
 
 
 /* =====================================================
-   REVEAL
-===================================================== */
-
-.reveal {
-
-  opacity:0;
-
-  transform:translateY(30px);
-
-  transition:all .6s;
-
-}
-
-.reveal.active {
-
-  opacity:1;
-
-  transform:translateY(0);
-
-}
-
-
-/* =====================================================
-   COMPTEUR VISITEURS
+   VISITEURS
 ===================================================== */
 
 #channelplus-online {
@@ -866,29 +830,21 @@ footer {
 
   left:15px;
 
-  z-index:99999;
+  z-index:9999;
 
-  background:rgba(10,15,25,.92);
+  background:
+    rgba(10,15,25,.92);
 
-  color:#fff;
+  color:white;
 
   padding:10px 16px;
 
   border-radius:30px;
 
-  font-family:Arial,sans-serif;
-
   font-size:14px;
 
-  font-weight:bold;
-
-  box-shadow:0 4px 15px rgba(0,0,0,.35);
-
-  border:1px solid rgba(255,255,255,.15);
-
-  backdrop-filter:blur(8px);
-
 }
+
 
 #channelplus-count {
 
@@ -906,49 +862,21 @@ footer {
 @media(max-width:600px) {
 
   header h1 {
+
     font-size:1.8rem;
+
   }
 
   .container {
+
     padding:0 14px;
+
   }
 
   .channels {
+
     grid-template-columns:1fr;
-    gap:18px;
-  }
 
-  .channel {
-    padding:18px;
-  }
-
-  #search {
-    font-size:16px;
-  }
-
-  #overlayBar {
-    flex-direction:column;
-    align-items:flex-start;
-    gap:10px;
-  }
-
-  #channelplus-online {
-    bottom:10px;
-    left:10px;
-    font-size:12px;
-    padding:8px 12px;
-  }
-
-  #channelplus-count {
-    font-size:14px;
-  }
-
-}
-
-@media(min-width:601px) and (max-width:1024px) {
-
-  .channels {
-    grid-template-columns:repeat(2,1fr);
   }
 
 }
@@ -957,46 +885,52 @@ footer {
 
 </head>
 
+
 <body>
 
 
 <!-- =====================================================
-     ÉCRAN DE VÉRIFICATION
+     VÉRIFICATION
 ===================================================== -->
 
 <div id="accessChecking">
 
-  <div>
+  <div class="accessBox">
 
-    🔐 Vérification de votre accès...
+    <div class="spinner"></div>
 
-    <span>
-      Connexion à votre compte Google et vérification du ticket.
-    </span>
+    <div id="accessMessage">
+
+      🔐 Vérification de votre accès...
+
+    </div>
+
+    <div id="accessSub">
+
+      Veuillez patienter quelques secondes.
+
+    </div>
 
   </div>
 
 </div>
 
 
-<!-- =====================================================
-     BACKGROUND
-===================================================== -->
-
 <div class="bg-mesh"></div>
 
 <div class="bg-grid"></div>
 
-<div class="particles" id="particles"></div>
+<div
+  class="particles"
+  id="particles">
+</div>
 
-
-<!-- =====================================================
-     HEADER
-===================================================== -->
 
 <header>
 
-  <h1>CHANNEL+ PREMIUM</h1>
+  <h1>
+    CHANNEL+ PREMIUM
+  </h1>
 
   <p class="live">
     TV EN DIRECT
@@ -1005,16 +939,10 @@ footer {
 </header>
 
 
-<!-- =====================================================
-     CONTENU
-===================================================== -->
-
 <div class="container">
 
 
-  <!-- PLAYER -->
-
-  <div class="player-box reveal">
+  <div class="player-box">
 
     <video
       id="video"
@@ -1027,9 +955,11 @@ footer {
   </div>
 
 
-  <!-- CHAT -->
+  <!-- =================================================
+       CHAT
+  ================================================== -->
 
-  <div class="chat-box reveal">
+  <div class="chat-box">
 
     <h3 id="chatTitle">
       💬 Chat Général
@@ -1061,201 +991,352 @@ footer {
   </div>
 
 
-  <!-- RECHERCHE -->
-
   <input
     id="search"
-    class="reveal"
     placeholder="Rechercher une chaîne...">
 
 
-  <!-- CHAÎNES -->
+  <!-- =================================================
+       CHAÎNES
+  ================================================== -->
 
   <div
     class="channels"
     id="channels">
 
 
-    <div class="channel reveal">
+    <div class="channel">
 
-      <img src="nolly.png" alt="NOLLYWOOD TV">
+      <img
+        src="nolly.png"
+        alt="NOLLYWOOD TV">
 
-      <h3>NOLLYWOOD TV</h3>
+      <h3>
+        NOLLYWOOD TV
+      </h3>
 
-      <button onclick="ouvrirEmbed('https://livewatch.top/embed/1562445425bf43cebd4faf-42294ead14e2b3')">
+      <button onclick="
+        ouvrirEmbed(
+          'https://livewatch.top/embed/1562445425bf43cebd4faf-42294ead14e2b3',
+          'NOLLYWOOD TV'
+        )
+      ">
+
         ▶ Regarder
+
       </button>
 
     </div>
 
 
-    <div class="channel reveal">
+    <div class="channel">
 
-      <img src="disney.png" alt="Disney Junior">
+      <img
+        src="disney.png"
+        alt="Disney Junior">
 
-      <h3>Disney Junior</h3>
+      <h3>
+        Disney Junior
+      </h3>
 
-      <button onclick="ouvrirEmbed('https://livewatch.top/embed/1762694647144af19e59b7-ba1042469cec01')">
+      <button onclick="
+        ouvrirEmbed(
+          'https://livewatch.top/embed/1762694647144af19e59b7-ba1042469cec01',
+          'Disney Junior'
+        )
+      ">
+
         ▶ Regarder
+
       </button>
 
     </div>
 
 
-    <div class="channel reveal">
+    <div class="channel">
 
-      <img src="nik.png" alt="Nickelodeon">
+      <img
+        src="nik.png"
+        alt="Nickelodeon">
 
-      <h3>Nickelodeon</h3>
+      <h3>
+        Nickelodeon
+      </h3>
 
       <button onclick="
         ouvrirChat('Nickelodeon');
-        ouvrirEmbed('https://livewatch.top/embed/3562748294b2ebad358cbf-9150df941c43fe')
+        ouvrirEmbed(
+          'https://livewatch.top/embed/3562748294b2ebad358cbf-9150df941c43fe',
+          'Nickelodeon'
+        )
       ">
+
         ▶ Regarder
+
       </button>
 
     </div>
 
 
-    <div class="channel reveal">
+    <div class="channel">
 
-      <img src="A+.jpg" alt="A+">
+      <img
+        src="A+.jpg"
+        alt="A+">
 
-      <h3>A+</h3>
+      <h3>
+        A+
+      </h3>
 
-      <button onclick="ouvrirEmbed('https://livewatch.top/embed/594965518e7c95c9c8814-e956b99b20c6e1')">
+      <button onclick="
+        ouvrirEmbed(
+          'https://livewatch.top/embed/594965518e7c95c9c8814-e956b99b20c6e1',
+          'A+'
+        )
+      ">
+
         ▶ Regarder
+
       </button>
 
     </div>
 
 
-    <div class="channel reveal">
+    <div class="channel">
 
-      <img src="nov.png" alt="Novelas TV">
+      <img
+        src="nov.png"
+        alt="Novelas TV">
 
-      <h3>Novelas TV</h3>
+      <h3>
+        Novelas TV
+      </h3>
 
-      <button onclick="ouvrirEmbed('https://livewatch.top/embed/16260338528710828dbe45-351424000ae001')">
+      <button onclick="
+        ouvrirEmbed(
+          'https://livewatch.top/embed/16260338528710828dbe45-351424000ae001',
+          'Novelas TV'
+        )
+      ">
+
         ▶ Regarder
+
       </button>
 
     </div>
 
 
-    <div class="channel reveal">
+    <div class="channel">
 
-      <img src="c+1.png" alt="Canal+ Sport 1">
+      <img
+        src="c+1.png"
+        alt="Canal+ Sport 1">
 
-      <h3>Canal+ Sport 1</h3>
+      <h3>
+        Canal+ Sport 1
+      </h3>
 
-      <button onclick="ouvrirEmbed('https://livewatch.top/embed/1012399982f41e3c10e6d6-646c8f3e43249f')">
+      <button onclick="
+        ouvrirEmbed(
+          'https://livewatch.top/embed/1012399982f41e3c10e6d6-646c8f3e43249f',
+          'Canal+ Sport 1'
+        )
+      ">
+
         ▶ Regarder
+
       </button>
 
     </div>
 
 
-    <div class="channel reveal">
+    <div class="channel">
 
-      <img src="infosport+.png" alt="Infosport+">
+      <img
+        src="infosport+.png"
+        alt="Infosport+">
 
-      <h3>Infosport+</h3>
+      <h3>
+        Infosport+
+      </h3>
 
-      <button onclick="ouvrirEmbed('https://livewatch.top/embed/14657608221ba582f5feb-c927a78429e447')">
+      <button onclick="
+        ouvrirEmbed(
+          'https://livewatch.top/embed/14657608221ba582f5feb-c927a78429e447',
+          'Infosport+'
+        )
+      ">
+
         ▶ Regarder
+
       </button>
 
     </div>
 
 
-    <div class="channel reveal">
+    <div class="channel">
 
-      <img src="c+family.png" alt="Canal+ Family">
+      <img
+        src="c+family.png"
+        alt="Canal+ Family">
 
-      <h3>Canal+ Family</h3>
+      <h3>
+        Canal+ Family
+      </h3>
 
-      <button onclick="ouvrirEmbed('https://livewatch.top/embed/4007062954bb448913d299-b72e5d5ebf8ade')">
+      <button onclick="
+        ouvrirEmbed(
+          'https://livewatch.top/embed/4007062954bb448913d299-b72e5d5ebf8ade',
+          'Canal+ Family'
+        )
+      ">
+
         ▶ Regarder
+
       </button>
 
     </div>
 
 
-    <div class="channel reveal">
+    <div class="channel">
 
-      <img src="tf1.jpg" alt="TF1">
+      <img
+        src="tf1.jpg"
+        alt="TF1">
 
-      <h3>TF1</h3>
+      <h3>
+        TF1
+      </h3>
 
-      <button onclick="ouvrirEmbed('https://livewatch.top/embed/1334669376bf508b8ed995-e1dc32893923cf')">
+      <button onclick="
+        ouvrirEmbed(
+          'https://livewatch.top/embed/1334669376bf508b8ed995-e1dc32893923cf',
+          'TF1'
+        )
+      ">
+
         ▶ Regarder
+
       </button>
 
     </div>
 
 
-    <div class="channel reveal">
+    <div class="channel">
 
-      <img src="piwi+.png" alt="Piwi+">
+      <img
+        src="piwi+.png"
+        alt="Piwi+">
 
-      <h3>Piwi+</h3>
+      <h3>
+        Piwi+
+      </h3>
 
-      <button onclick="ouvrirEmbed('https://livewatch.top/embed/2272423077184c1838f29c-7e205f90c233d3')">
+      <button onclick="
+        ouvrirEmbed(
+          'https://livewatch.top/embed/2272423077184c1838f29c-7e205f90c233d3',
+          'Piwi+'
+        )
+      ">
+
         ▶ Regarder
+
       </button>
 
     </div>
 
 
-    <div class="channel reveal">
+    <div class="channel">
 
-      <img src="tfx.jpg" alt="TFX">
+      <img
+        src="tfx.jpg"
+        alt="TFX">
 
-      <h3>TFX</h3>
+      <h3>
+        TFX
+      </h3>
 
-      <button onclick="ouvrirEmbed('https://livewatch.top/embed/3794086467dcb3e9b1728b-037a336b29d3ba')">
+      <button onclick="
+        ouvrirEmbed(
+          'https://livewatch.top/embed/3794086467dcb3e9b1728b-037a336b29d3ba',
+          'TFX'
+        )
+      ">
+
         ▶ Regarder
+
       </button>
 
     </div>
 
 
-    <div class="channel reveal">
+    <div class="channel">
 
-      <img src="action.jpg" alt="Action">
+      <img
+        src="action.jpg"
+        alt="Action">
 
-      <h3>Action</h3>
+      <h3>
+        Action
+      </h3>
 
-      <button onclick="ouvrirEmbed('https://livewatch.top/embed/3638789513f8ccd703cc28-dba0e03c0b6744')">
+      <button onclick="
+        ouvrirEmbed(
+          'https://livewatch.top/embed/3638789513f8ccd703cc28-dba0e03c0b6744',
+          'Action'
+        )
+      ">
+
         ▶ Regarder
+
       </button>
 
     </div>
 
 
-    <div class="channel reveal">
+    <div class="channel">
 
-      <img src="teletoon.jpg" alt="Teletoon+">
+      <img
+        src="teletoon.jpg"
+        alt="Teletoon+">
 
-      <h3>Teletoon+</h3>
+      <h3>
+        Teletoon+
+      </h3>
 
-      <button onclick="ouvrirEmbed('https://livewatch.top/embed/231278062503478eaef59f-8867e6406b2968')">
+      <button onclick="
+        ouvrirEmbed(
+          'https://livewatch.top/embed/231278062503478eaef59f-8867e6406b2968',
+          'Teletoon+'
+        )
+      ">
+
         ▶ Regarder
+
       </button>
 
     </div>
 
 
-    <div class="channel reveal">
+    <div class="channel">
 
-      <img src="bein.jpg" alt="BeinSport">
+      <img
+        src="bein.jpg"
+        alt="BeinSport">
 
-      <h3>BeinSport</h3>
+      <h3>
+        BeinSport
+      </h3>
 
-      <button onclick="ouvrirEmbed('https://livewatch.top/embed/1759440287bbe0a8212bda-322286e0727cc1')">
+      <button onclick="
+        ouvrirEmbed(
+          'https://livewatch.top/embed/1759440287bbe0a8212bda-322286e0727cc1',
+          'BeinSport'
+        )
+      ">
+
         ▶ Regarder
+
       </button>
 
     </div>
@@ -1265,10 +1346,6 @@ footer {
 
 </div>
 
-
-<!-- =====================================================
-     FOOTER
-===================================================== -->
 
 <footer>
 
@@ -1303,525 +1380,45 @@ footer {
   <iframe
     id="overlayFrame"
     src=""
-    sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-presentation"
+    sandbox="
+      allow-scripts
+      allow-same-origin
+      allow-popups
+      allow-forms
+      allow-presentation
+    "
     referrerpolicy="no-referrer"
-    allow="fullscreen; autoplay; encrypted-media; picture-in-picture"
+    allow="
+      fullscreen;
+      autoplay;
+      encrypted-media;
+      picture-in-picture
+    "
     loading="eager">
   </iframe>
-
-
-  <div id="overlayError">
-
-    <h2>
-      ⚠️ Impossible d'afficher le flux ici
-    </h2>
-
-    <p>
-      Le site bloque l'affichage en iframe.
-    </p>
-
-  </div>
 
 </div>
 
 
 <!-- =====================================================
-     VISITEURS EN DIRECT
+     VISITEURS
 ===================================================== -->
 
 <div id="channelplus-online">
 
   🟢
-  <span id="channelplus-count">1</span>
+
+  <span id="channelplus-count">
+    1
+  </span>
+
   personne actuellement sur ChannelPlus
 
 </div>
 
 
 <!-- =====================================================
-     FIREBASE AUTH + REALTIME DATABASE
-===================================================== -->
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-
-
-<script>
-
-const firebaseConfig = {
-
-  apiKey:
-    "AIzaSyDPh3d37uy21L70Mekm_ikuIfeD8wCZU",
-
-  authDomain:
-    "channelplus-8c219.firebaseapp.com",
-
-  databaseURL:
-    "https://channelplus-8c219-default-rtdb.firebaseio.com",
-
-  projectId:
-    "channelplus-8c219",
-
-  storageBucket:
-    "channelplus-8c219.firebasestorage.app",
-
-  messagingSenderId:
-    "178858225057",
-
-  appId:
-    "1:178858225057:web:63c327bf23eb877f196fe0"
-
-};
-
-
-firebase.initializeApp(firebaseConfig);
-
-const auth =
-  firebase.auth();
-
-const database =
-  firebase.database();
-
-
-/* =====================================================
-   VISITEURS
-===================================================== */
-
-auth.signInAnonymously()
-
-.then(() => {
-
-  const user =
-    auth.currentUser;
-
-  if (!user) return;
-
-
-  const visitorRef =
-    database.ref(
-      "channelplus/visitors/" +
-      user.uid
-    );
-
-
-  visitorRef.set({
-
-    online:true,
-
-    lastSeen:
-      firebase.database.ServerValue.TIMESTAMP
-
-  });
-
-
-  visitorRef.onDisconnect()
-    .remove();
-
-
-  const visitorsRef =
-    database.ref(
-      "channelplus/visitors"
-    );
-
-
-  visitorsRef.on(
-    "value",
-    snapshot => {
-
-      const count =
-        snapshot.numChildren();
-
-
-      const counter =
-        document.getElementById(
-          "channelplus-count"
-        );
-
-
-      if (!counter) return;
-
-
-      counter.textContent =
-        count;
-
-
-      const box =
-        document.getElementById(
-          "channelplus-online"
-        );
-
-
-      if (!box) return;
-
-
-      if (count <= 1) {
-
-        box.innerHTML =
-          '🟢 <span id="channelplus-count">' +
-          count +
-          '</span> personne actuellement sur ChannelPlus';
-
-      }
-
-      else {
-
-        box.innerHTML =
-          '🟢 <span id="channelplus-count">' +
-          count +
-          '</span> personnes actuellement sur ChannelPlus';
-
-      }
-
-    }
-  );
-
-})
-
-.catch(error => {
-
-  console.error(
-    "Erreur visiteurs :",
-    error
-  );
-
-});
-
-
-</script>
-
-
-<!-- =====================================================
-     CHAT FIREBASE
-===================================================== -->
-
-<script type="module">
-
-import {
-  initializeApp
-}
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  query,
-  orderBy,
-  onSnapshot,
-  serverTimestamp
-}
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-const firebaseConfigChat = {
-
-  apiKey:
-    "AIzaSyDPh3d37uy21L70Mekm_ikuIfeD8wCZU",
-
-  authDomain:
-    "channelplus-8c219.firebaseapp.com",
-
-  projectId:
-    "channelplus-8c219",
-
-  storageBucket:
-    "channelplus-8c219.firebasestorage.app",
-
-  messagingSenderId:
-    "178858225057",
-
-  appId:
-    "1:178858225057:web:63c327bf23eb877f196fe0"
-
-};
-
-
-const chatApp =
-  initializeApp(
-    firebaseConfigChat,
-    "channelPlusChat"
-  );
-
-
-const db =
-  getFirestore(chatApp);
-
-
-const messagesBox =
-  document.getElementById(
-    "messages"
-  );
-
-
-const usernameInput =
-  document.getElementById(
-    "username"
-  );
-
-
-const messageInput =
-  document.getElementById(
-    "messageInput"
-  );
-
-
-const sendBtn =
-  document.getElementById(
-    "sendBtn"
-  );
-
-
-const chatTitle =
-  document.getElementById(
-    "chatTitle"
-  );
-
-
-let currentChannel =
-  "Général";
-
-
-window.ouvrirChat =
-function(channelName) {
-
-  currentChannel =
-    channelName;
-
-  if (chatTitle) {
-
-    chatTitle.textContent =
-      "💬 Chat • " +
-      channelName;
-
-  }
-
-};
-
-
-window.ouvrirChat("Général");
-
-
-function renderMessage(
-  user,
-  text
-) {
-
-  const div =
-    document.createElement(
-      "div"
-    );
-
-
-  div.className =
-    "message";
-
-
-  const strong =
-    document.createElement(
-      "strong"
-    );
-
-
-  strong.textContent =
-    user + ":";
-
-
-  div.appendChild(
-    strong
-  );
-
-
-  div.appendChild(
-    document.createTextNode(
-      " " + text
-    )
-  );
-
-
-  messagesBox.appendChild(
-    div
-  );
-
-
-  messagesBox.scrollTop =
-    messagesBox.scrollHeight;
-
-}
-
-
-const messagesQuery =
-  query(
-    collection(
-      db,
-      "chats"
-    ),
-    orderBy(
-      "createdAt",
-      "asc"
-    )
-  );
-
-
-onSnapshot(
-
-  messagesQuery,
-
-  snapshot => {
-
-    messagesBox.innerHTML =
-      "";
-
-
-    snapshot.forEach(
-      messageDoc => {
-
-        const data =
-          messageDoc.data();
-
-
-        renderMessage(
-
-          data.user ||
-          "Anonyme",
-
-          data.text ||
-          ""
-
-        );
-
-      }
-    );
-
-  },
-
-  error => {
-
-    console.error(
-      "Erreur chat :",
-      error
-    );
-
-  }
-
-);
-
-
-async function sendMessage() {
-
-  const text =
-    messageInput.value.trim();
-
-
-  const user =
-    usernameInput.value.trim()
-    || "Anonyme";
-
-
-  if (!text) return;
-
-
-  sendBtn.disabled =
-    true;
-
-
-  sendBtn.textContent =
-    "Envoi...";
-
-
-  try {
-
-    await addDoc(
-
-      collection(
-        db,
-        "chats"
-      ),
-
-      {
-
-        user:user,
-
-        text:text,
-
-        channel:currentChannel,
-
-        createdAt:
-          serverTimestamp()
-
-      }
-
-    );
-
-
-    messageInput.value =
-      "";
-
-
-    messageInput.focus();
-
-  }
-
-  catch(error) {
-
-    console.error(
-      "Erreur envoi :",
-      error
-    );
-
-
-    alert(
-      "Impossible d'envoyer le message."
-    );
-
-  }
-
-  finally {
-
-    sendBtn.disabled =
-      false;
-
-    sendBtn.textContent =
-      "Envoyer";
-
-  }
-
-}
-
-
-sendBtn.addEventListener(
-  "click",
-  sendMessage
-);
-
-
-messageInput.addEventListener(
-  "keydown",
-  event => {
-
-    if (
-      event.key === "Enter"
-    ) {
-
-      event.preventDefault();
-
-      sendMessage();
-
-    }
-
-  }
-);
-
-</script>
-
-
-<!-- =====================================================
-     PROTECTION FIREBASE
+     FIREBASE AUTH
 ===================================================== -->
 
 <script type="module">
@@ -1850,10 +1447,10 @@ from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-const firebaseConfigProtection = {
+const firebaseConfig = {
 
   apiKey:
-    "AIzaSyDPh3d37uy21L70Mekm_ikuIfeD8wCZU",
+    "AIzaSyDPh3dJ37uy21L70Mekm_ikuIfeD8wCZU",
 
   authDomain:
     "channelplus-8c219.firebaseapp.com",
@@ -1873,315 +1470,737 @@ const firebaseConfigProtection = {
 };
 
 
-const protectionApp =
-  initializeApp(
-    firebaseConfigProtection,
-    "channelPlusProtection"
-  );
+const app =
+  initializeApp(firebaseConfig);
+
+const auth =
+  getAuth(app);
+
+const db =
+  getFirestore(app);
 
 
-const protectionAuth =
-  getAuth(
-    protectionApp
-  );
-
-
-const protectionDb =
-  getFirestore(
-    protectionApp
-  );
-
-
-const accessScreen =
+const checking =
   document.getElementById(
     "accessChecking"
   );
 
+const accessMessage =
+  document.getElementById(
+    "accessMessage"
+  );
 
-const INDEX_PAGE =
-  "./index.html";
-
-
-/* =====================================================
-   REFUS
-===================================================== */
-
-function denyAccess(reason) {
-
-  console.error(
-    "Accès refusé :",
-    reason
+const accessSub =
+  document.getElementById(
+    "accessSub"
   );
 
 
-  if (accessScreen) {
+const INDEX =
+  "./index.html";
 
-    accessScreen.innerHTML = `
 
-      <div>
+function refuse(message) {
 
-        ❌ Accès refusé.
+  accessMessage.textContent =
+    message;
 
-        <span>
-          ${reason}
-        </span>
-
-        <span>
-          Redirection vers la page de connexion...
-        </span>
-
-      </div>
-
-    `;
-
-  }
+  accessSub.textContent =
+    "Redirection vers la page d'accès...";
 
 
   setTimeout(
     () => {
 
       window.location.replace(
-        INDEX_PAGE
+        INDEX
       );
 
     },
-    1800
+    800
   );
 
 }
 
 
-/* =====================================================
-   AUTORISATION
-===================================================== */
+async function verifyAccess(user) {
 
-function allowAccess() {
+  if (!user) {
 
-  console.log(
-    "Channel+ : accès autorisé."
-  );
+    refuse(
+      "❌ Vous devez vous connecter."
+    );
 
-
-  if (accessScreen) {
-
-    accessScreen.style.display =
-      "none";
+    return;
 
   }
 
-}
 
+  try {
 
-/* =====================================================
-   VÉRIFICATION
-===================================================== */
+    // ===============================================
+    // PROFIL UTILISATEUR
+    // ===============================================
 
-onAuthStateChanged(
-
-  protectionAuth,
-
-  async user => {
-
-    try {
-
-      /* ---------------------------------------------
-         PAS DE COMPTE GOOGLE
-      --------------------------------------------- */
-
-      if (!user) {
-
-        denyAccess(
-          "Vous devez vous connecter avec votre compte Google."
-        );
-
-        return;
-
-      }
-
-
-      console.log(
-        "Utilisateur connecté :",
+    const userRef =
+      doc(
+        db,
+        "users",
         user.uid
       );
 
 
-      /* ---------------------------------------------
-         PROFIL UTILISATEUR
-      --------------------------------------------- */
-
-      const userRef =
-        doc(
-          protectionDb,
-          "users",
-          user.uid
-        );
+    const userSnap =
+      await getDoc(
+        userRef
+      );
 
 
-      const userSnap =
-        await getDoc(
-          userRef
-        );
+    if (
+      !userSnap.exists()
+    ) {
+
+      refuse(
+        "❌ Aucun accès Channel+ trouvé."
+      );
+
+      return;
+
+    }
 
 
-      if (!userSnap.exists()) {
-
-        denyAccess(
-          "Aucun ticket associé à ce compte."
-        );
-
-        return;
-
-      }
+    const userData =
+      userSnap.data();
 
 
-      const userData =
-        userSnap.data();
+    const ticketCode =
+      userData.ticketCode;
 
 
-      /* ---------------------------------------------
-         TICKET
-      --------------------------------------------- */
+    if (!ticketCode) {
 
-      const ticketCode =
-        userData.ticketCode;
+      refuse(
+        "❌ Aucun ticket associé à ce compte."
+      );
 
+      return;
 
-      if (!ticketCode) {
-
-        denyAccess(
-          "Aucun ticket associé à votre compte."
-        );
-
-        return;
-
-      }
+    }
 
 
-      console.log(
-        "Ticket associé :",
+    // ===============================================
+    // TICKET
+    // ===============================================
+
+    const ticketRef =
+      doc(
+        db,
+        "tickets",
         ticketCode
       );
 
 
-      /* ---------------------------------------------
-         DOCUMENT TICKET
-      --------------------------------------------- */
-
-      const ticketRef =
-        doc(
-          protectionDb,
-          "tickets",
-          ticketCode
-        );
-
-
-      const ticketSnap =
-        await getDoc(
-          ticketRef
-        );
-
-
-      if (!ticketSnap.exists()) {
-
-        denyAccess(
-          "Le ticket associé est introuvable."
-        );
-
-        return;
-
-      }
-
-
-      const ticketData =
-        ticketSnap.data();
-
-
-      /* ---------------------------------------------
-         VÉRIFIER PROPRIÉTAIRE
-      --------------------------------------------- */
-
-      if (
-        ticketData.userId &&
-        ticketData.userId !== user.uid
-      ) {
-
-        denyAccess(
-          "Ce ticket appartient à un autre compte."
-        );
-
-        return;
-
-      }
-
-
-      /* ---------------------------------------------
-         VÉRIFIER EXPIRATION
-      --------------------------------------------- */
-
-      if (
-        ticketData.expiresAt &&
-        typeof ticketData.expiresAt.toMillis ===
-        "function"
-      ) {
-
-        const expiration =
-          ticketData.expiresAt.toMillis();
-
-
-        if (
-          expiration < Date.now()
-        ) {
-
-          denyAccess(
-            "Votre ticket est expiré."
-          );
-
-          return;
-
-        }
-
-      }
-
-
-      /* ---------------------------------------------
-         TOUT EST BON
-      --------------------------------------------- */
-
-      allowAccess();
-
-    }
-
-    catch(error) {
-
-      console.error(
-        "Erreur vérification Channel+ :",
-        error
+    const ticketSnap =
+      await getDoc(
+        ticketRef
       );
 
 
+    if (
+      !ticketSnap.exists()
+    ) {
+
+      refuse(
+        "❌ Votre ticket n'existe plus."
+      );
+
+      return;
+
+    }
+
+
+    const ticket =
+      ticketSnap.data();
+
+
+    // ===============================================
+    // VÉRIFICATION PROPRIÉTAIRE
+    // ===============================================
+
+    if (
+      ticket.userId !==
+      user.uid
+    ) {
+
+      refuse(
+        "❌ Ce ticket n'est pas associé à votre compte."
+      );
+
+      return;
+
+    }
+
+
+    // ===============================================
+    // TICKET ACTIF
+    // ===============================================
+
+    if (
+      ticket.active === false
+    ) {
+
+      refuse(
+        "❌ Votre ticket est désactivé."
+      );
+
+      return;
+
+    }
+
+
+    // ===============================================
+    // EXPIRATION
+    // ===============================================
+
+    if (
+      ticket.linkedAt &&
+      ticket.duration
+    ) {
+
+      const linkedTime =
+        ticket.linkedAt.toMillis();
+
+
+      const durationMs =
+        Number(ticket.duration) *
+        60 *
+        60 *
+        1000;
+
+
+      const expiration =
+        linkedTime +
+        durationMs;
+
+
       if (
-        error.code ===
-        "permission-denied"
+        Date.now() >=
+        expiration
       ) {
 
-        denyAccess(
-          "Firebase refuse l'accès. Vérifiez les règles Firestore."
+        refuse(
+          "❌ Votre accès Premium a expiré."
         );
+
+        return;
 
       }
 
-      else {
+    }
 
-        denyAccess(
-          "Impossible de vérifier votre accès."
-        );
 
-      }
+    // ===============================================
+    // ACCÈS AUTORISÉ
+    // ===============================================
+
+    accessMessage.textContent =
+      "✅ Accès autorisé";
+
+    accessSub.textContent =
+      "Bienvenue sur Channel+ Premium.";
+
+
+    setTimeout(
+      () => {
+
+        checking.style.display =
+          "none";
+
+      },
+      400
+    );
+
+  }
+
+  catch(error) {
+
+    console.error(
+      "Erreur vérification accès :",
+      error
+    );
+
+
+    if (
+      error.code ===
+      "permission-denied"
+    ) {
+
+      refuse(
+        "❌ Firebase refuse l'accès."
+      );
+
+    }
+
+    else {
+
+      refuse(
+        "❌ Impossible de vérifier votre accès."
+      );
 
     }
 
   }
 
+}
+
+
+onAuthStateChanged(
+  auth,
+  user => {
+
+    verifyAccess(user);
+
+  }
+);
+
+</script>
+
+
+<!-- =====================================================
+     VISITEURS REALTIME DATABASE
+===================================================== -->
+
+<script>
+
+const visitorScript =
+  document.createElement(
+    "script"
+  );
+
+visitorScript.type =
+  "module";
+
+visitorScript.textContent = `
+
+import {
+  initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getDatabase,
+  ref,
+  set,
+  onDisconnect,
+  onValue
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const config = {
+
+  apiKey:
+    "AIzaSyDPh3dJ37uy21L70Mekm_ikuIfeD8wCZU",
+
+  authDomain:
+    "channelplus-8c219.firebaseapp.com",
+
+  databaseURL:
+    "https://channelplus-8c219-default-rtdb.firebaseio.com",
+
+  projectId:
+    "channelplus-8c219",
+
+  storageBucket:
+    "channelplus-8c219.firebasestorage.app",
+
+  messagingSenderId:
+    "178858225057",
+
+  appId:
+    "1:178858225057:web:63c327bf23eb877f196fe0"
+
+};
+
+const app =
+  initializeApp(
+    config,
+    "visitorsApp"
+  );
+
+const database =
+  getDatabase(app);
+
+const visitorId =
+  crypto.randomUUID();
+
+const visitorRef =
+  ref(
+    database,
+    "channelplus/visitors/" +
+    visitorId
+  );
+
+set(
+  visitorRef,
+  {
+    online:true,
+    time:Date.now()
+  }
+);
+
+onDisconnect(
+  visitorRef
+).remove();
+
+const visitors =
+  ref(
+    database,
+    "channelplus/visitors"
+  );
+
+onValue(
+  visitors,
+  snapshot => {
+
+    const count =
+      snapshot.size;
+
+    const counter =
+      document.getElementById(
+        "channelplus-count"
+      );
+
+    const box =
+      document.getElementById(
+        "channelplus-online"
+      );
+
+    if (!counter || !box)
+      return;
+
+    counter.textContent =
+      count;
+
+    box.innerHTML =
+      "🟢 <span id='channelplus-count'>" +
+      count +
+      "</span> " +
+      (
+        count <= 1
+          ? "personne"
+          : "personnes"
+      ) +
+      " actuellement sur ChannelPlus";
+
+  }
+);
+
+`;
+
+document.body.appendChild(
+  visitorScript
+);
+
+</script>
+
+
+<!-- =====================================================
+     CHAT
+===================================================== -->
+
+<script type="module">
+
+import {
+  initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  onSnapshot,
+  serverTimestamp
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+import {
+  getAuth
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+const config = {
+
+  apiKey:
+    "AIzaSyDPh3dJ37uy21L70Mekm_ikuIfeD8wCZU",
+
+  authDomain:
+    "channelplus-8c219.firebaseapp.com",
+
+  projectId:
+    "channelplus-8c219",
+
+  storageBucket:
+    "channelplus-8c219.firebasestorage.app",
+
+  messagingSenderId:
+    "178858225057",
+
+  appId:
+    "1:178858225057:web:63c327bf23eb877f196fe0"
+
+};
+
+
+const app =
+  initializeApp(
+    config,
+    "chatApp"
+  );
+
+
+const db =
+  getFirestore(app);
+
+
+const auth =
+  getAuth(app);
+
+
+const messages =
+  document.getElementById(
+    "messages"
+  );
+
+
+const username =
+  document.getElementById(
+    "username"
+  );
+
+
+const input =
+  document.getElementById(
+    "messageInput"
+  );
+
+
+const send =
+  document.getElementById(
+    "sendBtn"
+  );
+
+
+const title =
+  document.getElementById(
+    "chatTitle"
+  );
+
+
+let channel =
+  "Général";
+
+
+window.ouvrirChat =
+function(name) {
+
+  channel =
+    name;
+
+  title.textContent =
+    "💬 Chat • " +
+    name;
+
+};
+
+
+function render(data) {
+
+  const div =
+    document.createElement(
+      "div"
+    );
+
+  div.className =
+    "message";
+
+
+  const strong =
+    document.createElement(
+      "strong"
+    );
+
+  strong.textContent =
+    (data.user || "Anonyme") +
+    ":";
+
+
+  div.appendChild(
+    strong
+  );
+
+
+  div.appendChild(
+    document.createTextNode(
+      " " +
+      (data.text || "")
+    )
+  );
+
+
+  messages.appendChild(
+    div
+  );
+
+}
+
+
+const q =
+  query(
+    collection(
+      db,
+      "chats"
+    ),
+    orderBy(
+      "createdAt",
+      "asc"
+    )
+  );
+
+
+onSnapshot(
+  q,
+  snapshot => {
+
+    messages.innerHTML =
+      "";
+
+    snapshot.forEach(
+      doc => {
+
+        render(
+          doc.data()
+        );
+
+      }
+    );
+
+    messages.scrollTop =
+      messages.scrollHeight;
+
+  }
+);
+
+
+async function sendMessage() {
+
+  if (
+    !auth.currentUser
+  ) {
+
+    return;
+
+  }
+
+
+  const text =
+    input.value.trim();
+
+
+  const user =
+    username.value.trim() ||
+    "Anonyme";
+
+
+  if (!text)
+    return;
+
+
+  send.disabled =
+    true;
+
+
+  try {
+
+    await addDoc(
+      collection(
+        db,
+        "chats"
+      ),
+      {
+
+        user:user,
+
+        text:text,
+
+        channel:channel,
+
+        uid:
+          auth.currentUser.uid,
+
+        createdAt:
+          serverTimestamp()
+
+      }
+    );
+
+
+    input.value =
+      "";
+
+  }
+
+  catch(error) {
+
+    console.error(
+      error
+    );
+
+    alert(
+      "Impossible d'envoyer le message."
+    );
+
+  }
+
+  finally {
+
+    send.disabled =
+      false;
+
+  }
+
+}
+
+
+send.addEventListener(
+  "click",
+  sendMessage
+);
+
+
+input.addEventListener(
+  "keydown",
+  event => {
+
+    if (
+      event.key === "Enter"
+    ) {
+
+      sendMessage();
+
+    }
+
+  }
 );
 
 </script>
@@ -2193,7 +2212,8 @@ onAuthStateChanged(
 
 <script>
 
-let hls = null;
+let hls =
+  null;
 
 
 const video =
@@ -2206,23 +2226,21 @@ const adn =
   "https://d3b73b34o7cvkq.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-gz2sgqzp076kf/adn.m3u8";
 
 
-/* =====================================================
-   LECTEUR
-===================================================== */
-
 function playChannel(url) {
 
   if (hls) {
 
     hls.destroy();
 
-    hls = null;
+    hls =
+      null;
 
   }
 
 
   if (
-    typeof Hls !== "undefined" &&
+    typeof Hls !==
+      "undefined" &&
     Hls.isSupported()
   ) {
 
@@ -2246,7 +2264,9 @@ function playChannel(url) {
 
         video
           .play()
-          .catch(() => {});
+          .catch(
+            () => {}
+          );
 
       }
     );
@@ -2262,163 +2282,83 @@ function playChannel(url) {
     video.src =
       url;
 
-
     video
       .play()
-      .catch(() => {});
-
-  }
-
-}
-
-
-playChannel(adn);
-
-
-/* =====================================================
-   PARTICULES
-===================================================== */
-
-function createParticles() {
-
-  const container =
-    document.getElementById(
-      "particles"
-    );
-
-
-  if (!container) return;
-
-
-  for (
-    let i = 0;
-    i < 30;
-    i++
-  ) {
-
-    const particle =
-      document.createElement(
-        "div"
+      .catch(
+        () => {}
       );
 
-
-    particle.className =
-      "particle";
-
-
-    particle.style.left =
-      Math.random() * 100 +
-      "%";
-
-
-    particle.style.animationDuration =
-      Math.random() * 15 +
-      10 +
-      "s";
-
-
-    particle.style.animationDelay =
-      Math.random() * 10 +
-      "s";
-
-
-    const size =
-      Math.random() * 3 +
-      2;
-
-
-    particle.style.width =
-      size + "px";
-
-
-    particle.style.height =
-      size + "px";
-
-
-    container.appendChild(
-      particle
-    );
-
   }
 
 }
 
 
-createParticles();
+playChannel(
+  adn
+);
 
 
-/* =====================================================
-   REVEAL
-===================================================== */
+// =====================================================
+// PARTICULES
+// =====================================================
 
-function revealOnScroll() {
+const particleBox =
+  document.getElementById(
+    "particles"
+  );
 
-  const reveals =
-    document.querySelectorAll(
-      ".reveal"
+
+for (
+  let i = 0;
+  i < 30;
+  i++
+) {
+
+  const p =
+    document.createElement(
+      "div"
     );
 
+  p.className =
+    "particle";
 
-  reveals.forEach(
-    (element,index) => {
+  p.style.left =
+    Math.random() * 100 +
+    "%";
 
-      const elementTop =
-        element
-          .getBoundingClientRect()
-          .top;
+  p.style.animationDuration =
+    (
+      Math.random() * 15 +
+      10
+    ) +
+    "s";
 
+  p.style.animationDelay =
+    (
+      Math.random() * 10
+    ) +
+    "s";
 
-      if (
-        elementTop <
-        window.innerHeight - 100
-      ) {
-
-        setTimeout(
-          () => {
-
-            element.classList.add(
-              "active"
-            );
-
-          },
-          index * 50
-        );
-
-      }
-
-    }
+  particleBox.appendChild(
+    p
   );
 
 }
 
 
-window.addEventListener(
-  "scroll",
-  revealOnScroll
-);
-
-
-window.addEventListener(
-  "load",
-  revealOnScroll
-);
-
-
-/* =====================================================
-   OVERLAY
-===================================================== */
+// =====================================================
+// OVERLAY
+// =====================================================
 
 const overlay =
   document.getElementById(
     "overlayPlayer"
   );
 
-
-const iframe =
+const frame =
   document.getElementById(
     "overlayFrame"
   );
-
 
 const overlayTitle =
   document.getElementById(
@@ -2426,28 +2366,21 @@ const overlayTitle =
   );
 
 
-const overlayError =
-  document.getElementById(
-    "overlayError"
-  );
-
-
 window.ouvrirEmbed =
-function(url) {
-
-  overlayError.style.display =
-    "none";
-
-
-  iframe.style.display =
-    "block";
-
+function(
+  url,
+  name
+) {
 
   overlayTitle.textContent =
-    "📺 Lecture en cours";
+    "📺 " +
+    (
+      name ||
+      "Lecture en cours"
+    );
 
 
-  iframe.src =
+  frame.src =
     url;
 
 
@@ -2464,15 +2397,11 @@ function(url) {
 window.fermerOverlay =
 function() {
 
-  iframe.src =
+  frame.src =
     "about:blank";
 
 
   overlay.style.display =
-    "none";
-
-
-  overlayError.style.display =
     "none";
 
 
@@ -2487,8 +2416,7 @@ document.addEventListener(
   event => {
 
     if (
-      event.key === "Escape" &&
-      overlay.style.display === "flex"
+      event.key === "Escape"
     ) {
 
       fermerOverlay();
@@ -2499,9 +2427,9 @@ document.addEventListener(
 );
 
 
-/* =====================================================
-   RECHERCHE
-===================================================== */
+// =====================================================
+// RECHERCHE
+// =====================================================
 
 const search =
   document.getElementById(
@@ -2513,7 +2441,7 @@ search.addEventListener(
   "input",
   event => {
 
-    const query =
+    const text =
       event.target.value
         .toLowerCase()
         .trim();
@@ -2528,13 +2456,15 @@ search.addEventListener(
 
           const name =
             channel
-              .querySelector("h3")
+              .querySelector(
+                "h3"
+              )
               .textContent
               .toLowerCase();
 
 
           channel.style.display =
-            name.includes(query)
+            name.includes(text)
               ? ""
               : "none";
 
@@ -2557,7 +2487,7 @@ window.addEventListener(
 
       }
 
-      catch(error) {}
+      catch(e) {}
 
     }
 
