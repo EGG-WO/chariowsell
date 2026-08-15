@@ -958,7 +958,35 @@ footer {
 
 
 <body>
+<script>
+(function () {
 
+    const session = sessionStorage.getItem("channelplus_session");
+
+    if (!session) {
+        window.location.replace("index.html");
+        return;
+    }
+
+    try {
+
+        const data = JSON.parse(session);
+
+        if (!data.ticket || !data.at) {
+            sessionStorage.removeItem("channelplus_session");
+            window.location.replace("index.html");
+            return;
+        }
+
+    } catch (e) {
+
+        sessionStorage.removeItem("channelplus_session");
+        window.location.replace("index.html");
+
+    }
+
+})();
+</script>
 
 <!-- =====================================================
      PROTECTION D'ACCÈS
