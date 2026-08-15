@@ -420,8 +420,7 @@ import {
     addDoc,
     query,
     orderBy,
-    onSnapshot,
-    serverTimestamp
+    onSnapshot
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
@@ -774,7 +773,7 @@ if (!authorized) {
 
     /*
     ==================================================
-    CHAT
+    CHAT  — VERSION CORRIGÉE
     ==================================================
     */
 
@@ -790,6 +789,18 @@ if (!authorized) {
 
         if (chatUnsubscribe)
             chatUnsubscribe();
+
+
+        /*
+        Vider la zone avant de re-écouter
+        */
+
+        const box =
+            document.getElementById(
+                "messages"
+            );
+
+        box.innerHTML = "";
 
 
         const q = query(
@@ -811,59 +822,107 @@ if (!authorized) {
                 q,
                 snapshot => {
 
-                    const box =
-                        document.getElementById(
-                            "messages"
-                        );
+                    /*
+                    Rendu INCRÉMENTAL :
+                    on n'efface plus tout à chaque
+                    snapshot, on ajoute seulement
+                    les nouveaux messages.
+                    */
 
-                    box.innerHTML = "";
+                    snapshot.docChanges().forEach(
+                        change => {
 
+                            if (
+                                change.type === "added"
+                            ) {
 
-                    snapshot.forEach(d => {
+                                const docId =
+                                    change.doc.id;
 
-                        const data =
-                            d.data();
+                                /*
+                                Éviter les doublons
+                                si le snapshot se
+                                redéclenche
+                                */
 
-
-                        const div =
-                            document.createElement(
-                                "div"
-                            );
-
-                        div.className =
-                            "message";
-
-
-                        const strong =
-                            document.createElement(
-                                "strong"
-                            );
-
-                        strong.textContent =
-                            (data.user ||
-                            "Anonyme") + ":";
+                                if (
+                                    document.getElementById(
+                                        "msg-" + docId
+                                    )
+                                ) return;
 
 
-                        div.appendChild(
-                            strong
-                        );
+                                const data =
+                                    change.doc.data();
 
 
-                        div.appendChild(
-                            document.createTextNode(
-                                " " +
-                                (data.text || "")
-                            )
-                        );
+                                const div =
+                                    document.createElement(
+                                        "div"
+                                    );
+
+                                div.className =
+                                    "message";
+
+                                div.id =
+                                    "msg-" + docId;
 
 
-                        box.appendChild(div);
+                                const strong =
+                                    document.createElement(
+                                        "strong"
+                                    );
 
-                    });
+                                strong.textContent =
+                                    (data.user ||
+                                    "Anonyme") + ":";
+
+
+                                div.appendChild(
+                                    strong
+                                );
+
+                                div.appendChild(
+                                    document.createTextNode(
+                                        " " +
+                                        (data.text || "")
+                                    )
+                                );
+
+
+                                box.appendChild(div);
+
+                            }
+
+                        }
+                    );
 
 
                     box.scrollTop =
                         box.scrollHeight;
+
+                },
+
+                /*
+                Gestion d'erreur du listener :
+                si Firestore refuse l'accès
+                (règles de sécurité), on
+                l'affiche clairement.
+                */
+
+                error => {
+
+                    console.error(
+                        "Chat listen error:",
+                        error
+                    );
+
+                    box.innerHTML =
+                        '<div style="color:#ef4444;text-align:center;padding:20px">' +
+                        '⚠️ Impossible de charger le chat.<br>' +
+                        'Vérifiez vos règles Firestore pour ' +
+                        '<code>chats/{channel}/messages</code>' +
+                        '</div>';
 
                 }
             );
@@ -873,61 +932,142 @@ if (!authorized) {
 
     /*
     ==================================================
-    ENVOI CHAT
+    ENVOI CHAT  — VERSION CORRIGÉE
     ==================================================
     */
+
+    async function envoyerMessage() {
+
+        const text =
+            document
+            .getElementById(
+                "messageInput"
+            )
+            .value
+            .trim();
+
+
+        const user =
+            document
+            .getElementById(
+                "username"
+            )
+            .value
+            .trim()
+            ||
+            "Anonyme";
+
+
+        if (!text)
+            return;
+
+
+        const btn =
+            document.getElementById(
+                "sendBtn"
+            );
+
+        btn.disabled = true;
+        btn.textContent = "...";
+
+
+        try {
+
+            await addDoc(
+                collection(
+                    db,
+                    "chats",
+                    currentChannel,
+                    "messages"
+                ),
+                {
+                    user,
+                    text,
+                    /*
+                    Date côté client au lieu
+                    de serverTimestamp() :
+                    évite le bug où createdAt
+                    vaut null pendant que le
+                    serveur confirme, ce qui
+                    casse l'orderBy et crée
+                    des doublons / sauts.
+                    */
+                    createdAt: new Date()
+                }
+            );
+
+
+            document
+            .getElementById(
+                "messageInput"
+            )
+            .value = "";
+
+        } catch (err) {
+
+            console.error(
+                "Chat send error:",
+                err
+            );
+
+
+            const box =
+                document.getElementById(
+                    "messages"
+                );
+
+            const errDiv =
+                document.createElement(
+                    "div"
+                );
+
+            errDiv.style.cssText =
+                "color:#ef4444;" +
+                "text-align:center;" +
+                "padding:8px;" +
+                "font-size:0.85rem";
+
+            errDiv.textContent =
+                "⚠️ Erreur d'envoi. " +
+                "Vérifiez vos règles Firestore.";
+
+            box.appendChild(errDiv);
+
+            setTimeout(
+                () => errDiv.remove(),
+                4000
+            );
+
+        } finally {
+
+            btn.disabled = false;
+            btn.textContent = "Envoyer";
+
+        }
+
+    }
+
 
     document
         .getElementById("sendBtn")
         .addEventListener(
             "click",
-            async () => {
-
-                const text =
-                    document
-                    .getElementById(
-                        "messageInput"
-                    )
-                    .value
-                    .trim();
+            envoyerMessage
+        );
 
 
-                const user =
-                    document
-                    .getElementById(
-                        "username"
-                    )
-                    .value
-                    .trim()
-                    ||
-                    "Anonyme";
+    /*
+    Envoi avec la touche Entrée
+    */
 
+    document
+        .getElementById("messageInput")
+        .addEventListener(
+            "keydown",
+            e => {
 
-                if (!text)
-                    return;
-
-
-                await addDoc(
-                    collection(
-                        db,
-                        "chats",
-                        currentChannel,
-                        "messages"
-                    ),
-                    {
-                        user,
-                        text,
-                        createdAt:
-                            serverTimestamp()
-                    }
-                );
-
-
-                document
-                    .getElementById(
-                        "messageInput"
-                    )
-                    .value = "";
+                if (e.key === "Enter")
+                    envoyerMessage();
 
             }
         );
