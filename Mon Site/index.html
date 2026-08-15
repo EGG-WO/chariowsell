@@ -96,6 +96,7 @@ body {
   margin: 0 auto 12px;
 
   display: flex;
+
   align-items: center;
   justify-content: center;
 
@@ -177,14 +178,21 @@ button {
 }
 
 button:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.08);
+  transform:
+    translateY(-2px);
+
+  filter:
+    brightness(1.08);
 }
 
 button:disabled {
   opacity: .6;
-  cursor: not-allowed;
-  transform: none;
+
+  cursor:
+    not-allowed;
+
+  transform:
+    none;
 }
 
 .google-btn {
@@ -238,6 +246,7 @@ button:disabled {
 }
 
 #loading {
+
   display: none;
 
   position: fixed;
@@ -245,6 +254,7 @@ button:disabled {
   inset: 0;
 
   align-items: center;
+
   justify-content: center;
 
   background: #050816;
@@ -257,6 +267,7 @@ button:disabled {
 }
 
 .loading-box {
+
   background: #111827;
 
   padding: 30px;
@@ -269,6 +280,7 @@ button:disabled {
 }
 
 .spinner {
+
   width: 45px;
   height: 45px;
 
@@ -288,12 +300,16 @@ button:disabled {
 }
 
 @keyframes spin {
+
   to {
-    transform: rotate(360deg);
+    transform:
+      rotate(360deg);
   }
+
 }
 
 .user-info {
+
   display: none;
 
   margin-top: 15px;
@@ -318,7 +334,7 @@ button:disabled {
 
 
 <!-- =====================================================
-     FORMULAIRE D'ACCÈS
+     FORMULAIRE
 ===================================================== -->
 
 <div id="accessBox" class="box">
@@ -333,11 +349,11 @@ button:disabled {
 
 
   <!-- =================================================
-       ÉTAPE 1 : TICKET
+       ÉTAPE 1 : GOOGLE
   ================================================== -->
 
   <div
-    id="stepTicket"
+    id="stepGoogle"
     class="step active">
 
     <div class="step-number">
@@ -345,68 +361,18 @@ button:disabled {
     </div>
 
     <h2>
-      🎫 Votre ticket
+      🔐 Connexion
     </h2>
 
     <p class="sub">
-      Entrez le code reçu lors de votre achat.
-    </p>
 
-    <input
-      id="ticketInput"
-      type="text"
-      autocomplete="off"
-      placeholder="ABCD-1234-EFGH"
-      maxlength="50">
-
-    <button
-      id="btnVerifier">
-
-      Continuer
-
-    </button>
-
-    <div class="info">
-
-      🔐 Votre ticket sera associé
-      à votre compte Google.
+      Connectez votre compte Google
+      pour sécuriser votre accès.
 
       <br><br>
 
-      Une fois associé, vous pourrez
-      utiliser votre accès sur un autre
-      appareil simplement en vous
-      connectant avec le même compte Google.
-
-    </div>
-
-  </div>
-
-
-  <!-- =================================================
-       ÉTAPE 2 : GOOGLE
-  ================================================== -->
-
-  <div
-    id="stepGoogle"
-    class="step">
-
-    <div class="step-number">
-      2
-    </div>
-
-    <h2>
-      🔐 Sécurisez votre accès
-    </h2>
-
-    <p class="sub">
-
-      Votre code a été enregistré.
-
-      <br>
-
-      Connectez maintenant votre
-      compte Google pour continuer.
+      Votre ticket sera ensuite associé
+      à ce compte.
 
     </p>
 
@@ -423,6 +389,69 @@ button:disabled {
       class="user-info">
     </div>
 
+    <div class="info">
+
+      🔒 Votre compte Google sert
+      uniquement à sécuriser votre accès.
+
+      <br><br>
+
+      Un ticket ne peut être associé
+      qu'à un seul compte.
+
+    </div>
+
+  </div>
+
+
+  <!-- =================================================
+       ÉTAPE 2 : TICKET
+  ================================================== -->
+
+  <div
+    id="stepTicket"
+    class="step">
+
+    <div class="step-number">
+      2
+    </div>
+
+    <h2>
+      🎫 Votre ticket
+    </h2>
+
+    <p class="sub">
+
+      Entrez maintenant le code reçu
+      lors de votre achat.
+
+    </p>
+
+    <input
+      id="ticketInput"
+      type="text"
+      autocomplete="off"
+      placeholder="ABCD-1234-EFGH"
+      maxlength="50">
+
+    <button
+      id="btnVerifier">
+
+      Vérifier mon ticket
+
+    </button>
+
+    <div class="info">
+
+      ✅ Votre compte Google est connecté.
+
+      <br><br>
+
+      Entrez votre ticket pour activer
+      votre accès Channel+.
+
+    </div>
+
   </div>
 
 
@@ -436,7 +465,7 @@ button:disabled {
 
 
 <!-- =====================================================
-     ÉCRAN DE CHARGEMENT
+     LOADING
 ===================================================== -->
 
 <div id="loading">
@@ -446,7 +475,7 @@ button:disabled {
     <div class="spinner"></div>
 
     <div id="loadingText">
-      Préparation de votre accès...
+      Connexion...
     </div>
 
   </div>
@@ -470,7 +499,6 @@ from
 import {
   getFirestore,
   doc,
-  getDoc,
   runTransaction,
   serverTimestamp
 }
@@ -547,36 +575,54 @@ googleProvider.setCustomParameters({
 // ÉLÉMENTS
 // =====================================================
 
-const stepTicket =
-  document.getElementById("stepTicket");
-
 const stepGoogle =
-  document.getElementById("stepGoogle");
+  document.getElementById(
+    "stepGoogle"
+  );
 
-const ticketInput =
-  document.getElementById("ticketInput");
-
-const btnVerifier =
-  document.getElementById("btnVerifier");
+const stepTicket =
+  document.getElementById(
+    "stepTicket"
+  );
 
 const btnGoogle =
-  document.getElementById("btnGoogle");
+  document.getElementById(
+    "btnGoogle"
+  );
+
+const btnVerifier =
+  document.getElementById(
+    "btnVerifier"
+  );
+
+const ticketInput =
+  document.getElementById(
+    "ticketInput"
+  );
 
 const message =
-  document.getElementById("message");
+  document.getElementById(
+    "message"
+  );
 
 const loading =
-  document.getElementById("loading");
+  document.getElementById(
+    "loading"
+  );
 
 const loadingText =
-  document.getElementById("loadingText");
+  document.getElementById(
+    "loadingText"
+  );
 
 const userInfo =
-  document.getElementById("userInfo");
+  document.getElementById(
+    "userInfo"
+  );
 
 
 // =====================================================
-// PAGE DE DESTINATION
+// PAGE MULTICHAINE
 // =====================================================
 
 const SITE_URL =
@@ -584,21 +630,11 @@ const SITE_URL =
 
 
 // =====================================================
-// STOCKAGE DU CODE
-// =====================================================
-//
-// Le code est conservé uniquement pendant le processus.
-// Il n'est pas considéré comme une preuve d'accès.
-//
+// UTILISATEUR GOOGLE ACTUEL
 // =====================================================
 
-const TICKET_STORAGE_KEY =
-  "channelplus_pending_ticket";
-
-let verifiedTicket =
-  sessionStorage.getItem(
-    TICKET_STORAGE_KEY
-  );
+let currentUser =
+  null;
 
 
 // =====================================================
@@ -643,18 +679,164 @@ function hideLoading() {
 
 
 // =====================================================
-// ÉTAPE 1
+// GOOGLE
 // =====================================================
-//
-// Ici nous NE consultons PAS Firestore.
-// Le ticket sera réellement vérifié
-// après connexion Google.
-//
+
+btnGoogle.addEventListener(
+  "click",
+  connectGoogle
+);
+
+
+async function connectGoogle() {
+
+  btnGoogle.disabled =
+    true;
+
+  btnGoogle.textContent =
+    "Connexion Google...";
+
+  showLoading(
+    "Connexion à votre compte Google..."
+  );
+
+
+  try {
+
+    const result =
+      await signInWithPopup(
+        auth,
+        googleProvider
+      );
+
+
+    if (!result.user) {
+
+      throw new Error(
+        "GOOGLE_USER_NOT_FOUND"
+      );
+
+    }
+
+
+    currentUser =
+      result.user;
+
+
+    // ===============================================
+    // AFFICHAGE DU COMPTE
+    // ===============================================
+
+    userInfo.style.display =
+      "block";
+
+    userInfo.textContent =
+      "✅ Connecté : " +
+      (
+        currentUser.email ||
+        currentUser.displayName ||
+        "Compte Google"
+      );
+
+
+    showMessage(
+      "✅ Compte Google connecté.",
+      "success"
+    );
+
+
+    // ===============================================
+    // PASSAGE AU TICKET
+    // ===============================================
+
+    stepGoogle.classList.remove(
+      "active"
+    );
+
+    stepTicket.classList.add(
+      "active"
+    );
+
+
+    ticketInput.focus();
+
+
+  }
+
+  catch(error) {
+
+    console.error(
+      "Erreur Google :",
+      error
+    );
+
+
+    let text =
+      "❌ Impossible de finaliser la connexion.";
+
+
+    if (
+      error.code ===
+      "auth/popup-closed-by-user"
+    ) {
+
+      text =
+        "⚠️ La fenêtre Google a été fermée.";
+
+    }
+
+
+    else if (
+      error.code ===
+      "auth/popup-blocked"
+    ) {
+
+      text =
+        "⚠️ La fenêtre Google a été bloquée par votre navigateur.";
+
+    }
+
+
+    else if (
+      error.code ===
+      "auth/unauthorized-domain"
+    ) {
+
+      text =
+        "❌ Ce domaine n'est pas autorisé dans Firebase.";
+
+    }
+
+
+    showMessage(
+      text,
+      "error"
+    );
+
+  }
+
+  finally {
+
+    hideLoading();
+
+    btnGoogle.disabled =
+      false;
+
+    btnGoogle.textContent =
+      "🔵 Continuer avec Google";
+
+  }
+
+}
+
+
+// =====================================================
+// VÉRIFICATION DU TICKET
 // =====================================================
 
 btnVerifier.addEventListener(
   "click",
-  continuerTicket
+  verifierTicket
 );
 
 
@@ -666,7 +848,7 @@ ticketInput.addEventListener(
       event.key === "Enter"
     ) {
 
-      continuerTicket();
+      verifierTicket();
 
     }
 
@@ -674,7 +856,35 @@ ticketInput.addEventListener(
 );
 
 
-function continuerTicket() {
+async function verifierTicket() {
+
+  // ===================================================
+  // VÉRIFIER GOOGLE
+  // ===================================================
+
+  if (!currentUser) {
+
+    showMessage(
+      "❌ Connectez d'abord votre compte Google.",
+      "error"
+    );
+
+    stepTicket.classList.remove(
+      "active"
+    );
+
+    stepGoogle.classList.add(
+      "active"
+    );
+
+    return;
+
+  }
+
+
+  // ===================================================
+  // CODE
+  // ===================================================
 
   const code =
     ticketInput.value
@@ -694,133 +904,29 @@ function continuerTicket() {
   }
 
 
-  if (code.length < 4) {
-
-    showMessage(
-      "⚠️ Le code semble incorrect.",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  // ---------------------------------------------------
-  // MÉMORISATION TEMPORAIRE
-  // ---------------------------------------------------
-
-  verifiedTicket =
-    code;
-
-
-  sessionStorage.setItem(
-    TICKET_STORAGE_KEY,
-    code
-  );
-
-
-  showMessage(
-    "✅ Code enregistré. Connectez votre compte Google.",
-    "success"
-  );
-
-
-  stepTicket.classList.remove(
-    "active"
-  );
-
-  stepGoogle.classList.add(
-    "active"
-  );
-
-}
-
-
-// =====================================================
-// CONNEXION GOOGLE
-// =====================================================
-
-btnGoogle.addEventListener(
-  "click",
-  connectGoogle
-);
-
-
-async function connectGoogle() {
-
-  if (!verifiedTicket) {
-
-    showMessage(
-      "❌ Aucun code n'a été saisi.",
-      "error"
-    );
-
-    stepGoogle.classList.remove(
-      "active"
-    );
-
-    stepTicket.classList.add(
-      "active"
-    );
-
-    return;
-
-  }
-
-
-  btnGoogle.disabled =
+  btnVerifier.disabled =
     true;
 
-  btnGoogle.textContent =
-    "Connexion Google...";
+  btnVerifier.textContent =
+    "Vérification...";
 
 
   showLoading(
-    "Connexion à votre compte Google..."
+    "Vérification de votre ticket..."
   );
 
 
   try {
 
-    // =================================================
-    // GOOGLE
-    // =================================================
-
-    const result =
-      await signInWithPopup(
-        auth,
-        googleProvider
-      );
-
-
-    const user =
-      result.user;
-
-
-    if (!user) {
-
-      throw new Error(
-        "Utilisateur Google introuvable."
-      );
-
-    }
-
-
-    // =================================================
-    // VÉRIFICATION RÉELLE DU TICKET
-    // =================================================
-
-    showLoading(
-      "Vérification de votre ticket..."
-    );
-
+    // ===============================================
+    // RÉFÉRENCE DU TICKET
+    // ===============================================
 
     const ticketRef =
       doc(
         db,
         "tickets",
-        verifiedTicket
+        code
       );
 
 
@@ -828,21 +934,21 @@ async function connectGoogle() {
       doc(
         db,
         "users",
-        user.uid
+        currentUser.uid
       );
 
 
-    // =================================================
-    // TRANSACTION ATOMIQUE
-    // =================================================
+    // ===============================================
+    // TRANSACTION
+    // ===============================================
 
     await runTransaction(
       db,
       async transaction => {
 
-        // ---------------------------------------------
+        // -------------------------------------------
         // LECTURE DU TICKET
-        // ---------------------------------------------
+        // -------------------------------------------
 
         const ticketSnap =
           await transaction.get(
@@ -865,9 +971,9 @@ async function connectGoogle() {
           ticketSnap.data();
 
 
-        // ---------------------------------------------
+        // -------------------------------------------
         // EXPIRATION
-        // ---------------------------------------------
+        // -------------------------------------------
 
         if (
           ticketData.expiresAt
@@ -888,14 +994,15 @@ async function connectGoogle() {
         }
 
 
-        // ---------------------------------------------
-        // TICKET DÉJÀ ASSOCIÉ
-        // ---------------------------------------------
+        // -------------------------------------------
+        // TICKET DÉJÀ UTILISÉ
+        // -------------------------------------------
 
         if (
-          ticketData.ownerUid
+          ticketData.userId
           &&
-          ticketData.ownerUid !== user.uid
+          ticketData.userId !==
+            currentUser.uid
         ) {
 
           throw new Error(
@@ -905,22 +1012,24 @@ async function connectGoogle() {
         }
 
 
-        // ---------------------------------------------
-        // ASSOCIATION DU TICKET
-        // ---------------------------------------------
+        // -------------------------------------------
+        // ASSOCIATION
+        // -------------------------------------------
 
         transaction.update(
           ticketRef,
           {
 
-            ownerUid:
-              user.uid,
+            userId:
+              currentUser.uid,
 
             ownerEmail:
-              user.email || null,
+              currentUser.email ||
+              null,
 
             ownerName:
-              user.displayName || null,
+              currentUser.displayName ||
+              null,
 
             linkedAt:
               serverTimestamp()
@@ -929,28 +1038,31 @@ async function connectGoogle() {
         );
 
 
-        // ---------------------------------------------
+        // -------------------------------------------
         // PROFIL UTILISATEUR
-        // ---------------------------------------------
+        // -------------------------------------------
 
         transaction.set(
           userRef,
           {
 
             uid:
-              user.uid,
+              currentUser.uid,
 
             email:
-              user.email || null,
+              currentUser.email ||
+              null,
 
             name:
-              user.displayName || null,
+              currentUser.displayName ||
+              null,
 
             photo:
-              user.photoURL || null,
+              currentUser.photoURL ||
+              null,
 
             ticketCode:
-              verifiedTicket,
+              code,
 
             updatedAt:
               serverTimestamp()
@@ -969,53 +1081,28 @@ async function connectGoogle() {
     // SUCCÈS
     // =================================================
 
-    userInfo.style.display =
-      "block";
-
-    userInfo.textContent =
-      "✅ Connecté : " +
-      (
-        user.email ||
-        user.displayName ||
-        "Compte Google"
-      );
+    showLoading(
+      "✅ Ticket valide. Ouverture de Channel+..."
+    );
 
 
     showMessage(
-      "✅ Ticket validé et associé à votre compte.",
+      "✅ Votre accès est activé.",
       "success"
     );
 
-
-    showLoading(
-      "Accès autorisé. Ouverture de Channel+..."
-    );
-
-
-    // -------------------------------------------------
-    // SUPPRESSION DU CODE TEMPORAIRE
-    // -------------------------------------------------
-
-    sessionStorage.removeItem(
-      TICKET_STORAGE_KEY
-    );
-
-
-    // -------------------------------------------------
-    // PETITE PAUSE
-    // -------------------------------------------------
 
     await new Promise(
       resolve =>
         setTimeout(
           resolve,
-          800
+          1000
         )
     );
 
 
     // =================================================
-    // OUVERTURE DU SITE
+    // OUVERTURE
     // =================================================
 
     window.location.replace(
@@ -1028,17 +1115,13 @@ async function connectGoogle() {
   catch(error) {
 
     console.error(
-      "Channel+ Firebase :",
+      "Erreur ticket :",
       error
     );
 
 
-    // =================================================
-    // MESSAGES D'ERREUR
-    // =================================================
-
     let text =
-      "❌ Impossible de finaliser la connexion.";
+      "❌ Impossible de vérifier le ticket.";
 
 
     if (
@@ -1080,40 +1163,7 @@ async function connectGoogle() {
     ) {
 
       text =
-        "❌ Firebase a refusé l'accès. Vérifiez les règles Firestore.";
-
-    }
-
-
-    else if (
-      error.code ===
-      "auth/popup-closed-by-user"
-    ) {
-
-      text =
-        "⚠️ La fenêtre Google a été fermée.";
-
-    }
-
-
-    else if (
-      error.code ===
-      "auth/popup-blocked"
-    ) {
-
-      text =
-        "⚠️ Le navigateur a bloqué la fenêtre Google. Autorisez les fenêtres pop-up.";
-
-    }
-
-
-    else if (
-      error.code ===
-      "auth/unauthorized-domain"
-    ) {
-
-      text =
-        "❌ Ce domaine n'est pas autorisé dans Firebase Authentication.";
+        "❌ Firebase refuse l'accès. Vérifiez les règles Firestore.";
 
     }
 
@@ -1123,26 +1173,6 @@ async function connectGoogle() {
       "error"
     );
 
-
-    // -------------------------------------------------
-    // NETTOYAGE
-    // -------------------------------------------------
-
-    try {
-
-      await signOut(auth);
-
-    }
-
-    catch(e) {
-
-      console.warn(
-        "Déconnexion Firebase :",
-        e
-      );
-
-    }
-
   }
 
 
@@ -1150,11 +1180,11 @@ async function connectGoogle() {
 
     hideLoading();
 
-    btnGoogle.disabled =
+    btnVerifier.disabled =
       false;
 
-    btnGoogle.textContent =
-      "🔵 Continuer avec Google";
+    btnVerifier.textContent =
+      "Vérifier mon ticket";
 
   }
 
@@ -1162,7 +1192,7 @@ async function connectGoogle() {
 
 
 // =====================================================
-// UTILISATEUR DÉJÀ CONNECTÉ
+// SESSION GOOGLE EXISTANTE
 // =====================================================
 
 onAuthStateChanged(
@@ -1170,21 +1200,41 @@ onAuthStateChanged(
   user => {
 
     if (!user) {
+
+      currentUser =
+        null;
+
       return;
+
     }
 
-    /*
-      IMPORTANT :
 
-      Une simple connexion Google ne donne
-      PAS automatiquement accès au site.
+    currentUser =
+      user;
 
-      Le ticket doit toujours avoir été
-      associé au compte.
 
-      Le site principal devra également
-      effectuer sa propre vérification.
-    */
+    // Si l'utilisateur est déjà connecté,
+    // on passe directement au ticket.
+
+    userInfo.style.display =
+      "block";
+
+    userInfo.textContent =
+      "✅ Connecté : " +
+      (
+        user.email ||
+        user.displayName ||
+        "Compte Google"
+      );
+
+
+    stepGoogle.classList.remove(
+      "active"
+    );
+
+    stepTicket.classList.add(
+      "active"
+    );
 
   }
 );
