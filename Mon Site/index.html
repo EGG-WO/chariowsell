@@ -3,186 +3,849 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Channel+ — Accès</title>
+
 <style>
-*{box-sizing:border-box}
-html,body{margin:0;width:100%;height:100%;font-family:Arial,sans-serif;background:#050816;color:#fff}
-body{display:flex;justify-content:center;align-items:center;min-height:100vh}
-.box{width:min(92%,380px);background:#111827;padding:30px;border-radius:20px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.08)}
-h2{margin:0 0 8px;color:#22d3ee}
-.sub{color:#94a3b8;margin:0 0 20px}
-input{width:100%;padding:14px;border:0;border-radius:12px;background:#0b1220;color:#fff;font-size:16px;outline:none}
-button{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;background:linear-gradient(135deg,#22d3ee,#2563eb);color:#fff;font-weight:bold;font-size:16px;cursor:pointer}
-button:disabled{opacity:.65;cursor:not-allowed}
-#message{min-height:24px;margin-top:15px}
-#app{position:fixed;inset:0;display:none;background:#050816}
-#siteFrame{width:100%;height:100%;border:0;display:block}
-#loading{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:#050816;z-index:10;font-weight:bold}
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  font-family:Arial,sans-serif;
+  background:#050816;
+  color:#fff;
+}
+
+body{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+}
+
+.box{
+  width:min(92%,400px);
+  background:#111827;
+  padding:30px;
+  border-radius:20px;
+  text-align:center;
+  box-shadow:0 20px 50px rgba(0,0,0,.45);
+  border:1px solid rgba(255,255,255,.08);
+}
+
+h2{
+  margin:0 0 8px;
+  color:#22d3ee;
+}
+
+.sub{
+  color:#94a3b8;
+  margin:0 0 20px;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:12px;
+  background:#0b1220;
+  color:#fff;
+  font-size:16px;
+  outline:none;
+}
+
+button{
+  width:100%;
+  padding:14px;
+  margin-top:12px;
+  border:0;
+  border-radius:12px;
+  background:linear-gradient(135deg,#22d3ee,#2563eb);
+  color:#fff;
+  font-weight:bold;
+  font-size:16px;
+  cursor:pointer;
+}
+
+button:disabled{
+  opacity:.65;
+  cursor:not-allowed;
+}
+
+.google{
+  background:#fff;
+  color:#111827;
+}
+
+.google:hover{
+  background:#f1f5f9;
+}
+
+.hidden{
+  display:none !important;
+}
+
+#message{
+  min-height:24px;
+  margin-top:15px;
+}
+
+#loading{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:#050816;
+  z-index:100;
+  font-weight:bold;
+  text-align:center;
+  padding:20px;
+}
+
+.info{
+  margin-top:15px;
+  padding:12px;
+  border-radius:12px;
+  background:rgba(34,211,238,.08);
+  border:1px solid rgba(34,211,238,.15);
+  color:#94a3b8;
+  font-size:13px;
+  line-height:1.5;
+}
+
+#userInfo{
+  margin-top:15px;
+  color:#22d3ee;
+  font-size:14px;
+}
 </style>
 </head>
+
 <body>
 
 <div id="ticketBox" class="box">
+
   <h2>🎫 CHANNEL+ PREMIUM</h2>
-  <p class="sub">Entrez votre ticket pour accéder au service.</p>
-  <input id="ticketInput" type="text" autocomplete="off" placeholder="ABCD-1234-EFGH">
-  <button id="btnVerifier">Vérifier</button>
+
+  <p class="sub">
+    Entrez votre ticket pour vérifier votre accès.
+  </p>
+
+  <input
+    id="ticketInput"
+    type="text"
+    autocomplete="off"
+    placeholder="ABCD-1234-EFGH"
+  >
+
+  <button id="btnVerifier">
+    Vérifier mon ticket
+  </button>
+
+  <div id="googleBox" class="hidden">
+
+    <p class="sub">
+      ✅ Ticket valide
+    </p>
+
+    <p>
+      Connectez maintenant votre compte Google.
+    </p>
+
+    <button
+      id="btnGoogle"
+      class="google">
+      🔐 Continuer avec Google
+    </button>
+
+  </div>
+
+  <div id="userInfo"></div>
+
   <p id="message"></p>
+
+  <div class="info">
+    🔒 Votre ticket sera associé à votre compte Google.
+    <br><br>
+    Vous pourrez ensuite vous connecter depuis un autre appareil
+    avec le même compte Google.
+  </div>
+
 </div>
 
-<div id="loading">🔄 Vérification de votre accès...</div>
-
-<div id="app">
-  <iframe id="siteFrame" title="Channel+ Premium" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+<div id="loading">
+  🔄 Vérification de votre accès...
 </div>
+
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+/* =====================================================
+   FIREBASE
+===================================================== */
+
+import {
+  initializeApp
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+/* =====================================================
+   CONFIGURATION FIREBASE
+===================================================== */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDPh3dJ37uy21L70Mekm_ikuIfeD8wCZU",
-  authDomain: "channelplus-8c219.firebaseapp.com",
-  projectId: "channelplus-8c219",
-  storageBucket: "channelplus-8c219.firebasestorage.app",
-  messagingSenderId: "178858225057",
-  appId: "1:178858225057:web:63c327bf23eb877f196fe0"
+
+  apiKey:
+    "AIzaSyDPh3dJ37auy21L70Mekm_ikuIfeD8wCZU",
+
+  authDomain:
+    "channelplus-8c219.firebaseapp.com",
+
+  projectId:
+    "channelplus-8c219",
+
+  storageBucket:
+    "channelplus-8c219.firebasestorage.app",
+
+  messagingSenderId:
+    "178858225057",
+
+  appId:
+    "1:178858225057:web:63c327bf23eb877f196fe0"
+
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 
-const TICKET_KEY = "channelplus_ticket";
-const SESSION_KEY = "channelplus_session";
+/* =====================================================
+   INITIALISATION
+===================================================== */
 
-// Durée de mémorisation : 30 jours
-const SESSION_MAX_AGE = 30 * 24 * 60 * 60 * 1000;
-const SITE_URL = "./site-multichaine-securise.html";
+const app =
+  initializeApp(firebaseConfig);
 
-const ticketBox = document.getElementById("ticketBox");
-const appBox = document.getElementById("app");
-const frame = document.getElementById("siteFrame");
-const loading = document.getElementById("loading");
-const input = document.getElementById("ticketInput");
-const button = document.getElementById("btnVerifier");
-const message = document.getElementById("message");
+const db =
+  getFirestore(app);
 
-function saveAccess(code) {
-  localStorage.setItem(TICKET_KEY, code);
-  localStorage.setItem(SESSION_KEY, String(Date.now()));
+const auth =
+  getAuth(app);
+
+const googleProvider =
+  new GoogleAuthProvider();
+
+
+/* =====================================================
+   ÉLÉMENTS
+===================================================== */
+
+const ticketInput =
+  document.getElementById(
+    "ticketInput"
+  );
+
+const btnVerifier =
+  document.getElementById(
+    "btnVerifier"
+  );
+
+const googleBox =
+  document.getElementById(
+    "googleBox"
+  );
+
+const btnGoogle =
+  document.getElementById(
+    "btnGoogle"
+  );
+
+const message =
+  document.getElementById(
+    "message"
+  );
+
+const userInfo =
+  document.getElementById(
+    "userInfo"
+  );
+
+const loading =
+  document.getElementById(
+    "loading"
+  );
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let ticketEnAttente = null;
+
+
+/* =====================================================
+   AFFICHER UN MESSAGE
+===================================================== */
+
+function afficherMessage(
+  texte,
+  couleur = "#fff"
+){
+
+  message.textContent =
+    texte;
+
+  message.style.color =
+    couleur;
+
 }
 
-function clearAccess() {
-  localStorage.removeItem(TICKET_KEY);
-  localStorage.removeItem(SESSION_KEY);
-  sessionStorage.removeItem(SESSION_KEY);
-}
 
-function getSavedTicket() {
-  const code = localStorage.getItem(TICKET_KEY);
-  const time = Number(localStorage.getItem(SESSION_KEY) || 0);
-  if (!code || !time || Date.now() - time > SESSION_MAX_AGE) {
-    clearAccess();
-    return null;
-  }
-  return code;
-}
+/* =====================================================
+   VÉRIFICATION DU TICKET
+===================================================== */
 
-async function validateTicket(code) {
-  const snap = await getDoc(doc(db, "tickets", code));
-  if (!snap.exists()) return {ok:false, reason:"Ticket introuvable"};
+async function verifierTicket(code){
 
-  const data = snap.data();
-
-  if (data.expiresAt && typeof data.expiresAt.toMillis === "function" &&
-      data.expiresAt.toMillis() < Date.now()) {
-    return {ok:false, reason:"Ticket expiré"};
-  }
-
-  return {ok:true};
-}
-
-function showSite(code) {
-  // Autorisation de session pour la page enfant.
-  sessionStorage.setItem(SESSION_KEY, JSON.stringify({ticket:code, at:Date.now()}));
-
-  ticketBox.style.display = "none";
-  loading.style.display = "flex";
-  appBox.style.display = "block";
-
-  frame.onload = () => {
-    frame.contentWindow.postMessage(
-      {type:"CHANNELPLUS_ACCESS", ticket:code},
-      window.location.origin
+  const reference =
+    doc(
+      db,
+      "tickets",
+      code
     );
-    loading.style.display = "none";
-  };
 
-  frame.src = SITE_URL;
-}
+  const snapshot =
+    await getDoc(
+      reference
+    );
 
-async function verifierTicket(codeFromStorage = null) {
-  const code = (codeFromStorage || input.value).trim().toUpperCase();
 
-  if (!code) {
-    message.textContent = "⚠️ Entrez un ticket";
-    return false;
+  if(!snapshot.exists()){
+
+    return {
+      ok:false,
+      reason:"Ticket introuvable."
+    };
+
   }
 
-  button.disabled = true;
-  button.textContent = "Vérification...";
-  message.textContent = "🔄 Vérification...";
 
-  try {
-    const result = await validateTicket(code);
+  const data =
+    snapshot.data();
 
-    if (!result.ok) {
-      clearAccess();
-      message.textContent = "❌ " + result.reason;
-      return false;
+
+  /* ==========================
+     EXPIRATION
+  ========================== */
+
+  if(
+    data.expiresAt &&
+    typeof data.expiresAt.toMillis ===
+    "function"
+  ){
+
+    const expiration =
+      data.expiresAt.toMillis();
+
+
+    if(
+      expiration <
+      Date.now()
+    ){
+
+      return {
+        ok:false,
+        reason:"Ticket expiré."
+      };
+
     }
 
-    saveAccess(code);
-    message.textContent = "✅ Accès autorisé";
-    showSite(code);
-    return true;
-
-  } catch (e) {
-    console.error(e);
-    message.textContent = "❌ Impossible de vérifier le ticket.";
-    return false;
-  } finally {
-    button.disabled = false;
-    button.textContent = "Vérifier";
   }
+
+
+  /* ==========================
+     TICKET DÉJÀ ASSOCIÉ
+  ========================== */
+
+  if(
+    data.userId
+  ){
+
+    return {
+      ok:true,
+      alreadyLinked:true,
+      userId:data.userId,
+      data:data
+    };
+
+  }
+
+
+  return {
+    ok:true,
+    alreadyLinked:false,
+    data:data
+  };
+
 }
 
-button.addEventListener("click", () => verifierTicket());
 
-input.addEventListener("keydown", e => {
-  if (e.key === "Enter") verifierTicket();
-});
+/* =====================================================
+   BOUTON VÉRIFIER
+===================================================== */
 
-// Au retour sur la page : pas besoin de retaper le ticket.
-// Le ticket mémorisé est néanmoins revalidé auprès de Firestore.
-(async () => {
-  const saved = getSavedTicket();
-  if (saved) {
-    await verifierTicket(saved);
+btnVerifier.addEventListener(
+  "click",
+  async () => {
+
+    const code =
+      ticketInput.value
+        .trim()
+        .toUpperCase();
+
+
+    if(!code){
+
+      afficherMessage(
+        "⚠️ Entrez votre ticket.",
+        "#facc15"
+      );
+
+      return;
+
+    }
+
+
+    btnVerifier.disabled =
+      true;
+
+    btnVerifier.textContent =
+      "Vérification...";
+
+
+    afficherMessage(
+      "🔄 Vérification du ticket..."
+    );
+
+
+    try{
+
+      const result =
+        await verifierTicket(
+          code
+        );
+
+
+      if(!result.ok){
+
+        afficherMessage(
+          "❌ " + result.reason,
+          "#ff4444"
+        );
+
+        return;
+
+      }
+
+
+      /*
+       * On conserve le ticket
+       * uniquement temporairement
+       * avant connexion Google.
+       */
+
+      ticketEnAttente =
+        code;
+
+
+      afficherMessage(
+        "✅ Ticket valide.",
+        "#22c55e"
+      );
+
+
+      googleBox.classList.remove(
+        "hidden"
+      );
+
+
+      /*
+       * Si le ticket est déjà lié
+       * à un autre compte Google,
+       * on ne doit PAS permettre
+       * de le récupérer.
+       */
+
+      if(result.alreadyLinked){
+
+        googleBox.querySelector(
+          "p:nth-child(1)"
+        ).textContent =
+          "🔐 Ce ticket est déjà associé à un compte Google.";
+
+        googleBox.querySelector(
+          "p:nth-child(2)"
+        ).textContent =
+          "Connectez-vous avec le compte Google qui possède ce ticket.";
+
+      }
+
+    }
+
+    catch(error){
+
+      console.error(error);
+
+      afficherMessage(
+        "❌ Erreur lors de la vérification.",
+        "#ff4444"
+      );
+
+    }
+
+    finally{
+
+      btnVerifier.disabled =
+        false;
+
+      btnVerifier.textContent =
+        "Vérifier mon ticket";
+
+    }
+
   }
-})();
+);
 
-// Si l'enfant signale un problème d'accès, on revient au formulaire.
-window.addEventListener("message", e => {
-  if (e.origin !== window.location.origin) return;
-  if (e.data?.type === "CHANNELPLUS_ACCESS_DENIED") {
-    clearAccess();
-    frame.src = "about:blank";
-    appBox.style.display = "none";
-    ticketBox.style.display = "block";
-    message.textContent = "❌ Accès refusé. Veuillez saisir un ticket valide.";
+
+/* =====================================================
+   CONNEXION GOOGLE
+===================================================== */
+
+btnGoogle.addEventListener(
+  "click",
+  async () => {
+
+    if(!ticketEnAttente){
+
+      afficherMessage(
+        "⚠️ Vérifiez d'abord votre ticket.",
+        "#facc15"
+      );
+
+      return;
+
+    }
+
+
+    btnGoogle.disabled =
+      true;
+
+    btnGoogle.textContent =
+      "🔄 Connexion Google...";
+
+
+    try{
+
+      const result =
+        await signInWithPopup(
+          auth,
+          googleProvider
+        );
+
+
+      const user =
+        result.user;
+
+
+      if(!user){
+
+        throw new Error(
+          "Utilisateur Google introuvable."
+        );
+
+      }
+
+
+      const uid =
+        user.uid;
+
+
+      const email =
+        user.email || "";
+
+
+      /* =================================================
+         RELECTURE DU TICKET APRÈS CONNEXION
+
+         IMPORTANT :
+
+         On ne fait jamais confiance uniquement
+         à la vérification précédente.
+
+      ================================================= */
+
+      const ticketRef =
+        doc(
+          db,
+          "tickets",
+          ticketEnAttente
+        );
+
+
+      const ticketSnapshot =
+        await getDoc(
+          ticketRef
+        );
+
+
+      if(!ticketSnapshot.exists()){
+
+        throw new Error(
+          "Ticket introuvable."
+        );
+
+      }
+
+
+      const ticketData =
+        ticketSnapshot.data();
+
+
+      /* =================================================
+         VÉRIFICATION EXPIRATION
+      ================================================= */
+
+      if(
+        ticketData.expiresAt &&
+        typeof ticketData.expiresAt.toMillis ===
+        "function"
+      ){
+
+        if(
+          ticketData.expiresAt.toMillis() <
+          Date.now()
+        ){
+
+          throw new Error(
+            "Ticket expiré."
+          );
+
+        }
+
+      }
+
+
+      /* =================================================
+         TICKET DÉJÀ ASSOCIÉ
+      ================================================= */
+
+      if(ticketData.userId){
+
+        if(
+          ticketData.userId !== uid
+        ){
+
+          throw new Error(
+            "Ce ticket est déjà associé à un autre compte Google."
+          );
+
+        }
+
+      }
+
+
+      /* =================================================
+         ASSOCIATION TICKET → GOOGLE
+      ================================================= */
+
+      await updateDoc(
+        ticketRef,
+        {
+
+          userId:uid,
+
+          userEmail:email,
+
+          linkedAt:
+            new Date()
+
+        }
+      );
+
+
+      /* =================================================
+         CRÉATION DU PROFIL PREMIUM
+      ================================================= */
+
+      const userRef =
+        doc(
+          db,
+          "premiumUsers",
+          uid
+        );
+
+
+      await setDoc(
+        userRef,
+        {
+
+          ticket:
+            ticketEnAttente,
+
+          email:
+            email,
+
+          active:
+            true,
+
+          linkedAt:
+            new Date(),
+
+          expiresAt:
+            ticketData.expiresAt || null
+
+        },
+        {
+          merge:true
+        }
+      );
+
+
+      /* =================================================
+         ACCÈS
+      ================================================= */
+
+      userInfo.textContent =
+        "Connecté : " +
+        (
+          user.displayName ||
+          email
+        );
+
+
+      afficherMessage(
+        "✅ Compte Google associé. Accès autorisé !",
+        "#22c55e"
+      );
+
+
+      loading.style.display =
+        "flex";
+
+
+      /*
+       * Petite pause pour afficher
+       * la confirmation.
+       */
+
+      setTimeout(
+        () => {
+
+          window.location.href =
+            "./site-multichaine-securise.html";
+
+        },
+        700
+      );
+
+    }
+
+    catch(error){
+
+      console.error(error);
+
+
+      let texte =
+        "❌ Impossible de connecter ce compte.";
+
+
+      if(
+        error.message
+      ){
+
+        texte =
+          "❌ " +
+          error.message;
+
+      }
+
+
+      afficherMessage(
+        texte,
+        "#ff4444"
+      );
+
+    }
+
+    finally{
+
+      btnGoogle.disabled =
+        false;
+
+      btnGoogle.textContent =
+        "🔐 Continuer avec Google";
+
+    }
+
   }
-});
+);
+
+
+/* =====================================================
+   UTILISATEUR DÉJÀ CONNECTÉ
+===================================================== */
+
+onAuthStateChanged(
+  auth,
+  async (user) => {
+
+    if(!user){
+
+      return;
+
+    }
+
+
+    /*
+     * Pour l'instant on ne donne
+     * PAS automatiquement l'accès ici.
+     *
+     * L'étape suivante permettra
+     * de retrouver automatiquement
+     * le ticket associé au compte.
+     */
+
+    console.log(
+      "Compte Google connecté :",
+      user.email
+    );
+
+  }
+);
+
 </script>
+
 </body>
 </html>
