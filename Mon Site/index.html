@@ -1,1186 +1,186 @@
-<!DOCTYPE html>
 <html lang="fr">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<title>Channel+ — Accès Premium</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Channel+ — Accès</title>
 <style>
-
-* {
-  box-sizing:border-box;
-}
-
-html,
-body {
-  margin:0;
-  min-height:100%;
-  font-family:Arial,sans-serif;
-  background:#050816;
-  color:#fff;
-}
-
-body {
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:20px;
-}
-
-.box {
-
-  width:min(92%,420px);
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(17,24,39,.98),
-      rgba(15,23,42,.98)
-    );
-
-  padding:32px;
-
-  border-radius:24px;
-
-  text-align:center;
-
-  border:1px solid rgba(255,255,255,.08);
-
-  box-shadow:
-    0 20px 70px rgba(0,0,0,.6),
-    0 0 50px rgba(34,211,238,.08);
-}
-
-.logo {
-
-  font-size:30px;
-
-  font-weight:800;
-
-  margin-bottom:8px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #fff,
-      #22d3ee,
-      #2563eb
-    );
-
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-
-.sub {
-
-  color:#94a3b8;
-
-  line-height:1.5;
-
-  margin:0 0 25px;
-}
-
-.icon {
-
-  font-size:55px;
-
-  margin-bottom:10px;
-}
-
-h2 {
-
-  margin:0 0 10px;
-
-}
-
-input {
-
-  width:100%;
-
-  padding:16px;
-
-  margin-top:12px;
-
-  border-radius:14px;
-
-  border:1px solid rgba(255,255,255,.1);
-
-  background:#0b1220;
-
-  color:#fff;
-
-  font-size:17px;
-
-  text-align:center;
-
-  outline:none;
-
-  text-transform:uppercase;
-}
-
-input:focus {
-
-  border-color:#22d3ee;
-
-  box-shadow:
-    0 0 20px rgba(34,211,238,.15);
-}
-
-button {
-
-  width:100%;
-
-  padding:15px;
-
-  margin-top:14px;
-
-  border:0;
-
-  border-radius:14px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #22d3ee,
-      #2563eb
-    );
-
-  color:#fff;
-
-  font-size:16px;
-
-  font-weight:bold;
-
-  cursor:pointer;
-
-}
-
-button:hover {
-
-  filter:brightness(1.08);
-
-  transform:translateY(-1px);
-
-}
-
-button:disabled {
-
-  opacity:.6;
-
-  cursor:not-allowed;
-
-  transform:none;
-
-}
-
-.info {
-
-  margin-top:20px;
-
-  padding:14px;
-
-  border-radius:14px;
-
-  background:rgba(34,211,238,.06);
-
-  border:1px solid rgba(34,211,238,.12);
-
-  color:#94a3b8;
-
-  font-size:13px;
-
-  line-height:1.5;
-
-}
-
-#message {
-
-  min-height:24px;
-
-  margin-top:18px;
-
-  line-height:1.5;
-
-  font-weight:bold;
-}
-
-.success {
-  color:#22c55e;
-}
-
-.error {
-  color:#ef4444;
-}
-
-.loading {
-
-  display:none;
-
-  position:fixed;
-
-  inset:0;
-
-  z-index:999999;
-
-  background:#050816;
-
-  align-items:center;
-
-  justify-content:center;
-
-  text-align:center;
-}
-
-.loadingBox {
-
-  background:#111827;
-
-  padding:30px;
-
-  border-radius:20px;
-
-  border:1px solid rgba(255,255,255,.08);
-}
-
-.spinner {
-
-  width:45px;
-
-  height:45px;
-
-  margin:0 auto 18px;
-
-  border:4px solid rgba(255,255,255,.1);
-
-  border-top-color:#22d3ee;
-
-  border-radius:50%;
-
-  animation:spin .8s linear infinite;
-}
-
-@keyframes spin {
-
-  to {
-    transform:rotate(360deg);
-  }
-
-}
-
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;font-family:Arial,sans-serif;background:#050816;color:#fff}
+body{display:flex;justify-content:center;align-items:center;min-height:100vh}
+.box{width:min(92%,380px);background:#111827;padding:30px;border-radius:20px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.08)}
+h2{margin:0 0 8px;color:#22d3ee}
+.sub{color:#94a3b8;margin:0 0 20px}
+input{width:100%;padding:14px;border:0;border-radius:12px;background:#0b1220;color:#fff;font-size:16px;outline:none}
+button{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;background:linear-gradient(135deg,#22d3ee,#2563eb);color:#fff;font-weight:bold;font-size:16px;cursor:pointer}
+button:disabled{opacity:.65;cursor:not-allowed}
+#message{min-height:24px;margin-top:15px}
+#app{position:fixed;inset:0;display:none;background:#050816}
+#siteFrame{width:100%;height:100%;border:0;display:block}
+#loading{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:#050816;z-index:10;font-weight:bold}
 </style>
-
 </head>
-
-
 <body>
 
-
-<div class="box">
-
-  <div class="logo">
-    CHANNEL+ PREMIUM
-  </div>
-
-  <p class="sub">
-    Accès sécurisé à votre abonnement
-  </p>
-
-
-  <div class="icon">
-    🎫
-  </div>
-
-
-  <h2>
-    Entrez votre ticket
-  </h2>
-
-
-  <p class="sub">
-
-    Entrez le code reçu lors de votre achat
-    pour accéder à Channel+ Premium.
-
-  </p>
-
-
-  <input
-    id="ticketInput"
-    type="text"
-    autocomplete="off"
-    maxlength="50"
-    placeholder="ABCD-1234-EFGH">
-
-
-  <button
-    id="verifyButton">
-
-    🔐 Vérifier mon ticket
-
-  </button>
-
-
-  <div class="info">
-
-    🔒 Aucun compte Google n'est nécessaire.
-
-    <br><br>
-
-    Votre accès est sécurisé automatiquement
-    par Firebase.
-
-  </div>
-
-
-  <div id="message"></div>
-
+<div id="ticketBox" class="box">
+<h2>🎫 CHANNEL+ PREMIUM</h2>
+<p class="sub">Entrez votre ticket pour accéder au service.</p>
+<input id="ticketInput" type="text" autocomplete="off" placeholder="ABCD-1234-EFGH">
+<button id="btnVerifier">Vérifier</button>
+<p id="message"></p>
 </div>
 
+<div id="loading">🔄 Vérification de votre accès...</div>
 
-<div
-  id="loading"
-  class="loading">
-
-  <div class="loadingBox">
-
-    <div class="spinner"></div>
-
-    <div id="loadingText">
-      Vérification...
-    </div>
-
-  </div>
-
+<div id="app">
+<iframe id="siteFrame" title="Channel+ Premium" allow="autoplay; fullscreen; picture-in-picture"></iframe>
 </div>
-
 
 <script type="module">
-
-import {
-  initializeApp
-}
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-
-import {
-  getAuth,
-  signInAnonymously,
-  onAuthStateChanged
-}
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  runTransaction,
-  serverTimestamp
-}
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-// =====================================================
-// FIREBASE
-// =====================================================
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-
-  apiKey:
-    "AIzaSyDPh3dJ37au21L70Mekm_ikuIfeD8wCZU",
-
-  authDomain:
-    "channelplus-8c219.firebaseapp.com",
-
-  databaseURL:
-    "https://channelplus-8c219-default-rtdb.firebaseio.com",
-
-  projectId:
-    "channelplus-8c219",
-
-  storageBucket:
-    "channelplus-8c219.firebasestorage.app",
-
-  messagingSenderId:
-    "178858225057",
-
-  appId:
-    "1:178858225057:web:63c327bf23eb877f196fe0"
-
+apiKey: "AIzaSyDPh3dJ37uy21L70Mekm_ikuIfeD8wCZU",
+authDomain: "channelplus-8c219.firebaseapp.com",
+projectId: "channelplus-8c219",
+storageBucket: "channelplus-8c219.firebasestorage.app",
+messagingSenderId: "178858225057",
+appId: "1:178858225057:web:63c327bf23eb877f196fe0"
 };
 
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-const app =
-  initializeApp(firebaseConfig);
+const TICKET_KEY = "channelplus_ticket";
+const SESSION_KEY = "channelplus_session";
+const SESSION_MAX_AGE = 12 * 60 * 60 * 1000;
+const SITE_URL = "./site-multichaine-securise.html";
 
+const ticketBox = document.getElementById("ticketBox");
+const appBox = document.getElementById("app");
+const frame = document.getElementById("siteFrame");
+const loading = document.getElementById("loading");
+const input = document.getElementById("ticketInput");
+const button = document.getElementById("btnVerifier");
+const message = document.getElementById("message");
 
-const auth =
-  getAuth(app);
-
-
-const db =
-  getFirestore(app);
-
-
-// =====================================================
-// ÉLÉMENTS
-// =====================================================
-
-const ticketInput =
-  document.getElementById(
-    "ticketInput"
-  );
-
-
-const verifyButton =
-  document.getElementById(
-    "verifyButton"
-  );
-
-
-const message =
-  document.getElementById(
-    "message"
-  );
-
-
-const loading =
-  document.getElementById(
-    "loading"
-  );
-
-
-const loadingText =
-  document.getElementById(
-    "loadingText"
-  );
-
-
-// =====================================================
-// PAGE MULTICHAÎNE
-// =====================================================
-
-const SITE_MULTICHAINE =
-  "./site-multichaine-securise.html";
-
-
-// =====================================================
-// SESSION
-// =====================================================
-
-const SESSION_KEY =
-  "channelplus_access_v2";
-
-
-// =====================================================
-// UTILISATEUR FIREBASE
-// =====================================================
-
-let currentUser = null;
-
-
-// =====================================================
-// AFFICHAGE MESSAGE
-// =====================================================
-
-function showMessage(
-  text,
-  type
-) {
-
-  message.textContent =
-    text;
-
-  message.className =
-    type || "";
-
+function saveAccess(code) {
+localStorage.setItem(TICKET_KEY, code);
+localStorage.setItem(SESSION_KEY, String(Date.now()));
 }
 
-
-// =====================================================
-// LOADING
-// =====================================================
-
-function showLoading(text) {
-
-  loadingText.textContent =
-    text;
-
-  loading.style.display =
-    "flex";
-
+function clearAccess() {
+localStorage.removeItem(TICKET_KEY);
+localStorage.removeItem(SESSION_KEY);
+sessionStorage.removeItem(SESSION_KEY);
 }
 
-
-function hideLoading() {
-
-  loading.style.display =
-    "none";
-
+function getSavedTicket() {
+const code = localStorage.getItem(TICKET_KEY);
+const time = Number(localStorage.getItem(SESSION_KEY) || 0);
+if (!code || !time || Date.now() - time > SESSION_MAX_AGE) {
+clearAccess();
+return null;
+}
+return code;
 }
 
+async function validateTicket(code) {
+const snap = await getDoc(doc(db, "tickets", code));
+if (!snap.exists()) return {ok:false, reason:"Ticket introuvable"};
 
-// =====================================================
-// AUTHENTIFICATION ANONYME
-// =====================================================
+const data = snap.data();
 
-async function connectFirebase() {
-
-  try {
-
-    if (auth.currentUser) {
-
-      currentUser =
-        auth.currentUser;
-
-      return true;
-
-    }
-
-
-    const result =
-      await signInAnonymously(auth);
-
-
-    if (!result.user) {
-
-      throw new Error(
-        "AUTH_FAILED"
-      );
-
-    }
-
-
-    currentUser =
-      result.user;
-
-    return true;
-
-  }
-
-  catch(error) {
-
-    console.error(
-      "Erreur authentification Firebase:",
-      error
-    );
-
-    return false;
-
-  }
-
+if (data.expiresAt && typeof data.expiresAt.toMillis === "function" &&
+data.expiresAt.toMillis() < Date.now()) {
+return {ok:false, reason:"Ticket expiré"};
 }
 
-
-// =====================================================
-// VÉRIFIER SI UNE SESSION EXISTE
-// =====================================================
-
-function getSavedAccess() {
-
-  try {
-
-    const saved =
-      sessionStorage.getItem(
-        SESSION_KEY
-      );
-
-
-    if (!saved) {
-
-      return null;
-
-    }
-
-
-    const data =
-      JSON.parse(saved);
-
-
-    if (
-      !data.ticket ||
-      !data.expiresAt
-    ) {
-
-      sessionStorage.removeItem(
-        SESSION_KEY
-      );
-
-      return null;
-
-    }
-
-
-    if (
-      Date.now() >=
-      Number(data.expiresAt)
-    ) {
-
-      sessionStorage.removeItem(
-        SESSION_KEY
-      );
-
-      return null;
-
-    }
-
-
-    return data;
-
-  }
-
-  catch(error) {
-
-    sessionStorage.removeItem(
-      SESSION_KEY
-    );
-
-    return null;
-
-  }
-
+return {ok:true};
 }
 
+function showSite(code) {
+// Autorisation de session pour la page enfant.
+sessionStorage.setItem(SESSION_KEY, JSON.stringify({ticket:code, at:Date.now()}));
 
-// =====================================================
-// VÉRIFICATION AUTOMATIQUE DE SESSION
-// =====================================================
+ticketBox.style.display = "none";
+loading.style.display = "flex";
+appBox.style.display = "block";
 
-const savedAccess =
-  getSavedAccess();
-
-
-if (savedAccess) {
-
-  window.location.replace(
-    SITE_MULTICHAINE
-  );
-
-}
-
-
-// =====================================================
-// VÉRIFICATION TICKET
-// =====================================================
-
-verifyButton.addEventListener(
-  "click",
-  verifyTicket
+frame.onload = () => {
+frame.contentWindow.postMessage(
+{type:"CHANNELPLUS_ACCESS", ticket:code},
+window.location.origin
 );
+loading.style.display = "none";
+};
 
-
-ticketInput.addEventListener(
-  "keydown",
-  event => {
-
-    if (
-      event.key === "Enter"
-    ) {
-
-      verifyTicket();
-
-    }
-
-  }
-);
-
-
-async function verifyTicket() {
-
-  const code =
-    ticketInput.value
-      .trim()
-      .toUpperCase();
-
-
-  // ---------------------------------------------------
-  // CODE VIDE
-  // ---------------------------------------------------
-
-  if (!code) {
-
-    showMessage(
-      "⚠️ Entrez votre ticket.",
-      "error"
-    );
-
-    ticketInput.focus();
-
-    return;
-
-  }
-
-
-  verifyButton.disabled =
-    true;
-
-  verifyButton.textContent =
-    "Vérification...";
-
-
-  showLoading(
-    "Connexion sécurisée..."
-  );
-
-
-  try {
-
-    // =================================================
-    // AUTHENTIFICATION ANONYME
-    // =================================================
-
-    const connected =
-      await connectFirebase();
-
-
-    if (!connected) {
-
-      throw new Error(
-        "AUTH_FAILED"
-      );
-
-    }
-
-
-    // =================================================
-    // RÉFÉRENCE DU TICKET
-    // =================================================
-
-    const ticketRef =
-      doc(
-        db,
-        "tickets",
-        code
-      );
-
-
-    // =================================================
-    // LECTURE
-    // =================================================
-
-    showLoading(
-      "Vérification de votre ticket..."
-    );
-
-
-    const ticketSnap =
-      await getDoc(
-        ticketRef
-      );
-
-
-    if (
-      !ticketSnap.exists()
-    ) {
-
-      throw new Error(
-        "TICKET_NOT_FOUND"
-      );
-
-    }
-
-
-    const ticketData =
-      ticketSnap.data();
-
-
-    // =================================================
-    // TICKET ACTIF
-    // =================================================
-
-    if (
-      ticketData.active === false
-    ) {
-
-      throw new Error(
-        "TICKET_INACTIVE"
-      );
-
-    }
-
-
-    // =================================================
-    // TICKET DÉJÀ UTILISÉ PAR QUELQU'UN
-    // =================================================
-
-    if (
-      ticketData.userId &&
-      ticketData.userId !==
-        currentUser.uid
-    ) {
-
-      throw new Error(
-        "TICKET_USED"
-      );
-
-    }
-
-
-    // =================================================
-    // DURÉE
-    // =================================================
-
-    const durationMinutes =
-      Number(
-        ticketData.duration || 720
-      );
-
-
-    // =================================================
-    // CALCUL EXPIRATION
-    // =================================================
-
-    let expiresAt;
-
-
-    if (
-      ticketData.expiresAt &&
-      typeof ticketData.expiresAt.toMillis ===
-        "function"
-    ) {
-
-      expiresAt =
-        ticketData.expiresAt.toMillis();
-
-    }
-
-    else if (
-      ticketData.linkedAt &&
-      typeof ticketData.linkedAt.toMillis ===
-        "function"
-    ) {
-
-      expiresAt =
-        ticketData.linkedAt.toMillis() +
-        durationMinutes *
-        60 *
-        1000;
-
-    }
-
-    else {
-
-      expiresAt =
-        Date.now() +
-        durationMinutes *
-        60 *
-        1000;
-
-    }
-
-
-    // =================================================
-    // TICKET EXPIRÉ
-    // =================================================
-
-    if (
-      Date.now() >=
-      expiresAt
-    ) {
-
-      throw new Error(
-        "TICKET_EXPIRED"
-      );
-
-    }
-
-
-    // =================================================
-    // ASSOCIATION DU TICKET
-    // =================================================
-
-    showLoading(
-      "Activation de votre accès..."
-    );
-
-
-    await runTransaction(
-      db,
-      async transaction => {
-
-        const freshSnap =
-          await transaction.get(
-            ticketRef
-          );
-
-
-        if (
-          !freshSnap.exists()
-        ) {
-
-          throw new Error(
-            "TICKET_NOT_FOUND"
-          );
-
-        }
-
-
-        const freshData =
-          freshSnap.data();
-
-
-        if (
-          freshData.active === false
-        ) {
-
-          throw new Error(
-            "TICKET_INACTIVE"
-          );
-
-        }
-
-
-        if (
-          freshData.userId &&
-          freshData.userId !==
-            currentUser.uid
-        ) {
-
-          throw new Error(
-            "TICKET_USED"
-          );
-
-        }
-
-
-        let finalExpiresAt =
-          expiresAt;
-
-
-        if (
-          freshData.expiresAt &&
-          typeof freshData.expiresAt.toMillis ===
-            "function"
-        ) {
-
-          finalExpiresAt =
-            freshData.expiresAt.toMillis();
-
-        }
-
-
-        if (
-          Date.now() >=
-          finalExpiresAt
-        ) {
-
-          throw new Error(
-            "TICKET_EXPIRED"
-          );
-
-        }
-
-
-        transaction.update(
-          ticketRef,
-          {
-
-            userId:
-              currentUser.uid,
-
-            used:
-              true,
-
-            linkedAt:
-              freshData.linkedAt ||
-              serverTimestamp(),
-
-            activatedAt:
-              serverTimestamp()
-
-          }
-        );
-
-      }
-    );
-
-
-    // =================================================
-    // ENREGISTREMENT LOCAL
-    // =================================================
-
-    sessionStorage.setItem(
-      SESSION_KEY,
-      JSON.stringify({
-
-        ticket:
-          code,
-
-        uid:
-          currentUser.uid,
-
-        expiresAt:
-          expiresAt
-
-      })
-    );
-
-
-    // =================================================
-    // SUCCÈS
-    // =================================================
-
-    hideLoading();
-
-
-    showMessage(
-      "✅ Ticket valide ! Ouverture de Channel+...",
-      "success"
-    );
-
-
-    await new Promise(
-      resolve =>
-        setTimeout(
-          resolve,
-          800
-        )
-    );
-
-
-    window.location.replace(
-      SITE_MULTICHAINE
-    );
-
-  }
-
-
-  catch(error) {
-
-    console.error(
-      "Erreur ticket:",
-      error
-    );
-
-
-    hideLoading();
-
-
-    let text =
-      "❌ Impossible de vérifier le ticket.";
-
-
-    if (
-      error.message ===
-      "AUTH_FAILED"
-    ) {
-
-      text =
-        "❌ Impossible de connecter Firebase anonymement. Vérifiez que la connexion anonyme est activée.";
-
-    }
-
-    else if (
-      error.message ===
-      "TICKET_NOT_FOUND"
-    ) {
-
-      text =
-        "❌ Ce ticket n'existe pas.";
-
-    }
-
-    else if (
-      error.message ===
-      "TICKET_INACTIVE"
-    ) {
-
-      text =
-        "❌ Ce ticket est désactivé.";
-
-    }
-
-    else if (
-      error.message ===
-      "TICKET_USED"
-    ) {
-
-      text =
-        "❌ Ce ticket est déjà utilisé sur un autre appareil.";
-
-    }
-
-    else if (
-      error.message ===
-      "TICKET_EXPIRED"
-    ) {
-
-      text =
-        "❌ Ce ticket est expiré.";
-
-    }
-
-    else if (
-      error.code ===
-      "permission-denied"
-    ) {
-
-      text =
-        "❌ Firebase refuse l'accès. Vérifiez les règles Firestore.";
-
-    }
-
-    else if (
-      error.code ===
-      "auth/operation-not-allowed"
-    ) {
-
-      text =
-        "❌ L'authentification anonyme n'est pas activée dans Firebase.";
-
-    }
-
-
-    showMessage(
-      text,
-      "error"
-    );
-
-  }
-
-
-  finally {
-
-    verifyButton.disabled =
-      false;
-
-    verifyButton.textContent =
-      "🔐 Vérifier mon ticket";
-
-  }
-
+frame.src = SITE_URL;
 }
 
+async function verifierTicket(codeFromStorage = null) {
+const code = (codeFromStorage || input.value).trim().toUpperCase();
 
-// =====================================================
-// AUTH STATE
-// =====================================================
+if (!code) {
+message.textContent = "⚠️ Entrez un ticket";
+return false;
+}
 
-onAuthStateChanged(
-  auth,
-  user => {
+button.disabled = true;
+button.textContent = "Vérification...";
+message.textContent = "🔄 Vérification...";
 
-    if (user) {
+try {
+const result = await validateTicket(code);
 
-      currentUser =
-        user;
+if (!result.ok) {
+  clearAccess();
+  message.textContent = "❌ " + result.reason;
+  return false;
+}
 
-    }
+saveAccess(code);
+message.textContent = "✅ Accès autorisé";
+showSite(code);
+return true;
 
-  }
-);
 
+} catch (e) {
+console.error(e);
+message.textContent = "❌ Impossible de vérifier le ticket.";
+return false;
+} finally {
+button.disabled = false;
+button.textContent = "Vérifier";
+}
+}
+
+button.addEventListener("click", () => verifierTicket());
+
+input.addEventListener("keydown", e => {
+if (e.key === "Enter") verifierTicket();
+});
+
+// Au retour sur la page : pas besoin de retaper le ticket.
+// Le ticket mémorisé est néanmoins revalidé auprès de Firestore.
+(async () => {
+const saved = getSavedTicket();
+if (saved) {
+await verifierTicket(saved);
+}
+})();
+
+// Si l'enfant signale un problème d'accès, on revient au formulaire.
+window.addEventListener("message", e => {
+if (e.origin !== window.location.origin) return;
+if (e.data?.type === "CHANNELPLUS_ACCESS_DENIED") {
+clearAccess();
+frame.src = "about:blank";
+appBox.style.display = "none";
+ticketBox.style.display = "block";
+message.textContent = "❌ Accès refusé. Veuillez saisir un ticket valide.";
+}
+});
 </script>
-
 </body>
-
 </html>
