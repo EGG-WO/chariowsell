@@ -5,168 +5,164 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Channel+ Premium</title>
 
-
-<!-- Optimisation LiveWatch -->
-
-<link rel="dns-prefetch"
-      href="//livewatch.top">
-
-<link rel="preconnect"
-      href="https://livewatch.top"
-      crossorigin>
-
-
-<!-- HLS.js -->
+<link rel="dns-prefetch" href="//livewatch.top">
+<link rel="preconnect" href="https://livewatch.top" crossorigin>
 
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-
 
 <style>
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-
 :root {
-
-  --primary: #00f0ff;
-
-  --secondary: #7b2dff;
-
-  --accent: #ff006e;
-
-  --glass: rgba(15, 23, 42, 0.6);
-
-  --glass-border: rgba(255, 255, 255, 0.1);
-
+  --primary:#00f0ff;
+  --secondary:#7b2dff;
+  --accent:#ff006e;
+  --glass:rgba(15,23,42,.6);
+  --glass-border:rgba(255,255,255,.1);
   --neon-glow:
-    0 0 20px rgba(0, 240, 255, 0.3),
-    0 0 40px rgba(0, 240, 255, 0.1);
-
+    0 0 20px rgba(0,240,255,.3),
+    0 0 40px rgba(0,240,255,.1);
 }
-
 
 * {
-
-  margin: 0;
-
-  padding: 0;
-
-  box-sizing: border-box;
-
-  font-family: 'Inter', Arial, sans-serif;
-
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter',Arial,sans-serif;
 }
 
+html,body {
+  margin:0;
+  padding:0;
+  background:#02040a;
+  color:#fff;
+  min-height:100vh;
+  overflow-x:hidden;
+}
 
 body {
+  position:relative;
+}
 
-  background: #02040a;
 
-  color: #fff;
+/* =====================================================
+   ÉCRAN DE VÉRIFICATION
+===================================================== */
 
-  min-height: 100vh;
+#accessChecking {
 
-  overflow-x: hidden;
+  position:fixed;
+  inset:0;
+
+  z-index:999999;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:#02040a;
+
+  color:#fff;
+
+  font-size:18px;
+  font-weight:700;
+
+  text-align:center;
+
+}
+
+#accessChecking div {
+
+  padding:30px;
+
+}
+
+#accessChecking span {
+
+  display:block;
+
+  margin-top:12px;
+
+  color:#94a3b8;
+
+  font-size:14px;
+
+  font-weight:400;
 
 }
 
 
-/* ==============================
-   ANIMATED BACKGROUND
-============================== */
+/* =====================================================
+   BACKGROUND
+===================================================== */
 
 .bg-mesh {
 
-  position: fixed;
+  position:fixed;
+  inset:0;
 
-  inset: 0;
-
-  z-index: 0;
+  z-index:0;
 
   background:
-
     radial-gradient(
       ellipse at 20% 20%,
-      rgba(0, 240, 255, 0.08) 0%,
+      rgba(0,240,255,.08) 0%,
       transparent 50%
     ),
-
     radial-gradient(
       ellipse at 80% 80%,
-      rgba(123, 45, 255, 0.08) 0%,
+      rgba(123,45,255,.08) 0%,
       transparent 50%
     ),
-
     radial-gradient(
       ellipse at 50% 50%,
-      rgba(255, 0, 110, 0.04) 0%,
+      rgba(255,0,110,.04) 0%,
       transparent 60%
     );
 
-  animation:
-    meshMove 15s ease-in-out infinite alternate;
-
+  animation:meshMove 15s ease-in-out infinite alternate;
 }
-
 
 @keyframes meshMove {
 
   0% {
-
-    transform:
-      scale(1)
-      rotate(0deg);
-
+    transform:scale(1) rotate(0deg);
   }
 
   50% {
-
-    transform:
-      scale(1.1)
-      rotate(2deg);
-
+    transform:scale(1.1) rotate(2deg);
   }
 
   100% {
-
-    transform:
-      scale(1)
-      rotate(-2deg);
-
+    transform:scale(1) rotate(-2deg);
   }
 
 }
 
-
 .bg-grid {
 
-  position: fixed;
+  position:fixed;
+  inset:0;
 
-  inset: 0;
-
-  z-index: 0;
+  z-index:0;
 
   background-image:
-
     linear-gradient(
-      rgba(255,255,255,0.03)
-      1px,
+      rgba(255,255,255,.03) 1px,
       transparent 1px
     ),
-
     linear-gradient(
       90deg,
-      rgba(255,255,255,0.03)
-      1px,
+      rgba(255,255,255,.03) 1px,
       transparent 1px
     );
 
-  background-size: 60px 60px;
+  background-size:60px 60px;
 
   mask-image:
     radial-gradient(
@@ -185,41 +181,37 @@ body {
 }
 
 
-/* ==============================
+/* =====================================================
    PARTICULES
-============================== */
+===================================================== */
 
 .particles {
 
-  position: fixed;
+  position:fixed;
+  inset:0;
 
-  inset: 0;
+  z-index:0;
 
-  z-index: 0;
+  pointer-events:none;
 
-  pointer-events: none;
-
-  overflow: hidden;
+  overflow:hidden;
 
 }
 
-
 .particle {
 
-  position: absolute;
+  position:absolute;
 
-  width: 4px;
+  width:4px;
+  height:4px;
 
-  height: 4px;
+  background:var(--primary);
 
-  background: var(--primary);
+  border-radius:50%;
 
-  border-radius: 50%;
+  opacity:.6;
 
-  opacity: 0.6;
-
-  animation:
-    floatUp linear infinite;
+  animation:floatUp linear infinite;
 
   box-shadow:
     0 0 10px var(--primary),
@@ -227,82 +219,63 @@ body {
 
 }
 
-
 @keyframes floatUp {
 
   0% {
-
-    transform:
-      translateY(100vh)
-      scale(0);
-
-    opacity: 0;
-
+    transform:translateY(100vh) scale(0);
+    opacity:0;
   }
 
   10% {
-
-    opacity: 0.6;
-
+    opacity:.6;
   }
 
   90% {
-
-    opacity: 0.6;
-
+    opacity:.6;
   }
 
   100% {
-
-    transform:
-      translateY(-100px)
-      scale(1);
-
-    opacity: 0;
-
+    transform:translateY(-100px) scale(1);
+    opacity:0;
   }
 
 }
 
 
-/* ==============================
+/* =====================================================
    HEADER
-============================== */
+===================================================== */
 
 header {
 
   background:
     linear-gradient(
       180deg,
-      rgba(15,23,42,0.95) 0%,
-      rgba(15,23,42,0.8) 100%
+      rgba(15,23,42,.95) 0%,
+      rgba(15,23,42,.8) 100%
     );
 
-  backdrop-filter: blur(20px);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
 
-  -webkit-backdrop-filter: blur(20px);
+  padding:25px 20px;
 
-  padding: 25px 20px;
+  text-align:center;
 
-  text-align: center;
+  position:sticky;
+  top:0;
 
-  position: sticky;
+  z-index:100;
 
-  top: 0;
-
-  z-index: 100;
-
-  border-bottom:
-    1px solid var(--glass-border);
+  border-bottom:1px solid var(--glass-border);
 
 }
 
-
 header h1 {
 
-  font-size: 2.4rem;
+  font-size:2.4rem;
 
-  font-weight: 800;
+  font-weight:800;
 
   background:
     linear-gradient(
@@ -312,361 +285,260 @@ header h1 {
       var(--secondary) 100%
     );
 
-  -webkit-background-clip: text;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 
-  -webkit-text-fill-color: transparent;
+  background-clip:text;
 
-  background-clip: text;
+  letter-spacing:-1px;
 
-  letter-spacing: -1px;
-
-  animation:
-    titleShine 3s ease-in-out infinite;
-
-  text-shadow:
-    0 0 30px rgba(0,240,255,0.2);
+  animation:titleShine 3s ease-in-out infinite;
 
 }
-
 
 @keyframes titleShine {
 
-  0%, 100% {
-
-    filter: brightness(1);
-
+  0%,100% {
+    filter:brightness(1);
   }
 
   50% {
-
-    filter: brightness(1.2);
-
+    filter:brightness(1.2);
   }
 
 }
 
-
 header p.live {
 
-  display: inline-flex;
+  display:inline-flex;
 
-  align-items: center;
+  align-items:center;
 
-  gap: 8px;
+  gap:8px;
 
-  font-weight: 700;
+  font-weight:700;
 
-  font-size: 1rem;
+  font-size:1rem;
 
-  margin-top: 8px;
+  margin-top:8px;
 
-  color: #ff4444;
-
-  text-shadow:
-    0 0 10px rgba(255,68,68,0.5);
+  color:#ff4444;
 
 }
 
-
 header p.live::before {
 
-  content: '';
+  content:'';
 
-  width: 10px;
+  width:10px;
+  height:10px;
 
-  height: 10px;
+  background:#ff4444;
 
-  background: #ff4444;
-
-  border-radius: 50%;
+  border-radius:50%;
 
   box-shadow:
     0 0 15px #ff4444,
     0 0 30px #ff4444;
 
-  animation:
-    pulse 1.5s ease-in-out infinite;
+  animation:pulse 1.5s ease-in-out infinite;
 
 }
-
 
 @keyframes pulse {
 
-  0%, 100% {
-
-    transform: scale(1);
-
-    opacity: 1;
-
+  0%,100% {
+    transform:scale(1);
+    opacity:1;
   }
 
   50% {
-
-    transform: scale(1.5);
-
-    opacity: 0.5;
-
+    transform:scale(1.5);
+    opacity:.5;
   }
 
 }
 
 
-/* ==============================
+/* =====================================================
    CONTAINER
-============================== */
+===================================================== */
 
 .container {
 
-  max-width: 1200px;
+  max-width:1200px;
 
-  margin: 30px auto;
+  margin:30px auto;
 
-  padding: 0 20px;
+  padding:0 20px;
 
-  position: relative;
+  position:relative;
 
-  z-index: 1;
+  z-index:1;
 
 }
 
 
-/* ==============================
+/* =====================================================
    PLAYER
-============================== */
+===================================================== */
 
 .player-box {
 
-  background: var(--glass);
+  background:var(--glass);
 
-  backdrop-filter: blur(20px);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
 
-  -webkit-backdrop-filter: blur(20px);
+  border-radius:24px;
 
-  border-radius: 24px;
+  overflow:hidden;
 
-  overflow: hidden;
-
-  border:
-    1px solid var(--glass-border);
+  border:1px solid var(--glass-border);
 
   box-shadow:
-    0 8px 32px rgba(0,0,0,0.4),
+    0 8px 32px rgba(0,0,0,.4),
     var(--neon-glow);
 
-  position: relative;
+  position:relative;
 
-  transition:
-    all 0.4s
-    cubic-bezier(0.4,0,0.2,1);
+  transition:all .4s;
 
 }
-
 
 .player-box:hover {
 
   box-shadow:
-    0 12px 40px rgba(0,0,0,0.5),
-    0 0 30px rgba(0,240,255,0.15),
-    0 0 60px rgba(0,240,255,0.05);
+    0 12px 40px rgba(0,0,0,.5),
+    0 0 30px rgba(0,240,255,.15),
+    0 0 60px rgba(0,240,255,.05);
 
-  transform: translateY(-2px);
-
-}
-
-
-.player-box::before {
-
-  content: '';
-
-  position: absolute;
-
-  inset: 0;
-
-  border-radius: 24px;
-
-  padding: 1px;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(0,240,255,0.3),
-      rgba(123,45,255,0.3),
-      transparent 60%
-    );
-
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-
-  -webkit-mask-composite: xor;
-
-  mask-composite: exclude;
-
-  pointer-events: none;
-
-  opacity: 0;
-
-  transition: opacity 0.4s;
+  transform:translateY(-2px);
 
 }
-
-
-.player-box:hover::before {
-
-  opacity: 1;
-
-}
-
 
 video {
 
-  width: 100%;
+  width:100%;
 
-  aspect-ratio: 16/9;
+  aspect-ratio:16/9;
 
-  display: block;
+  display:block;
 
-  background: #000;
+  background:#000;
 
 }
 
 
-/* ==============================
-   SEARCH
-============================== */
+/* =====================================================
+   RECHERCHE
+===================================================== */
 
 #search {
 
-  width: 100%;
+  width:100%;
 
-  padding: 16px 24px;
+  padding:16px 24px;
 
-  margin-top: 28px;
+  margin-top:28px;
 
-  border:
-    1px solid var(--glass-border);
+  border:1px solid var(--glass-border);
 
-  border-radius: 16px;
+  border-radius:16px;
 
-  background: var(--glass);
+  background:var(--glass);
 
-  backdrop-filter: blur(12px);
+  backdrop-filter:blur(12px);
 
-  color: #fff;
+  color:#fff;
 
-  font-size: 1rem;
+  font-size:1rem;
 
-  outline: none;
-
-  transition: all 0.3s;
-
-  box-shadow:
-    0 4px 15px rgba(0,0,0,0.2);
+  outline:none;
 
 }
-
 
 #search:focus {
 
-  border-color:
-    rgba(0,240,255,0.4);
+  border-color:rgba(0,240,255,.4);
 
   box-shadow:
-    0 0 20px rgba(0,240,255,0.1),
-    0 4px 15px rgba(0,0,0,0.2);
-
-  background:
-    rgba(15,23,42,0.8);
+    0 0 20px rgba(0,240,255,.1);
 
 }
-
 
 #search::placeholder {
 
-  color:
-    rgba(255,255,255,0.4);
+  color:rgba(255,255,255,.4);
 
 }
 
 
-/* ==============================
-   CHANNELS
-============================== */
+/* =====================================================
+   CHAÎNES
+===================================================== */
 
 .channels {
 
-  margin-top: 35px;
+  margin-top:35px;
 
-  display: grid;
+  display:grid;
 
   grid-template-columns:
-    repeat(
-      auto-fit,
-      minmax(240px,1fr)
-    );
+    repeat(auto-fit,minmax(240px,1fr));
 
-  gap: 24px;
+  gap:24px;
 
 }
-
 
 .channel {
 
-  background: var(--glass);
+  background:var(--glass);
 
-  backdrop-filter: blur(16px);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
 
-  -webkit-backdrop-filter: blur(16px);
+  border:1px solid var(--glass-border);
 
-  border:
-    1px solid var(--glass-border);
+  border-radius:24px;
 
-  border-radius: 24px;
+  padding:24px;
 
-  padding: 24px;
+  text-align:center;
 
-  text-align: center;
+  transition:all .4s;
 
-  transition:
-    all 0.4s
-    cubic-bezier(0.4,0,0.2,1);
+  position:relative;
 
-  position: relative;
+  overflow:hidden;
 
-  overflow: hidden;
-
-  cursor: pointer;
+  cursor:pointer;
 
 }
-
 
 .channel:hover {
 
-  transform:
-    translateY(-8px)
-    scale(1.02);
+  transform:translateY(-8px) scale(1.02);
 
   box-shadow:
-    0 20px 40px rgba(0,0,0,0.4),
-    0 0 30px rgba(0,240,255,0.1);
+    0 20px 40px rgba(0,0,0,.4),
+    0 0 30px rgba(0,240,255,.1);
 
-  border-color:
-    rgba(0,240,255,0.2);
+  border-color:rgba(0,240,255,.2);
 
 }
 
-
 .channel img {
 
-  width: 100%;
+  width:100%;
 
-  height: 130px;
+  height:130px;
 
-  object-fit: cover;
+  object-fit:cover;
 
-  margin-bottom: 18px;
+  margin-bottom:18px;
 
-  border-radius: 20px;
+  border-radius:20px;
 
   background:
     linear-gradient(
@@ -675,54 +547,40 @@ video {
       #1a1a2e
     );
 
-  padding: 8px;
+  padding:8px;
 
   box-shadow:
-    0 8px 25px rgba(0,0,0,0.3);
-
-  border:
-    1px solid rgba(255,255,255,0.06);
-
-  transition: all 0.4s;
+    0 8px 25px rgba(0,0,0,.3);
 
 }
-
 
 .channel:hover img {
 
-  transform:
-    scale(1.05)
-    rotate(1deg);
-
-  box-shadow:
-    0 15px 35px rgba(0,0,0,0.4),
-    0 0 20px rgba(0,240,255,0.1);
+  transform:scale(1.05) rotate(1deg);
 
 }
-
 
 .channel h3 {
 
-  margin-bottom: 18px;
+  margin-bottom:18px;
 
-  color: #e2e8f0;
+  color:#e2e8f0;
 
-  font-size: 1.05rem;
+  font-size:1.05rem;
 
-  font-weight: 600;
+  font-weight:600;
 
 }
-
 
 .channel button {
 
-  width: 100%;
+  width:100%;
 
-  padding: 14px;
+  padding:14px;
 
-  border: none;
+  border:none;
 
-  border-radius: 14px;
+  border-radius:14px;
 
   background:
     linear-gradient(
@@ -731,164 +589,119 @@ video {
       #7b2dff
     );
 
-  color: #fff;
+  color:#fff;
 
-  font-weight: 700;
+  font-weight:700;
 
-  cursor: pointer;
+  cursor:pointer;
 
-  transition: all 0.3s;
-
-  box-shadow:
-    0 4px 15px rgba(0,240,255,0.2);
-
-  font-size: 0.95rem;
+  font-size:.95rem;
 
 }
 
 
-.channel button:hover {
-
-  transform: translateY(-2px);
-
-  box-shadow:
-    0 8px 25px rgba(0,240,255,0.3);
-
-  filter: brightness(1.1);
-
-}
-
-
-/* ==============================
+/* =====================================================
    CHAT
-============================== */
+===================================================== */
 
 .chat-box {
 
-  margin-top: 35px;
+  margin-top:35px;
 
-  background: var(--glass);
+  background:var(--glass);
 
-  backdrop-filter: blur(20px);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
 
-  -webkit-backdrop-filter: blur(20px);
+  border:1px solid var(--glass-border);
 
-  border:
-    1px solid var(--glass-border);
+  border-radius:24px;
 
-  border-radius: 24px;
-
-  padding: 24px;
-
-  box-shadow:
-    0 8px 32px rgba(0,0,0,0.3);
+  padding:24px;
 
 }
-
 
 .chat-box h3 {
 
-  margin-bottom: 18px;
+  margin-bottom:18px;
 
-  color: var(--primary);
+  color:var(--primary);
 
-  font-weight: 700;
-
-  font-size: 1.1rem;
+  font-weight:700;
 
 }
-
 
 .messages {
 
-  height: 280px;
+  height:280px;
 
-  overflow-y: auto;
+  overflow-y:auto;
 
-  background:
-    rgba(11,18,32,0.6);
+  background:rgba(11,18,32,.6);
 
-  border-radius: 16px;
+  border-radius:16px;
 
-  padding: 14px;
+  padding:14px;
 
-  margin-bottom: 14px;
-
-  border:
-    1px solid rgba(255,255,255,0.05);
+  margin-bottom:14px;
 
 }
-
 
 .message {
 
-  margin-bottom: 12px;
+  margin-bottom:12px;
 
-  padding: 10px 14px;
+  padding:10px 14px;
 
-  border-radius: 14px;
+  border-radius:14px;
 
-  background:
-    linear-gradient(
-      135deg,
-      rgba(17,24,39,0.8),
-      rgba(17,24,39,0.6)
-    );
-
-  border:
-    1px solid rgba(255,255,255,0.05);
+  background:rgba(17,24,39,.8);
 
 }
-
 
 .message strong {
 
-  color: var(--primary);
+  color:var(--primary);
 
 }
-
 
 .chat-input {
 
-  display: flex;
+  display:flex;
 
-  gap: 10px;
+  gap:10px;
 
-  flex-wrap: wrap;
+  flex-wrap:wrap;
 
 }
-
 
 .chat-input input {
 
-  flex: 1;
+  flex:1;
 
-  min-width: 120px;
+  min-width:120px;
 
-  padding: 12px 16px;
+  padding:12px 16px;
 
-  border:
-    1px solid var(--glass-border);
+  border:1px solid var(--glass-border);
 
-  border-radius: 14px;
+  border-radius:14px;
 
-  background:
-    rgba(17,24,39,0.8);
+  background:rgba(17,24,39,.8);
 
-  color: #fff;
+  color:#fff;
 
-  outline: none;
+  outline:none;
 
 }
 
-
 .chat-input button {
 
-  padding: 12px 20px;
+  padding:12px 20px;
 
-  border: none;
+  border:none;
 
-  border-radius: 14px;
+  border-radius:14px;
 
   background:
     linear-gradient(
@@ -897,103 +710,85 @@ video {
       #7b2dff
     );
 
-  color: #fff;
+  color:#fff;
 
-  font-weight: 700;
+  font-weight:700;
 
-  cursor: pointer;
+  cursor:pointer;
 
 }
 
 
-/* ==============================
+/* =====================================================
    FOOTER
-============================== */
+===================================================== */
 
 footer {
 
-  text-align: center;
+  text-align:center;
 
-  padding: 40px 20px;
+  padding:40px 20px;
 
-  color:
-    rgba(148,163,184,0.7);
+  color:rgba(148,163,184,.7);
 
-  font-size: 0.9rem;
+  font-size:.9rem;
 
 }
 
 
-/* ==============================
+/* =====================================================
    OVERLAY
-============================== */
+===================================================== */
 
 #overlayPlayer {
 
-  display: none;
+  display:none;
 
-  position: fixed;
+  position:fixed;
 
-  inset: 0;
+  inset:0;
 
-  z-index: 5000;
+  z-index:5000;
 
-  background:
-    rgba(2,4,10,0.98);
+  background:rgba(2,4,10,.98);
 
-  backdrop-filter: blur(30px);
+  backdrop-filter:blur(30px);
 
-  flex-direction: column;
+  flex-direction:column;
 
 }
-
 
 #overlayBar {
 
-  display: flex;
+  display:flex;
 
-  justify-content: space-between;
+  justify-content:space-between;
 
-  align-items: center;
+  align-items:center;
 
-  padding: 16px 24px;
+  padding:16px 24px;
 
-  background:
-    rgba(15,23,42,0.95);
+  background:rgba(15,23,42,.95);
 
-  border-bottom:
-    1px solid var(--glass-border);
+  border-bottom:1px solid var(--glass-border);
 
 }
-
 
 #overlayBar span {
 
-  color: var(--primary);
+  color:var(--primary);
 
-  font-weight: 700;
-
-}
-
-
-#overlayBar button {
-
-  border: none;
-
-  border-radius: 12px;
-
-  padding: 10px 18px;
-
-  color: #fff;
-
-  font-weight: 700;
-
-  cursor: pointer;
+  font-weight:700;
 
 }
-
 
 #btnClose {
+
+  border:none;
+
+  border-radius:12px;
+
+  padding:10px 18px;
 
   background:
     linear-gradient(
@@ -1002,117 +797,157 @@ footer {
       #cc0000
     );
 
-}
+  color:#fff;
 
+  font-weight:700;
+
+  cursor:pointer;
+
+}
 
 #overlayFrame {
 
-  flex: 1;
+  flex:1;
 
-  width: 100%;
+  width:100%;
 
-  border: none;
+  border:none;
 
-  background: #000;
+  background:#000;
 
 }
-
 
 #overlayError {
 
-  display: none;
+  display:none;
 
-  padding: 40px;
+  padding:40px;
 
-  text-align: center;
+  text-align:center;
 
-  color: #ff4444;
+  color:#ff4444;
 
 }
 
 
-/* ==============================
+/* =====================================================
    REVEAL
-============================== */
+===================================================== */
 
 .reveal {
 
-  opacity: 0;
+  opacity:0;
 
-  transform: translateY(30px);
+  transform:translateY(30px);
 
-  transition:
-    all 0.6s
-    cubic-bezier(0.4,0,0.2,1);
+  transition:all .6s;
 
 }
-
 
 .reveal.active {
 
-  opacity: 1;
+  opacity:1;
 
-  transform: translateY(0);
+  transform:translateY(0);
 
 }
 
 
-/* ==============================
-   RESPONSIVE
-============================== */
+/* =====================================================
+   COMPTEUR VISITEURS
+===================================================== */
 
-@media(max-width:600px){
+#channelplus-online {
+
+  position:fixed;
+
+  bottom:15px;
+
+  left:15px;
+
+  z-index:99999;
+
+  background:rgba(10,15,25,.92);
+
+  color:#fff;
+
+  padding:10px 16px;
+
+  border-radius:30px;
+
+  font-family:Arial,sans-serif;
+
+  font-size:14px;
+
+  font-weight:bold;
+
+  box-shadow:0 4px 15px rgba(0,0,0,.35);
+
+  border:1px solid rgba(255,255,255,.15);
+
+  backdrop-filter:blur(8px);
+
+}
+
+#channelplus-count {
+
+  color:#00ff66;
+
+  font-size:16px;
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:600px) {
 
   header h1 {
-
-    font-size: 1.8rem;
-
+    font-size:1.8rem;
   }
 
   .container {
-
-    padding: 0 14px;
-
+    padding:0 14px;
   }
 
   .channels {
-
-    grid-template-columns: 1fr;
-
-    gap: 18px;
-
+    grid-template-columns:1fr;
+    gap:18px;
   }
 
   .channel {
-
-    padding: 18px;
-
+    padding:18px;
   }
 
   #search {
-
-    font-size: 16px;
-
+    font-size:16px;
   }
 
   #overlayBar {
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+  }
 
-    flex-direction: column;
+  #channelplus-online {
+    bottom:10px;
+    left:10px;
+    font-size:12px;
+    padding:8px 12px;
+  }
 
-    align-items: flex-start;
-
+  #channelplus-count {
+    font-size:14px;
   }
 
 }
 
-
-@media(min-width:601px) and (max-width:1024px){
+@media(min-width:601px) and (max-width:1024px) {
 
   .channels {
-
-    grid-template-columns:
-      repeat(2,1fr);
-
+    grid-template-columns:repeat(2,1fr);
   }
 
 }
@@ -1125,21 +960,39 @@ footer {
 <body>
 
 
-<!-- ==============================
+<!-- =====================================================
+     PROTECTION D'ACCÈS
+===================================================== -->
+
+<div id="accessChecking">
+
+  <div>
+
+    🔐 Vérification de votre accès...
+
+    <span>
+      Veuillez patienter quelques secondes.
+    </span>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
      BACKGROUND
-============================== -->
+===================================================== -->
 
 <div class="bg-mesh"></div>
 
 <div class="bg-grid"></div>
 
-<div class="particles"
-     id="particles"></div>
+<div class="particles" id="particles"></div>
 
 
-<!-- ==============================
+<!-- =====================================================
      HEADER
-============================== -->
+===================================================== -->
 
 <header>
 
@@ -1152,14 +1005,14 @@ footer {
 </header>
 
 
-<!-- ==============================
-     CONTENU PRINCIPAL
-============================== -->
+<!-- =====================================================
+     CONTENU
+===================================================== -->
 
 <div class="container">
 
 
-  <!-- LECTEUR -->
+  <!-- PLAYER -->
 
   <div class="player-box reveal">
 
@@ -1174,9 +1027,7 @@ footer {
   </div>
 
 
-  <!-- ============================
-       CHAT GLOBAL
-  ============================= -->
+  <!-- CHAT -->
 
   <div class="chat-box reveal">
 
@@ -1224,202 +1075,200 @@ footer {
     class="channels"
     id="channels">
 
-<!-- ==============================
-     CHAÎNES
-============================== -->
 
-<div class="channel reveal">
+    <div class="channel reveal">
 
-  <img src="nolly.png" alt="NOLLYWOOD TV">
+      <img src="nolly.png" alt="NOLLYWOOD TV">
 
-  <h3>NOLLYWOOD TV</h3>
+      <h3>NOLLYWOOD TV</h3>
 
-  <button onclick="ouvrirEmbed('https://livewatch.top/embed/1562445425bf43cebd4faf-42294ead14e2b3')">
-    ▶ Regarder
-  </button>
+      <button onclick="ouvrirEmbed('https://livewatch.top/embed/1562445425bf43cebd4faf-42294ead14e2b3')">
+        ▶ Regarder
+      </button>
+
+    </div>
+
+
+    <div class="channel reveal">
+
+      <img src="disney.png" alt="Disney Junior">
+
+      <h3>Disney Junior</h3>
+
+      <button onclick="ouvrirEmbed('https://livewatch.top/embed/1762694647144af19e59b7-ba1042469cec01')">
+        ▶ Regarder
+      </button>
+
+    </div>
+
+
+    <div class="channel reveal">
+
+      <img src="nik.png" alt="Nickelodeon">
+
+      <h3>Nickelodeon</h3>
+
+      <button onclick="
+        ouvrirChat('Nickelodeon');
+        ouvrirEmbed('https://livewatch.top/embed/3562748294b2ebad358cbf-9150df941c43fe')
+      ">
+        ▶ Regarder
+      </button>
+
+    </div>
+
+
+    <div class="channel reveal">
+
+      <img src="A+.jpg" alt="A+">
+
+      <h3>A+</h3>
+
+      <button onclick="ouvrirEmbed('https://livewatch.top/embed/594965518e7c95c9c8814-e956b99b20c6e1')">
+        ▶ Regarder
+      </button>
+
+    </div>
+
+
+    <div class="channel reveal">
+
+      <img src="nov.png" alt="Novelas TV">
+
+      <h3>Novelas TV</h3>
+
+      <button onclick="ouvrirEmbed('https://livewatch.top/embed/16260338528710828dbe45-351424000ae001')">
+        ▶ Regarder
+      </button>
+
+    </div>
+
+
+    <div class="channel reveal">
+
+      <img src="c+1.png" alt="Canal+ Sport 1">
+
+      <h3>Canal+ Sport 1</h3>
+
+      <button onclick="ouvrirEmbed('https://livewatch.top/embed/1012399982f41e3c10e6d6-646c8f3e43249f')">
+        ▶ Regarder
+      </button>
+
+    </div>
+
+
+    <div class="channel reveal">
+
+      <img src="infosport+.png" alt="Infosport+">
+
+      <h3>Infosport+</h3>
+
+      <button onclick="ouvrirEmbed('https://livewatch.top/embed/14657608221ba582f5feb-c927a78429e447')">
+        ▶ Regarder
+      </button>
+
+    </div>
+
+
+    <div class="channel reveal">
+
+      <img src="c+family.png" alt="Canal+ Family">
+
+      <h3>Canal+ Family</h3>
+
+      <button onclick="ouvrirEmbed('https://livewatch.top/embed/4007062954bb448913d299-b72e5d5ebf8ade')">
+        ▶ Regarder
+      </button>
+
+    </div>
+
+
+    <div class="channel reveal">
+
+      <img src="tf1.jpg" alt="TF1">
+
+      <h3>TF1</h3>
+
+      <button onclick="ouvrirEmbed('https://livewatch.top/embed/1334669376bf508b8ed995-e1dc32893923cf')">
+        ▶ Regarder
+      </button>
+
+    </div>
+
+
+    <div class="channel reveal">
+
+      <img src="piwi+.png" alt="Piwi+">
+
+      <h3>Piwi+</h3>
+
+      <button onclick="ouvrirEmbed('https://livewatch.top/embed/2272423077184c1838f29c-7e205f90c233d3')">
+        ▶ Regarder
+      </button>
+
+    </div>
+
+
+    <div class="channel reveal">
+
+      <img src="tfx.jpg" alt="TFX">
+
+      <h3>TFX</h3>
+
+      <button onclick="ouvrirEmbed('https://livewatch.top/embed/3794086467dcb3e9b1728b-037a336b29d3ba')">
+        ▶ Regarder
+      </button>
+
+    </div>
+
+
+    <div class="channel reveal">
+
+      <img src="action.jpg" alt="Action">
+
+      <h3>Action</h3>
+
+      <button onclick="ouvrirEmbed('https://livewatch.top/embed/3638789513f8ccd703cc28-dba0e03c0b6744')">
+        ▶ Regarder
+      </button>
+
+    </div>
+
+
+    <div class="channel reveal">
+
+      <img src="teletoon.jpg" alt="Teletoon+">
+
+      <h3>Teletoon+</h3>
+
+      <button onclick="ouvrirEmbed('https://livewatch.top/embed/231278062503478eaef59f-8867e6406b2968')">
+        ▶ Regarder
+      </button>
+
+    </div>
+
+
+    <div class="channel reveal">
+
+      <img src="bein.jpg" alt="BeinSport">
+
+      <h3>BeinSport</h3>
+
+      <button onclick="ouvrirEmbed('https://livewatch.top/embed/1759440287bbe0a8212bda-322286e0727cc1')">
+        ▶ Regarder
+      </button>
+
+    </div>
+
+
+  </div>
 
 </div>
 
 
-<div class="channel reveal">
-
-  <img src="disney.png" alt="Disney Junior">
-
-  <h3>Disney Junior</h3>
-
-  <button onclick="ouvrirEmbed('https://livewatch.top/embed/1762694647144af19e59b7-ba1042469cec01')">
-    ▶ Regarder
-  </button>
-
-</div>
-
-
-<div class="channel reveal">
-
-  <img src="nik.png" alt="Nickelodeon">
-
-  <h3>Nickelodeon</h3>
-
-  <button onclick="
-    ouvrirChat('Nickelodeon');
-    ouvrirEmbed('https://livewatch.top/embed/3562748294b2ebad358cbf-9150df941c43fe')
-  ">
-    ▶ Regarder
-  </button>
-
-</div>
-
-
-<div class="channel reveal">
-
-  <img src="A+.jpg" alt="A+">
-
-  <h3>A+</h3>
-
-  <button onclick="ouvrirEmbed('https://livewatch.top/embed/594965518e7c95c9c8814-e956b99b20c6e1')">
-    ▶ Regarder
-  </button>
-
-</div>
-
-
-<div class="channel reveal">
-
-  <img src="nov.png" alt="Novelas TV">
-
-  <h3>Novelas TV</h3>
-
-  <button onclick="ouvrirEmbed('https://livewatch.top/embed/16260338528710828dbe45-351424000ae001')">
-    ▶ Regarder
-  </button>
-
-</div>
-
-
-<div class="channel reveal">
-
-  <img src="c+1.png" alt="Canal+ Sport 1">
-
-  <h3>Canal+ Sport 1</h3>
-
-  <button onclick="ouvrirEmbed('https://livewatch.top/embed/1012399982f41e3c10e6d6-646c8f3e43249f')">
-    ▶ Regarder
-  </button>
-
-</div>
-
-
-<div class="channel reveal">
-
-  <img src="infosport+.png" alt="Infosport+">
-
-  <h3>Infosport+</h3>
-
-  <button onclick="ouvrirEmbed('https://livewatch.top/embed/14657608221ba582f5feb-c927a78429e447')">
-    ▶ Regarder
-  </button>
-
-</div>
-
-
-<div class="channel reveal">
-
-  <img src="c+family.png" alt="Canal+ Family">
-
-  <h3>Canal+ Family</h3>
-
-  <button onclick="ouvrirEmbed('https://livewatch.top/embed/4007062954bb448913d299-b72e5d5ebf8ade')">
-    ▶ Regarder
-  </button>
-
-</div>
-
-
-<div class="channel reveal">
-
-  <img src="tf1.jpg" alt="TF1">
-
-  <h3>TF1</h3>
-
-  <button onclick="ouvrirEmbed('https://livewatch.top/embed/1334669376bf508b8ed995-e1dc32893923cf')">
-    ▶ Regarder
-  </button>
-
-</div>
-
-
-<div class="channel reveal">
-
-  <img src="piwi+.png" alt="Piwi+">
-
-  <h3>Piwi+</h3>
-
-  <button onclick="ouvrirEmbed('https://livewatch.top/embed/2272423077184c1838f29c-7e205f90c233d3')">
-    ▶ Regarder
-  </button>
-
-</div>
-
-
-<div class="channel reveal">
-
-  <img src="tfx.jpg" alt="TFX">
-
-  <h3>TFX</h3>
-
-  <button onclick="ouvrirEmbed('https://livewatch.top/embed/3794086467dcb3e9b1728b-037a336b29d3ba')">
-    ▶ Regarder
-  </button>
-
-</div>
-
-
-<div class="channel reveal">
-
-  <img src="action.jpg" alt="Action">
-
-  <h3>Action</h3>
-
-  <button onclick="ouvrirEmbed('https://livewatch.top/embed/3638789513f8ccd703cc28-dba0e03c0b6744')">
-    ▶ Regarder
-  </button>
-
-</div>
-
-
-<div class="channel reveal">
-
-  <img src="teletoon.jpg" alt="Teletoon+">
-
-  <h3>Teletoon+</h3>
-
-  <button onclick="ouvrirEmbed('https://livewatch.top/embed/231278062503478eaef59f-8867e6406b2968')">
-    ▶ Regarder
-  </button>
-
-</div>
-
-<div class="channel reveal">
-
-  <img src="bein.jpg" alt="sport">
-
-  <h3>BeinSport</h3>
-
-  <button onclick="ouvrirEmbed('https://livewatch.top/embed/1759440287bbe0a8212bda-322286e0727cc1')">
-    ▶ Regarder
-  </button>
-
-</div>
-
-
-</div>
-
-</div>
-
-
-<!-- ==============================
+<!-- =====================================================
      FOOTER
-============================== -->
+===================================================== -->
 
 <footer>
 
@@ -1428,9 +1277,9 @@ footer {
 </footer>
 
 
-<!-- ==============================
-     OVERLAY PLAYER
-============================== -->
+<!-- =====================================================
+     OVERLAY
+===================================================== -->
 
 <div id="overlayPlayer">
 
@@ -1440,17 +1289,13 @@ footer {
       📺 Lecture en cours
     </span>
 
-    <div class="actions">
+    <button
+      id="btnClose"
+      onclick="fermerOverlay()">
 
-      <button
-        id="btnClose"
-        onclick="fermerOverlay()">
+      ✕ Fermer
 
-        ✕ Fermer
-
-      </button>
-
-    </div>
+    </button>
 
   </div>
 
@@ -1473,8 +1318,6 @@ footer {
 
     <p>
       Le site bloque l'affichage en iframe.
-      Retente dans quelques secondes ou choisis
-      un autre flux.
     </p>
 
   </div>
@@ -1482,430 +1325,534 @@ footer {
 </div>
 
 
-<!-- ==============================
-     JAVASCRIPT
-============================== -->
-
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-
-```html
-```html
 <!-- =====================================================
-     PARTIE 3 — FIREBASE + CHAT GLOBAL
+     VISITEURS EN DIRECT
 ===================================================== -->
 
-<script type="module">
+<div id="channelplus-online">
 
-  // =====================================================
-  // IMPORTS FIREBASE
-  // =====================================================
+  🟢
+  <span id="channelplus-count">1</span>
+  personne actuellement sur ChannelPlus
 
-  import { initializeApp }
-    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-  import {
-    getFirestore,
-    collection,
-    addDoc,
-    query,
-    orderBy,
-    onSnapshot,
-    serverTimestamp
-  }
-    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+</div>
 
 
-  // =====================================================
-  // CONFIGURATION FIREBASE
-  // =====================================================
+<!-- =====================================================
+     FIREBASE
+===================================================== -->
 
-  const firebaseConfig = {
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 
-    apiKey: "AIzaSyDPh3dJ37auy21L70Mekm_ikuIfeD8wCZU",
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 
-    authDomain: "channelplus-8c219.firebaseapp.com",
-
-    projectId: "channelplus-8c219",
-
-    storageBucket: "channelplus-8c219.firebasestorage.app",
-
-    messagingSenderId: "178858225057",
-
-    appId: "1:178858225057:web:63c327bf23eb877f196fe0"
-
-  };
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 
-  // =====================================================
-  // INITIALISATION
-  // =====================================================
+<script>
 
-  const app =
-    initializeApp(firebaseConfig);
+const firebaseConfig = {
 
-  const db =
-    getFirestore(app);
+  apiKey:
+    "AIzaSyDPh3dJ37uy21L70Mekm_ikuIfeD8wCZU",
 
+  authDomain:
+    "channelplus-8c219.firebaseapp.com",
 
-  // =====================================================
-  // ÉLÉMENTS DU CHAT
-  // =====================================================
+  databaseURL:
+    "https://channelplus-8c219-default-rtdb.firebaseio.com",
 
-  const messagesBox =
-    document.getElementById("messages");
+  projectId:
+    "channelplus-8c219",
 
-  const usernameInput =
-    document.getElementById("username");
+  storageBucket:
+    "channelplus-8c219.firebasestorage.app",
 
-  const messageInput =
-    document.getElementById("messageInput");
+  messagingSenderId:
+    "178858225057",
 
-  const sendBtn =
-    document.getElementById("sendBtn");
+  appId:
+    "1:178858225057:web:63c327bf23eb877f196fe0"
 
-  const chatTitle =
-    document.getElementById("chatTitle");
+};
 
 
-  // =====================================================
-  // CHAT ACTUEL
-  // =====================================================
-
-  let currentChannel = "Général";
+firebase.initializeApp(firebaseConfig);
 
 
-  chatTitle.textContent =
-    "💬 Chat Général";
+const auth =
+  firebase.auth();
 
 
-  // =====================================================
-  // AFFICHER UN MESSAGE
-  // =====================================================
-
-  function renderMessage(user, text) {
-
-    const div =
-      document.createElement("div");
-
-    div.className =
-      "message";
+const database =
+  firebase.database();
 
 
-    const strong =
-      document.createElement("strong");
+/* =====================================================
+   VISITEURS EN DIRECT
+===================================================== */
 
-    strong.textContent =
-      user + ":";
+auth.signInAnonymously()
+
+.then(() => {
+
+  const user =
+    auth.currentUser;
+
+  if (!user) return;
 
 
-    div.appendChild(strong);
-
-
-    div.appendChild(
-      document.createTextNode(
-        " " + text
-      )
+  const visitorRef =
+    database.ref(
+      "channelplus/visitors/" +
+      user.uid
     );
 
 
-    messagesBox.appendChild(div);
+  visitorRef.set({
 
+    online:true,
 
-    messagesBox.scrollTop =
-      messagesBox.scrollHeight;
+    lastSeen:
+      firebase.database.ServerValue.TIMESTAMP
 
-  }
+  });
 
 
-  // =====================================================
-  // RÉCUPÉRATION DES MESSAGES
-  //
-  // COLLECTION FIRESTORE :
-  // chats
-  // =====================================================
+  visitorRef.onDisconnect()
+    .remove();
 
-  const messagesQuery = query(
 
-    collection(
-      db,
-      "chats"
-    ),
+  const visitorsRef =
+    database.ref(
+      "channelplus/visitors"
+    );
 
-    orderBy(
-      "createdAt",
-      "asc"
-    )
 
-  );
+  visitorsRef.on(
+    "value",
+    snapshot => {
 
+      const count =
+        snapshot.numChildren();
 
-  // =====================================================
-  // ÉCOUTE EN TEMPS RÉEL
-  // =====================================================
 
-  onSnapshot(
+      const counter =
+        document.getElementById(
+          "channelplus-count"
+        );
 
-    messagesQuery,
 
-    (snapshot) => {
+      if (!counter) return;
 
-      messagesBox.innerHTML = "";
 
+      counter.textContent =
+        count;
 
-      snapshot.forEach(
 
-        (messageDoc) => {
+      const box =
+        document.getElementById(
+          "channelplus-online"
+        );
 
-          const data =
-            messageDoc.data();
 
+      if (!box) return;
 
-          renderMessage(
 
-            data.user ||
-            "Anonyme",
+      if (count <= 1) {
 
-            data.text ||
-            ""
+        box.innerHTML =
+          '🟢 <span id="channelplus-count">' +
+          count +
+          '</span> personne actuellement sur ChannelPlus';
 
-          );
+      } else {
 
-        }
-
-      );
-
-    },
-
-
-    (error) => {
-
-      console.error(
-        "Erreur Firebase :",
-        error
-      );
-
-
-      messagesBox.innerHTML = "";
-
-
-      const errorMessage =
-        document.createElement("div");
-
-      errorMessage.className =
-        "message";
-
-
-      const strong =
-        document.createElement("strong");
-
-      strong.textContent =
-        "Système :";
-
-
-      errorMessage.appendChild(
-        strong
-      );
-
-
-      errorMessage.appendChild(
-        document.createTextNode(
-          " Impossible de charger le chat."
-        )
-      );
-
-
-      messagesBox.appendChild(
-        errorMessage
-      );
-
-    }
-
-  );
-
-
-  // =====================================================
-  // ENVOYER UN MESSAGE
-  // =====================================================
-
-  async function sendMessage() {
-
-    const text =
-      messageInput.value.trim();
-
-
-    const user =
-      usernameInput.value.trim()
-      || "Anonyme";
-
-
-    // Message vide = rien
-
-    if (!text) {
-      return;
-    }
-
-
-    try {
-
-      // Désactiver temporairement
-      // le bouton
-
-      sendBtn.disabled = true;
-
-      sendBtn.textContent =
-        "Envoi...";
-
-
-      // Enregistrer dans Firestore
-
-      await addDoc(
-
-        collection(
-          db,
-          "chats"
-        ),
-
-        {
-
-          user: user,
-
-          text: text,
-
-          createdAt:
-            serverTimestamp()
-
-        }
-
-      );
-
-
-      // Nettoyer le champ
-
-      messageInput.value = "";
-
-      messageInput.focus();
-
-
-    }
-
-    catch(error) {
-
-      console.error(
-        "Erreur lors de l'envoi :",
-        error
-      );
-
-
-      alert(
-        "Impossible d'envoyer le message."
-      );
-
-    }
-
-
-    finally {
-
-      sendBtn.disabled =
-        false;
-
-      sendBtn.textContent =
-        "Envoyer";
-
-    }
-
-  }
-
-
-  // =====================================================
-  // BOUTON ENVOYER
-  // =====================================================
-
-  sendBtn.addEventListener(
-
-    "click",
-
-    sendMessage
-
-  );
-
-
-  // =====================================================
-  // ENTRÉE CLAVIER
-  // =====================================================
-
-  messageInput.addEventListener(
-
-    "keydown",
-
-    (event) => {
-
-      if (
-        event.key === "Enter"
-      ) {
-
-        event.preventDefault();
-
-        sendMessage();
+        box.innerHTML =
+          '🟢 <span id="channelplus-count">' +
+          count +
+          '</span> personnes actuellement sur ChannelPlus';
 
       }
 
     }
+  );
 
+})
+
+.catch(error => {
+
+  console.error(
+    "Erreur visiteurs :",
+    error
+  );
+
+});
+
+
+</script>
+
+
+<!-- =====================================================
+     CHAT FIREBASE
+===================================================== -->
+
+<script type="module">
+
+import {
+  initializeApp
+} from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  onSnapshot,
+  serverTimestamp
+} from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+const firebaseConfigChat = {
+
+  apiKey:
+    "AIzaSyDPh3dJ37uy21L70Mekm_ikuIfeD8wCZU",
+
+  authDomain:
+    "channelplus-8c219.firebaseapp.com",
+
+  projectId:
+    "channelplus-8c219",
+
+  storageBucket:
+    "channelplus-8c219.firebasestorage.app",
+
+  messagingSenderId:
+    "178858225057",
+
+  appId:
+    "1:178858225057:web:63c327bf23eb877f196fe0"
+
+};
+
+
+const chatApp =
+  initializeApp(
+    firebaseConfigChat,
+    "channelPlusChat"
   );
 
 
-  // =====================================================
-  // CHANGER LE TITRE DU CHAT
-  // =====================================================
-
-  window.ouvrirChat =
-    function(channelName) {
-
-      currentChannel =
-        channelName;
+const db =
+  getFirestore(chatApp);
 
 
-      chatTitle.textContent =
-        "💬 Chat • " +
-        channelName;
+const messagesBox =
+  document.getElementById(
+    "messages"
+  );
 
-    };
+
+const usernameInput =
+  document.getElementById(
+    "username"
+  );
 
 
-  // =====================================================
-  // FIN PARTIE 3
-  // =====================================================
+const messageInput =
+  document.getElementById(
+    "messageInput"
+  );
+
+
+const sendBtn =
+  document.getElementById(
+    "sendBtn"
+  );
+
+
+const chatTitle =
+  document.getElementById(
+    "chatTitle"
+  );
+
+
+let currentChannel =
+  "Général";
+
+
+window.ouvrirChat =
+function(channelName) {
+
+  currentChannel =
+    channelName;
+
+  if (chatTitle) {
+
+    chatTitle.textContent =
+      "💬 Chat • " +
+      channelName;
+
+  }
+
+};
+
+
+window.ouvrirChat("Général");
+
+
+/* =====================================================
+   AFFICHAGE MESSAGE
+===================================================== */
+
+function renderMessage(
+  user,
+  text
+) {
+
+  const div =
+    document.createElement(
+      "div"
+    );
+
+
+  div.className =
+    "message";
+
+
+  const strong =
+    document.createElement(
+      "strong"
+    );
+
+
+  strong.textContent =
+    user + ":";
+
+
+  div.appendChild(
+    strong
+  );
+
+
+  div.appendChild(
+    document.createTextNode(
+      " " + text
+    )
+  );
+
+
+  messagesBox.appendChild(
+    div
+  );
+
+
+  messagesBox.scrollTop =
+    messagesBox.scrollHeight;
+
+}
+
+
+/* =====================================================
+   ÉCOUTE CHAT
+===================================================== */
+
+const messagesQuery =
+  query(
+    collection(
+      db,
+      "chats"
+    ),
+    orderBy(
+      "createdAt",
+      "asc"
+    )
+  );
+
+
+onSnapshot(
+
+  messagesQuery,
+
+  snapshot => {
+
+    messagesBox.innerHTML =
+      "";
+
+
+    snapshot.forEach(
+      messageDoc => {
+
+        const data =
+          messageDoc.data();
+
+
+        renderMessage(
+
+          data.user ||
+          "Anonyme",
+
+          data.text ||
+          ""
+
+        );
+
+      }
+    );
+
+  },
+
+  error => {
+
+    console.error(
+      "Erreur chat :",
+      error
+    );
+
+  }
+
+);
+
+
+/* =====================================================
+   ENVOYER MESSAGE
+===================================================== */
+
+async function sendMessage() {
+
+  const text =
+    messageInput.value.trim();
+
+
+  const user =
+    usernameInput.value.trim()
+    || "Anonyme";
+
+
+  if (!text) return;
+
+
+  sendBtn.disabled =
+    true;
+
+
+  sendBtn.textContent =
+    "Envoi...";
+
+
+  try {
+
+    await addDoc(
+
+      collection(
+        db,
+        "chats"
+      ),
+
+      {
+
+        user:user,
+
+        text:text,
+
+        channel:currentChannel,
+
+        createdAt:
+          serverTimestamp()
+
+      }
+
+    );
+
+
+    messageInput.value =
+      "";
+
+
+    messageInput.focus();
+
+  }
+
+  catch(error) {
+
+    console.error(
+      "Erreur envoi :",
+      error
+    );
+
+
+    alert(
+      "Impossible d'envoyer le message."
+    );
+
+  }
+
+  finally {
+
+    sendBtn.disabled =
+      false;
+
+    sendBtn.textContent =
+      "Envoyer";
+
+  }
+
+}
+
+
+sendBtn.addEventListener(
+  "click",
+  sendMessage
+);
+
+
+messageInput.addEventListener(
+  "keydown",
+  event => {
+
+    if (
+      event.key === "Enter"
+    ) {
+
+      event.preventDefault();
+
+      sendMessage();
+
+    }
+
+  }
+);
 
 </script>
-```
-```html
+
+
 <!-- =====================================================
-     PARTIE 4 — LECTEUR + ANIMATIONS + OVERLAY + RECHERCHE
+     JAVASCRIPT PRINCIPAL
 ===================================================== -->
 
 <script>
 
-// =====================================================
-// LECTEUR HLS PRINCIPAL
-// =====================================================
-
 let hls = null;
 
 const video =
-  document.getElementById("video");
+  document.getElementById(
+    "video"
+  );
 
-
-// Ton flux principal
 
 const adn =
   "https://d3b73b34o7cvkq.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-gz2sgqzp076kf/adn.m3u8";
 
 
-// Fonction lecture
+/* =====================================================
+   LECTEUR PRINCIPAL
+===================================================== */
 
 function playChannel(url) {
-
-  // Détruire l'ancien lecteur HLS
 
   if (hls) {
 
@@ -1916,18 +1863,23 @@ function playChannel(url) {
   }
 
 
-  // Navigateur compatible HLS.js
-
   if (
     typeof Hls !== "undefined" &&
     Hls.isSupported()
   ) {
 
-    hls = new Hls();
+    hls =
+      new Hls();
 
-    hls.loadSource(url);
 
-    hls.attachMedia(video);
+    hls.loadSource(
+      url
+    );
+
+
+    hls.attachMedia(
+      video
+    );
 
 
     hls.on(
@@ -1942,21 +1894,7 @@ function playChannel(url) {
     );
 
 
-    hls.on(
-      Hls.Events.ERROR,
-      (event, data) => {
-
-        console.warn(
-          "Erreur HLS :",
-          data
-        );
-
-      }
-    );
-
   }
-
-  // Safari / navigateur avec HLS natif
 
   else if (
     video.canPlayType(
@@ -1964,7 +1902,9 @@ function playChannel(url) {
     )
   ) {
 
-    video.src = url;
+    video.src =
+      url;
+
 
     video
       .play()
@@ -1975,24 +1915,22 @@ function playChannel(url) {
 }
 
 
-// Lancer le flux principal
-
 playChannel(adn);
 
 
-// =====================================================
-// PARTICULES ANIMÉES
-// =====================================================
+/* =====================================================
+   PARTICULES
+===================================================== */
 
 function createParticles() {
 
   const container =
-    document.getElementById("particles");
+    document.getElementById(
+      "particles"
+    );
 
 
-  if (!container) {
-    return;
-  }
+  if (!container) return;
 
 
   for (
@@ -2002,7 +1940,9 @@ function createParticles() {
   ) {
 
     const particle =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
 
 
     particle.className =
@@ -2010,19 +1950,24 @@ function createParticles() {
 
 
     particle.style.left =
-      Math.random() * 100 + "%";
+      Math.random() * 100 +
+      "%";
 
 
     particle.style.animationDuration =
-      (Math.random() * 15 + 10) + "s";
+      Math.random() * 15 +
+      10 +
+      "s";
 
 
     particle.style.animationDelay =
-      (Math.random() * 10) + "s";
+      Math.random() * 10 +
+      "s";
 
 
     const size =
-      Math.random() * 3 + 2;
+      Math.random() * 3 +
+      2;
 
 
     particle.style.width =
@@ -2031,38 +1976,6 @@ function createParticles() {
 
     particle.style.height =
       size + "px";
-
-
-    const colors = [
-
-      "#00f0ff",
-
-      "#7b2dff",
-
-      "#ff006e",
-
-      "#00ff88"
-
-    ];
-
-
-    const color =
-      colors[
-        Math.floor(
-          Math.random() * colors.length
-        )
-      ];
-
-
-    particle.style.background =
-      color;
-
-
-    particle.style.boxShadow =
-      "0 0 " +
-      (Math.random() * 10 + 5) +
-      "px " +
-      color;
 
 
     container.appendChild(
@@ -2077,9 +1990,9 @@ function createParticles() {
 createParticles();
 
 
-// =====================================================
-// ANIMATION AU DÉFILEMENT
-// =====================================================
+/* =====================================================
+   REVEAL
+===================================================== */
 
 function revealOnScroll() {
 
@@ -2090,25 +2003,17 @@ function revealOnScroll() {
 
 
   reveals.forEach(
-    (element, index) => {
-
-      const windowHeight =
-        window.innerHeight;
-
+    (element,index) => {
 
       const elementTop =
-        element.getBoundingClientRect()
+        element
+          .getBoundingClientRect()
           .top;
-
-
-      const elementVisible =
-        100;
 
 
       if (
         elementTop <
-        windowHeight -
-        elementVisible
+        window.innerHeight - 100
       ) {
 
         setTimeout(
@@ -2142,9 +2047,9 @@ window.addEventListener(
 );
 
 
-// =====================================================
-// OVERLAY DES CHAÎNES
-// =====================================================
+/* =====================================================
+   OVERLAY
+===================================================== */
 
 const overlay =
   document.getElementById(
@@ -2170,133 +2075,59 @@ const overlayError =
   );
 
 
-let currentEmbedUrl = "";
-
-
-// =====================================================
-// OUVRIR UNE CHAÎNE
-// =====================================================
-
 window.ouvrirEmbed =
-  function(url) {
+function(url) {
 
-    currentEmbedUrl =
-      url;
-
-
-    overlayTitle.textContent =
-      "📺 Chargement…";
+  overlayError.style.display =
+    "none";
 
 
-    overlayError.style.display =
-      "none";
+  iframe.style.display =
+    "block";
 
 
-    iframe.style.display =
-      "block";
+  overlayTitle.textContent =
+    "📺 Lecture en cours";
 
 
-    iframe.src =
-      url;
+  iframe.src =
+    url;
 
 
-    overlay.style.display =
-      "flex";
+  overlay.style.display =
+    "flex";
 
 
-    document.body.style.overflow =
-      "hidden";
+  document.body.style.overflow =
+    "hidden";
 
+};
 
-    // Petit délai pour laisser
-    // le lecteur charger
-
-    setTimeout(
-      () => {
-
-        try {
-
-          const location =
-            iframe.contentWindow
-              .location.href;
-
-
-          if (
-            location ===
-              "about:blank" ||
-
-            location ===
-              window.location.href
-          ) {
-
-            overlayError.style.display =
-              "block";
-
-
-            iframe.style.display =
-              "none";
-
-          }
-
-        }
-
-        catch(error) {
-
-          // Normal avec une iframe
-          // provenant d'un autre domaine
-
-          overlayTitle.textContent =
-            "📺 Lecture en cours";
-
-        }
-
-      },
-      3500
-    );
-
-  };
-
-
-// =====================================================
-// FERMER L'OVERLAY
-// =====================================================
 
 window.fermerOverlay =
-  function() {
+function() {
 
-    iframe.src =
-      "about:blank";
-
-
-    overlay.style.display =
-      "none";
+  iframe.src =
+    "about:blank";
 
 
-    overlayError.style.display =
-      "none";
+  overlay.style.display =
+    "none";
 
 
-    iframe.style.display =
-      "block";
+  overlayError.style.display =
+    "none";
 
 
-    document.body.style.overflow =
-      "";
+  document.body.style.overflow =
+    "";
 
+};
 
-    currentEmbedUrl =
-      "";
-
-  };
-
-
-// =====================================================
-// TOUCHE ESC POUR FERMER
-// =====================================================
 
 document.addEventListener(
   "keydown",
-  (event) => {
+  event => {
 
     if (
       event.key === "Escape" &&
@@ -2311,9 +2142,9 @@ document.addEventListener(
 );
 
 
-// =====================================================
-// RECHERCHE DES CHAÎNES
-// =====================================================
+/* =====================================================
+   RECHERCHE
+===================================================== */
 
 const search =
   document.getElementById(
@@ -2323,7 +2154,7 @@ const search =
 
 search.addEventListener(
   "input",
-  (event) => {
+  event => {
 
     const query =
       event.target.value
@@ -2331,297 +2162,296 @@ search.addEventListener(
         .trim();
 
 
-    const channels =
-      document.querySelectorAll(
+    document
+      .querySelectorAll(
         ".channel"
+      )
+      .forEach(
+        channel => {
+
+          const name =
+            channel
+              .querySelector("h3")
+              .textContent
+              .toLowerCase();
+
+
+          channel.style.display =
+            name.includes(query)
+              ? ""
+              : "none";
+
+        }
       );
 
-
-    channels.forEach(
-      (channel) => {
-
-        const name =
-          channel
-            .querySelector("h3")
-            .textContent
-            .toLowerCase();
+  }
+);
 
 
-        if (
-          name.includes(query)
-        ) {
+window.addEventListener(
+  "beforeunload",
+  () => {
 
-          channel.style.display =
-            "";
+    if (hls) {
 
-        }
+      try {
 
-        else {
-
-          channel.style.display =
-            "none";
-
-        }
+        hls.destroy();
 
       }
-    );
+
+      catch(error) {}
+
+    }
 
   }
 );
 
-
-// =====================================================
-// CHAT GÉNÉRAL AU CHARGEMENT
-// =====================================================
-
-if (
-  typeof window.ouvrirChat ===
-  "function"
-) {
-
-  window.ouvrirChat(
-    "Général"
-  );
-
-}
-
 </script>
-```
-```html
+
+
 <!-- =====================================================
-     PARTIE 5 — FIN DU SITE
+     PROTECTION CHANNEL+
 ===================================================== -->
 
 <script>
 
-// =====================================================
-// EMPÊCHER LE BOUTON ENVOYER DE RESTER BLOQUÉ
-// =====================================================
+(function() {
 
-window.addEventListener("beforeunload", () => {
 
-  // Arrêter le lecteur HLS avant de quitter
+  const INDEX_PAGE =
+    "./index.html";
 
-  if (typeof hls !== "undefined" && hls) {
 
-    try {
+  const ACCESS_KEY =
+    "channelplus_authorized";
 
-      hls.destroy();
+
+  const ACCESS_TIME_KEY =
+    "channelplus_authorized_time";
+
+
+  const MAX_TIME =
+    30 * 24 * 60 * 60 * 1000;
+
+
+  const accessScreen =
+    document.getElementById(
+      "accessChecking"
+    );
+
+
+  let authorized =
+    false;
+
+
+  /* ===================================================
+     AUTORISATION DÉJÀ TRANSMISE PAR INDEX
+  =================================================== */
+
+  function grantAccess(ticket) {
+
+    if (!ticket) {
+
+      denyAccess();
+
+      return;
 
     }
 
-    catch(error) {
 
-      console.warn(
-        "Impossible d'arrêter HLS.",
-        error
+    authorized =
+      true;
+
+
+    sessionStorage.setItem(
+      ACCESS_KEY,
+      "true"
+    );
+
+
+    sessionStorage.setItem(
+      ACCESS_TIME_KEY,
+      String(Date.now())
+    );
+
+
+    if (accessScreen) {
+
+      accessScreen.style.display =
+        "none";
+
+    }
+
+  }
+
+
+  /* ===================================================
+     REFUS
+  =================================================== */
+
+  function denyAccess() {
+
+    authorized =
+      false;
+
+
+    sessionStorage.removeItem(
+      ACCESS_KEY
+    );
+
+
+    sessionStorage.removeItem(
+      ACCESS_TIME_KEY
+    );
+
+
+    if (accessScreen) {
+
+      accessScreen.innerHTML = `
+
+        <div>
+
+          ❌ Accès refusé.
+
+          <span>
+            Redirection vers la page d'accès...
+          </span>
+
+        </div>
+
+      `;
+
+    }
+
+
+    setTimeout(
+      () => {
+
+        window.location.replace(
+          INDEX_PAGE
+        );
+
+      },
+      500
+    );
+
+  }
+
+
+  /* ===================================================
+     MESSAGE ENVOYÉ PAR INDEX.HTML
+  =================================================== */
+
+  window.addEventListener(
+    "message",
+    event => {
+
+
+      if (
+        event.origin !==
+        window.location.origin
+      ) {
+
+        return;
+
+      }
+
+
+      if (
+        !event.data ||
+        event.data.type !==
+        "CHANNELPLUS_ACCESS"
+      ) {
+
+        return;
+
+      }
+
+
+      const ticket =
+        event.data.ticket;
+
+
+      if (!ticket) {
+
+        denyAccess();
+
+        return;
+
+      }
+
+
+      grantAccess(
+        ticket
       );
 
     }
-
-  }
-
-});
+  );
 
 
-// =====================================================
-// AMÉLIORATION MOBILE
-// =====================================================
+  /* ===================================================
+     VÉRIFICATION SESSION
+  =================================================== */
 
-document.addEventListener(
-  "touchstart",
-  () => {},
-  { passive: true }
-);
+  const saved =
+    sessionStorage.getItem(
+      ACCESS_KEY
+    );
 
 
-// =====================================================
-// LANCER LES ANIMATIONS AU CHARGEMENT
-// =====================================================
+  const savedTime =
+    Number(
+      sessionStorage.getItem(
+        ACCESS_TIME_KEY
+      ) || 0
+    );
 
-setTimeout(() => {
 
   if (
-    typeof revealOnScroll ===
-    "function"
+    saved === "true" &&
+    savedTime &&
+    Date.now() - savedTime <
+      MAX_TIME
   ) {
 
-    revealOnScroll();
+    authorized =
+      true;
+
+
+    if (accessScreen) {
+
+      accessScreen.style.display =
+        "none";
+
+    }
 
   }
 
-}, 100);
+
+  /* ===================================================
+     SI PAS D'AUTORISATION
+  =================================================== */
+
+  setTimeout(
+    () => {
+
+      if (!authorized) {
+
+        denyAccess();
+
+      }
+
+    },
+    1500
+  );
 
 
-// =====================================================
-// MESSAGE CONSOLE
-// =====================================================
-
-console.log(
-  "✅ Channel+ Premium chargé."
-);
-
-console.log(
-  "💬 Chat Firebase connecté à la collection : chats"
-);
-
-</script>
-<!-- ============================= -->
-<!-- CHANNEL+ : VISITEURS EN DIRECT -->
-<!-- ============================= -->
-
-<div id="channelplus-online">
-    🟢 <span id="channelplus-count">1</span> personne actuellement sur ChannelPlus
-</div>
-
-<style>
-#channelplus-online {
-    position: fixed;
-    bottom: 15px;
-    left: 15px;
-    z-index: 99999;
-
-    background: rgba(10, 15, 25, 0.92);
-    color: white;
-
-    padding: 10px 16px;
-    border-radius: 30px;
-
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    font-weight: bold;
-
-    box-shadow: 0 4px 15px rgba(0,0,0,0.35);
-    border: 1px solid rgba(255,255,255,0.15);
-
-    backdrop-filter: blur(8px);
-}
-
-#channelplus-count {
-    color: #00ff66;
-    font-size: 16px;
-}
-
-@media (max-width: 600px) {
-    #channelplus-online {
-        bottom: 10px;
-        left: 10px;
-        font-size: 12px;
-        padding: 8px 12px;
-    }
-
-    #channelplus-count {
-        font-size: 14px;
-    }
-}
-</style>
-
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-
-<script>
-
-const firebaseConfig = {
-
-  apiKey: "AIzaSyDPh3dJ37auy21L70Mekm_ikuIfeD8wCZU",
-
-  authDomain: "channelplus-8c219.firebaseapp.com",
-
-  databaseURL: "https://channelplus-8c219-default-rtdb.firebaseio.com",
-
-  projectId: "channelplus-8c219",
-
-  storageBucket: "channelplus-8c219.firebasestorage.app",
-
-  messagingSenderId: "178858225057",
-
-  appId: "1:178858225057:web:63c327bf23eb877f196fe0"
-};
-
-
-firebase.initializeApp(firebaseConfig);
-
-const auth = firebase.auth();
-const database = firebase.database();
-
-auth.signInAnonymously()
-.then(() => {
-
-    const user = auth.currentUser;
-
-    if (!user) return;
-
-    const visitorRef = database.ref(
-        "channelplus/visitors/" + user.uid
-    );
-
-    // Enregistre le visiteur
-    visitorRef.set({
-        online: true,
-        lastSeen: firebase.database.ServerValue.TIMESTAMP
-    });
-
-    // Supprime automatiquement le visiteur
-    // lorsqu'il quitte/perd la connexion
-    visitorRef.onDisconnect().remove();
-
-    // Surveille les visiteurs actuellement présents
-    const visitorsRef = database.ref(
-        "channelplus/visitors"
-    );
-
-    visitorsRef.on("value", (snapshot) => {
-
-        const count = snapshot.numChildren();
-
-        const counter =
-            document.getElementById("channelplus-count");
-
-        if (!counter) return;
-
-        counter.textContent = count;
-
-        const text =
-            document.getElementById("channelplus-online");
-
-        if (count <= 1) {
-
-            text.innerHTML =
-                '🟢 <span id="channelplus-count">' +
-                count +
-                '</span> personne actuellement sur ChannelPlus';
-
-        } else {
-
-            text.innerHTML =
-                '🟢 <span id="channelplus-count">' +
-                count +
-                '</span> personnes actuellement sur ChannelPlus';
-
-        }
-
-    });
-
-})
-.catch((error) => {
-
-    console.error(
-        "Erreur ChannelPlus visiteurs :",
-        error
-    );
-
-});
+})();
 
 </script>
 
-<!-- =====================================================
-     FIN DU SITE
-===================================================== -->
 
 </body>
 
 </html>
-```
-
