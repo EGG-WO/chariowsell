@@ -5,7 +5,8 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>Channel+ Premium</title>
 
@@ -36,7 +37,8 @@
   font-family:'Inter',Arial,sans-serif;
 }
 
-html,body {
+html,
+body {
   margin:0;
   padding:0;
   background:#02040a;
@@ -552,6 +554,8 @@ video {
   box-shadow:
     0 8px 25px rgba(0,0,0,.3);
 
+  transition:.3s;
+
 }
 
 .channel:hover img {
@@ -958,38 +962,10 @@ footer {
 
 
 <body>
-<script>
-(function () {
 
-    const session = sessionStorage.getItem("channelplus_session");
-
-    if (!session) {
-        window.location.replace("index.html");
-        return;
-    }
-
-    try {
-
-        const data = JSON.parse(session);
-
-        if (!data.ticket || !data.at) {
-            sessionStorage.removeItem("channelplus_session");
-            window.location.replace("index.html");
-            return;
-        }
-
-    } catch (e) {
-
-        sessionStorage.removeItem("channelplus_session");
-        window.location.replace("index.html");
-
-    }
-
-})();
-</script>
 
 <!-- =====================================================
-     PROTECTION D'ACCÈS
+     ÉCRAN DE VÉRIFICATION FIREBASE
 ===================================================== -->
 
 <div id="accessChecking">
@@ -999,7 +975,7 @@ footer {
     🔐 Vérification de votre accès...
 
     <span>
-      Veuillez patienter quelques secondes.
+      Vérification de votre compte Google et de votre ticket.
     </span>
 
   </div>
@@ -1040,7 +1016,9 @@ footer {
 <div class="container">
 
 
-  <!-- PLAYER -->
+  <!-- ===================================================
+       PLAYER
+  ==================================================== -->
 
   <div class="player-box reveal">
 
@@ -1055,7 +1033,9 @@ footer {
   </div>
 
 
-  <!-- CHAT -->
+  <!-- ===================================================
+       CHAT
+  ==================================================== -->
 
   <div class="chat-box reveal">
 
@@ -1089,7 +1069,9 @@ footer {
   </div>
 
 
-  <!-- RECHERCHE -->
+  <!-- ===================================================
+       RECHERCHE
+  ==================================================== -->
 
   <input
     id="search"
@@ -1097,7 +1079,9 @@ footer {
     placeholder="Rechercher une chaîne...">
 
 
-  <!-- CHAÎNES -->
+  <!-- ===================================================
+       CHAÎNES
+  ==================================================== -->
 
   <div
     class="channels"
@@ -1106,7 +1090,9 @@ footer {
 
     <div class="channel reveal">
 
-      <img src="nolly.png" alt="NOLLYWOOD TV">
+      <img
+        src="nolly.png"
+        alt="NOLLYWOOD TV">
 
       <h3>NOLLYWOOD TV</h3>
 
@@ -1119,7 +1105,9 @@ footer {
 
     <div class="channel reveal">
 
-      <img src="disney.png" alt="Disney Junior">
+      <img
+        src="disney.png"
+        alt="Disney Junior">
 
       <h3>Disney Junior</h3>
 
@@ -1132,7 +1120,9 @@ footer {
 
     <div class="channel reveal">
 
-      <img src="nik.png" alt="Nickelodeon">
+      <img
+        src="nik.png"
+        alt="Nickelodeon">
 
       <h3>Nickelodeon</h3>
 
@@ -1148,7 +1138,9 @@ footer {
 
     <div class="channel reveal">
 
-      <img src="A+.jpg" alt="A+">
+      <img
+        src="A+.jpg"
+        alt="A+">
 
       <h3>A+</h3>
 
@@ -1161,7 +1153,9 @@ footer {
 
     <div class="channel reveal">
 
-      <img src="nov.png" alt="Novelas TV">
+      <img
+        src="nov.png"
+        alt="Novelas TV">
 
       <h3>Novelas TV</h3>
 
@@ -1174,7 +1168,9 @@ footer {
 
     <div class="channel reveal">
 
-      <img src="c+1.png" alt="Canal+ Sport 1">
+      <img
+        src="c+1.png"
+        alt="Canal+ Sport 1">
 
       <h3>Canal+ Sport 1</h3>
 
@@ -1187,7 +1183,9 @@ footer {
 
     <div class="channel reveal">
 
-      <img src="infosport+.png" alt="Infosport+">
+      <img
+        src="infosport+.png"
+        alt="Infosport+">
 
       <h3>Infosport+</h3>
 
@@ -1200,7 +1198,9 @@ footer {
 
     <div class="channel reveal">
 
-      <img src="c+family.png" alt="Canal+ Family">
+      <img
+        src="c+family.png"
+        alt="Canal+ Family">
 
       <h3>Canal+ Family</h3>
 
@@ -1213,7 +1213,9 @@ footer {
 
     <div class="channel reveal">
 
-      <img src="tf1.jpg" alt="TF1">
+      <img
+        src="tf1.jpg"
+        alt="TF1">
 
       <h3>TF1</h3>
 
@@ -1226,7 +1228,9 @@ footer {
 
     <div class="channel reveal">
 
-      <img src="piwi+.png" alt="Piwi+">
+      <img
+        src="piwi+.png"
+        alt="Piwi+">
 
       <h3>Piwi+</h3>
 
@@ -1239,7 +1243,9 @@ footer {
 
     <div class="channel reveal">
 
-      <img src="tfx.jpg" alt="TFX">
+      <img
+        src="tfx.jpg"
+        alt="TFX">
 
       <h3>TFX</h3>
 
@@ -1252,7 +1258,9 @@ footer {
 
     <div class="channel reveal">
 
-      <img src="action.jpg" alt="Action">
+      <img
+        src="action.jpg"
+        alt="Action">
 
       <h3>Action</h3>
 
@@ -1265,7 +1273,9 @@ footer {
 
     <div class="channel reveal">
 
-      <img src="teletoon.jpg" alt="Teletoon+">
+      <img
+        src="teletoon.jpg"
+        alt="Teletoon+">
 
       <h3>Teletoon+</h3>
 
@@ -1278,7 +1288,9 @@ footer {
 
     <div class="channel reveal">
 
-      <img src="bein.jpg" alt="BeinSport">
+      <img
+        src="bein.jpg"
+        alt="BeinSport">
 
       <h3>BeinSport</h3>
 
@@ -1306,7 +1318,7 @@ footer {
 
 
 <!-- =====================================================
-     OVERLAY
+     OVERLAY PLAYER
 ===================================================== -->
 
 <div id="overlayPlayer">
@@ -1354,7 +1366,7 @@ footer {
 
 
 <!-- =====================================================
-     VISITEURS EN DIRECT
+     COMPTEUR VISITEURS
 ===================================================== -->
 
 <div id="channelplus-online">
@@ -1367,7 +1379,7 @@ footer {
 
 
 <!-- =====================================================
-     FIREBASE
+     FIREBASE COMPAT
 ===================================================== -->
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -1378,6 +1390,10 @@ footer {
 
 
 <script>
+
+/* =====================================================
+   CONFIGURATION FIREBASE
+===================================================== */
 
 const firebaseConfig = {
 
@@ -1405,7 +1421,19 @@ const firebaseConfig = {
 };
 
 
-firebase.initializeApp(firebaseConfig);
+/* =====================================================
+   INITIALISATION
+===================================================== */
+
+if (
+  !firebase.apps.length
+) {
+
+  firebase.initializeApp(
+    firebaseConfig
+  );
+
+}
 
 
 const auth =
@@ -1417,119 +1445,129 @@ const database =
 
 
 /* =====================================================
-   VISITEURS EN DIRECT
+   COMPTEUR VISITEURS
 ===================================================== */
 
-auth.signInAnonymously()
+/*
+   IMPORTANT :
 
-.then(() => {
+   On n'utilise PLUS signInAnonymously().
 
-  const user =
-    auth.currentUser;
+   Le visiteur doit être connecté avec
+   son compte Google.
 
-  if (!user) return;
+   On utilise donc directement son UID Google.
+*/
 
+auth.onAuthStateChanged(
+  function(user) {
 
-  const visitorRef =
-    database.ref(
-      "channelplus/visitors/" +
-      user.uid
-    );
+    if (!user) {
 
+      console.log(
+        "Visiteur non connecté."
+      );
 
-  visitorRef.set({
-
-    online:true,
-
-    lastSeen:
-      firebase.database.ServerValue.TIMESTAMP
-
-  });
-
-
-  visitorRef.onDisconnect()
-    .remove();
-
-
-  const visitorsRef =
-    database.ref(
-      "channelplus/visitors"
-    );
-
-
-  visitorsRef.on(
-    "value",
-    snapshot => {
-
-      const count =
-        snapshot.numChildren();
-
-
-      const counter =
-        document.getElementById(
-          "channelplus-count"
-        );
-
-
-      if (!counter) return;
-
-
-      counter.textContent =
-        count;
-
-
-      const box =
-        document.getElementById(
-          "channelplus-online"
-        );
-
-
-      if (!box) return;
-
-
-      if (count <= 1) {
-
-        box.innerHTML =
-          '🟢 <span id="channelplus-count">' +
-          count +
-          '</span> personne actuellement sur ChannelPlus';
-
-      } else {
-
-        box.innerHTML =
-          '🟢 <span id="channelplus-count">' +
-          count +
-          '</span> personnes actuellement sur ChannelPlus';
-
-      }
+      return;
 
     }
-  );
 
-})
 
-.catch(error => {
+    const visitorRef =
+      database.ref(
+        "channelplus/visitors/" +
+        user.uid
+      );
 
-  console.error(
-    "Erreur visiteurs :",
-    error
-  );
 
-});
+    visitorRef.set({
+
+      online:true,
+
+      lastSeen:
+        firebase.database.ServerValue.TIMESTAMP
+
+    });
+
+
+    visitorRef.onDisconnect()
+      .remove();
+
+
+    const visitorsRef =
+      database.ref(
+        "channelplus/visitors"
+      );
+
+
+    visitorsRef.on(
+      "value",
+      function(snapshot) {
+
+        const count =
+          snapshot.numChildren();
+
+
+        const counter =
+          document.getElementById(
+            "channelplus-count"
+          );
+
+
+        if (!counter) return;
+
+
+        counter.textContent =
+          count;
+
+
+        const box =
+          document.getElementById(
+            "channelplus-online"
+          );
+
+
+        if (!box) return;
+
+
+        if (count <= 1) {
+
+          box.innerHTML =
+            '🟢 <span id="channelplus-count">' +
+            count +
+            '</span> personne actuellement sur ChannelPlus';
+
+        }
+
+        else {
+
+          box.innerHTML =
+            '🟢 <span id="channelplus-count">' +
+            count +
+            '</span> personnes actuellement sur ChannelPlus';
+
+        }
+
+      }
+    );
+
+  }
+);
 
 
 </script>
 
 
 <!-- =====================================================
-     CHAT FIREBASE
+     CHAT FIRESTORE
 ===================================================== -->
 
 <script type="module">
 
 import {
   initializeApp
-} from
+}
+from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 
@@ -1541,7 +1579,8 @@ import {
   orderBy,
   onSnapshot,
   serverTimestamp
-} from
+}
+from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
@@ -1576,7 +1615,9 @@ const chatApp =
 
 
 const db =
-  getFirestore(chatApp);
+  getFirestore(
+    chatApp
+  );
 
 
 const messagesBox =
@@ -1613,11 +1654,16 @@ let currentChannel =
   "Général";
 
 
+/* =====================================================
+   OUVRIR CHAT
+===================================================== */
+
 window.ouvrirChat =
 function(channelName) {
 
   currentChannel =
     channelName;
+
 
   if (chatTitle) {
 
@@ -1630,11 +1676,13 @@ function(channelName) {
 };
 
 
-window.ouvrirChat("Général");
+window.ouvrirChat(
+  "Général"
+);
 
 
 /* =====================================================
-   AFFICHAGE MESSAGE
+   AFFICHER MESSAGE
 ===================================================== */
 
 function renderMessage(
@@ -1686,7 +1734,7 @@ function renderMessage(
 
 
 /* =====================================================
-   ÉCOUTE CHAT
+   ÉCOUTER LE CHAT
 ===================================================== */
 
 const messagesQuery =
@@ -1706,14 +1754,14 @@ onSnapshot(
 
   messagesQuery,
 
-  snapshot => {
+  function(snapshot) {
 
     messagesBox.innerHTML =
       "";
 
 
     snapshot.forEach(
-      messageDoc => {
+      function(messageDoc) {
 
         const data =
           messageDoc.data();
@@ -1734,7 +1782,7 @@ onSnapshot(
 
   },
 
-  error => {
+  function(error) {
 
     console.error(
       "Erreur chat :",
@@ -1753,12 +1801,14 @@ onSnapshot(
 async function sendMessage() {
 
   const text =
-    messageInput.value.trim();
+    messageInput.value
+      .trim();
 
 
   const user =
-    usernameInput.value.trim()
-    || "Anonyme";
+    usernameInput.value
+      .trim()
+      || "Anonyme";
 
 
   if (!text) return;
@@ -1824,6 +1874,7 @@ async function sendMessage() {
     sendBtn.disabled =
       false;
 
+
     sendBtn.textContent =
       "Envoyer";
 
@@ -1840,7 +1891,7 @@ sendBtn.addEventListener(
 
 messageInput.addEventListener(
   "keydown",
-  event => {
+  function(event) {
 
     if (
       event.key === "Enter"
@@ -1855,6 +1906,437 @@ messageInput.addEventListener(
   }
 );
 
+
+</script>
+
+
+<!-- =====================================================
+     PROTECTION CHANNEL+
+     NOUVEAU SYSTÈME
+===================================================== -->
+
+<script type="module">
+
+import {
+  initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+import {
+  getAuth,
+  onAuthStateChanged
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+import {
+  getFirestore,
+  doc,
+  getDoc
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+/* =====================================================
+   CONFIGURATION FIREBASE
+===================================================== */
+
+const firebaseConfigProtection = {
+
+  apiKey:
+    "AIzaSyDPh3dJ37uy21L70Mekm_ikuIfeD8wCZU",
+
+  authDomain:
+    "channelplus-8c219.firebaseapp.com",
+
+  projectId:
+    "channelplus-8c219",
+
+  storageBucket:
+    "channelplus-8c219.firebasestorage.app",
+
+  messagingSenderId:
+    "178858225057",
+
+  appId:
+    "1:178858225057:web:63c327bf23eb877f196fe0"
+
+};
+
+
+/* =====================================================
+   INITIALISATION FIREBASE
+===================================================== */
+
+const protectionApp =
+  initializeApp(
+    firebaseConfigProtection,
+    "channelPlusProtection"
+  );
+
+
+const protectionAuth =
+  getAuth(
+    protectionApp
+  );
+
+
+const protectionDb =
+  getFirestore(
+    protectionApp
+  );
+
+
+/* =====================================================
+   ÉCRAN
+===================================================== */
+
+const accessChecking =
+  document.getElementById(
+    "accessChecking"
+  );
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+function showAccessMessage(
+  title,
+  subtitle
+) {
+
+  if (!accessChecking) return;
+
+
+  accessChecking.innerHTML = `
+
+    <div>
+
+      ${title}
+
+      <span>
+        ${subtitle}
+      </span>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =====================================================
+   REFUS
+===================================================== */
+
+function denyAccess(
+  reason
+) {
+
+  showAccessMessage(
+
+    "❌ Accès refusé",
+
+    reason
+
+  );
+
+
+  setTimeout(
+    function() {
+
+      window.location.replace(
+        "./index.html"
+      );
+
+    },
+    1500
+  );
+
+}
+
+
+/* =====================================================
+   VÉRIFICATION PREMIUM
+===================================================== */
+
+async function verifyPremiumAccess(
+  user
+) {
+
+  try {
+
+    showAccessMessage(
+
+      "🔐 Vérification de votre accès...",
+
+      "Vérification de votre compte Google."
+
+    );
+
+
+    /* =================================================
+       PROFIL UTILISATEUR
+    ================================================= */
+
+    const userRef =
+      doc(
+        protectionDb,
+        "users",
+        user.uid
+      );
+
+
+    const userSnap =
+      await getDoc(
+        userRef
+      );
+
+
+    if (
+      !userSnap.exists()
+    ) {
+
+      denyAccess(
+
+        "Aucun accès Channel+ n'est associé à ce compte."
+
+      );
+
+      return;
+
+    }
+
+
+    const userData =
+      userSnap.data();
+
+
+    /* =================================================
+       TICKET DU COMPTE
+    ================================================= */
+
+    const ticketCode =
+      userData.ticketCode;
+
+
+    if (!ticketCode) {
+
+      denyAccess(
+
+        "Aucun ticket n'est associé à votre compte."
+
+      );
+
+      return;
+
+    }
+
+
+    /* =================================================
+       RÉCUPÉRER LE TICKET
+    ================================================= */
+
+    const ticketRef =
+      doc(
+        protectionDb,
+        "tickets",
+        ticketCode
+      );
+
+
+    const ticketSnap =
+      await getDoc(
+        ticketRef
+      );
+
+
+    if (
+      !ticketSnap.exists()
+    ) {
+
+      denyAccess(
+
+        "Votre ticket est introuvable."
+
+      );
+
+      return;
+
+    }
+
+
+    const ticket =
+      ticketSnap.data();
+
+
+    /* =================================================
+       VÉRIFIER PROPRIÉTAIRE
+    ================================================= */
+
+    if (
+      ticket.ownerUid !==
+      user.uid
+    ) {
+
+      denyAccess(
+
+        "Ce ticket n'est pas associé à votre compte Google."
+
+      );
+
+      return;
+
+    }
+
+
+    /* =================================================
+       VÉRIFIER EXPIRATION
+    ================================================= */
+
+    if (
+
+      ticket.expiresAt &&
+
+      typeof ticket.expiresAt.toMillis ===
+        "function"
+
+    ) {
+
+      const expiration =
+        ticket.expiresAt.toMillis();
+
+
+      if (
+        expiration <= Date.now()
+      ) {
+
+        denyAccess(
+
+          "Votre ticket est expiré."
+
+        );
+
+        return;
+
+      }
+
+    }
+
+
+    /* =================================================
+       ACCÈS AUTORISÉ
+    ================================================= */
+
+    showAccessMessage(
+
+      "✅ Accès autorisé",
+
+      "Bienvenue sur Channel+ Premium."
+
+    );
+
+
+    console.log(
+      "CHANNEL+ : accès autorisé",
+      user.email
+    );
+
+
+    /* =================================================
+       MASQUER L'ÉCRAN
+    ================================================= */
+
+    setTimeout(
+      function() {
+
+        if (accessChecking) {
+
+          accessChecking.style.display =
+            "none";
+
+        }
+
+      },
+      500
+    );
+
+  }
+
+  catch(error) {
+
+    console.error(
+
+      "Erreur vérification Channel+ :",
+
+      error
+
+    );
+
+
+    denyAccess(
+
+      "Impossible de vérifier votre accès. Veuillez vous reconnecter."
+
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   SURVEILLER CONNEXION GOOGLE
+===================================================== */
+
+onAuthStateChanged(
+
+  protectionAuth,
+
+  function(user) {
+
+    console.log(
+      "État Google :",
+      user
+        ? user.email
+        : "non connecté"
+    );
+
+
+    /* ===============================================
+       PAS CONNECTÉ
+    =============================================== */
+
+    if (!user) {
+
+      denyAccess(
+
+        "Vous devez vous connecter avec votre compte Google."
+
+      );
+
+      return;
+
+    }
+
+
+    /* ===============================================
+       CONNECTÉ
+    =============================================== */
+
+    verifyPremiumAccess(
+      user
+    );
+
+  }
+
+);
+
 </script>
 
 
@@ -1865,6 +2347,7 @@ messageInput.addEventListener(
 <script>
 
 let hls = null;
+
 
 const video =
   document.getElementById(
@@ -1880,7 +2363,9 @@ const adn =
    LECTEUR PRINCIPAL
 ===================================================== */
 
-function playChannel(url) {
+function playChannel(
+  url
+) {
 
   if (hls) {
 
@@ -1892,8 +2377,11 @@ function playChannel(url) {
 
 
   if (
+
     typeof Hls !== "undefined" &&
+
     Hls.isSupported()
+
   ) {
 
     hls =
@@ -1911,23 +2399,29 @@ function playChannel(url) {
 
 
     hls.on(
+
       Hls.Events.MANIFEST_PARSED,
-      () => {
+
+      function() {
 
         video
           .play()
-          .catch(() => {});
+          .catch(
+            function() {}
+          );
 
       }
-    );
 
+    );
 
   }
 
   else if (
+
     video.canPlayType(
       "application/vnd.apple.mpegurl"
     )
+
   ) {
 
     video.src =
@@ -1936,14 +2430,18 @@ function playChannel(url) {
 
     video
       .play()
-      .catch(() => {});
+      .catch(
+        function() {}
+      );
 
   }
 
 }
 
 
-playChannel(adn);
+playChannel(
+  adn
+);
 
 
 /* =====================================================
@@ -2031,7 +2529,7 @@ function revealOnScroll() {
 
 
   reveals.forEach(
-    (element,index) => {
+    function(element,index) {
 
       const elementTop =
         element
@@ -2040,19 +2538,24 @@ function revealOnScroll() {
 
 
       if (
+
         elementTop <
         window.innerHeight - 100
+
       ) {
 
         setTimeout(
-          () => {
+
+          function() {
 
             element.classList.add(
               "active"
             );
 
           },
+
           index * 50
+
         );
 
       }
@@ -2155,11 +2658,15 @@ function() {
 
 document.addEventListener(
   "keydown",
-  event => {
+  function(event) {
 
     if (
+
       event.key === "Escape" &&
-      overlay.style.display === "flex"
+
+      overlay.style.display ===
+        "flex"
+
     ) {
 
       fermerOverlay();
@@ -2182,7 +2689,7 @@ const search =
 
 search.addEventListener(
   "input",
-  event => {
+  function(event) {
 
     const query =
       event.target.value
@@ -2195,7 +2702,7 @@ search.addEventListener(
         ".channel"
       )
       .forEach(
-        channel => {
+        function(channel) {
 
           const name =
             channel
@@ -2216,9 +2723,13 @@ search.addEventListener(
 );
 
 
+/* =====================================================
+   NETTOYAGE
+===================================================== */
+
 window.addEventListener(
   "beforeunload",
-  () => {
+  function() {
 
     if (hls) {
 
@@ -2234,248 +2745,6 @@ window.addEventListener(
 
   }
 );
-
-</script>
-
-
-<!-- =====================================================
-     PROTECTION CHANNEL+
-===================================================== -->
-
-<script>
-
-(function() {
-
-
-  const INDEX_PAGE =
-    "./index.html";
-
-
-  const ACCESS_KEY =
-    "channelplus_authorized";
-
-
-  const ACCESS_TIME_KEY =
-    "channelplus_authorized_time";
-
-
-  const MAX_TIME =
-    30 * 24 * 60 * 60 * 1000;
-
-
-  const accessScreen =
-    document.getElementById(
-      "accessChecking"
-    );
-
-
-  let authorized =
-    false;
-
-
-  /* ===================================================
-     AUTORISATION DÉJÀ TRANSMISE PAR INDEX
-  =================================================== */
-
-  function grantAccess(ticket) {
-
-    if (!ticket) {
-
-      denyAccess();
-
-      return;
-
-    }
-
-
-    authorized =
-      true;
-
-
-    sessionStorage.setItem(
-      ACCESS_KEY,
-      "true"
-    );
-
-
-    sessionStorage.setItem(
-      ACCESS_TIME_KEY,
-      String(Date.now())
-    );
-
-
-    if (accessScreen) {
-
-      accessScreen.style.display =
-        "none";
-
-    }
-
-  }
-
-
-  /* ===================================================
-     REFUS
-  =================================================== */
-
-  function denyAccess() {
-
-    authorized =
-      false;
-
-
-    sessionStorage.removeItem(
-      ACCESS_KEY
-    );
-
-
-    sessionStorage.removeItem(
-      ACCESS_TIME_KEY
-    );
-
-
-    if (accessScreen) {
-
-      accessScreen.innerHTML = `
-
-        <div>
-
-          ❌ Accès refusé.
-
-          <span>
-            Redirection vers la page d'accès...
-          </span>
-
-        </div>
-
-      `;
-
-    }
-
-
-    setTimeout(
-      () => {
-
-        window.location.replace(
-          INDEX_PAGE
-        );
-
-      },
-      500
-    );
-
-  }
-
-
-  /* ===================================================
-     MESSAGE ENVOYÉ PAR INDEX.HTML
-  =================================================== */
-
-  window.addEventListener(
-    "message",
-    event => {
-
-
-      if (
-        event.origin !==
-        window.location.origin
-      ) {
-
-        return;
-
-      }
-
-
-      if (
-        !event.data ||
-        event.data.type !==
-        "CHANNELPLUS_ACCESS"
-      ) {
-
-        return;
-
-      }
-
-
-      const ticket =
-        event.data.ticket;
-
-
-      if (!ticket) {
-
-        denyAccess();
-
-        return;
-
-      }
-
-
-      grantAccess(
-        ticket
-      );
-
-    }
-  );
-
-
-  /* ===================================================
-     VÉRIFICATION SESSION
-  =================================================== */
-
-  const saved =
-    sessionStorage.getItem(
-      ACCESS_KEY
-    );
-
-
-  const savedTime =
-    Number(
-      sessionStorage.getItem(
-        ACCESS_TIME_KEY
-      ) || 0
-    );
-
-
-  if (
-    saved === "true" &&
-    savedTime &&
-    Date.now() - savedTime <
-      MAX_TIME
-  ) {
-
-    authorized =
-      true;
-
-
-    if (accessScreen) {
-
-      accessScreen.style.display =
-        "none";
-
-    }
-
-  }
-
-
-  /* ===================================================
-     SI PAS D'AUTORISATION
-  =================================================== */
-
-  setTimeout(
-    () => {
-
-      if (!authorized) {
-
-        denyAccess();
-
-      }
-
-    },
-    1500
-  );
-
-
-})();
 
 </script>
 
