@@ -13,194 +13,136 @@
 <style>
 
 * {
-  box-sizing: border-box;
+  box-sizing:border-box;
 }
 
 html,
 body {
-
-  margin: 0;
-  padding: 0;
-
-  width: 100%;
-  min-height: 100%;
-
-  font-family: Arial, sans-serif;
-
-  background:
-    radial-gradient(
-      circle at top,
-      #101c35,
-      #050816 60%
-    );
-
-  color: white;
-
+  margin:0;
+  min-height:100%;
+  font-family:Arial,sans-serif;
+  background:#050816;
+  color:#fff;
 }
 
 body {
-
-  min-height: 100vh;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  padding: 20px;
-
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
 }
 
 .box {
 
-  width: min(92%, 430px);
-
-  padding: 32px;
-
-  border-radius: 24px;
+  width:min(92%,420px);
 
   background:
-    rgba(15,23,42,.96);
+    linear-gradient(
+      145deg,
+      rgba(17,24,39,.98),
+      rgba(15,23,42,.98)
+    );
 
-  border:
-    1px solid
-    rgba(255,255,255,.08);
+  padding:32px;
+
+  border-radius:24px;
+
+  text-align:center;
+
+  border:1px solid rgba(255,255,255,.08);
 
   box-shadow:
-    0 25px 80px rgba(0,0,0,.6),
+    0 20px 70px rgba(0,0,0,.6),
     0 0 50px rgba(34,211,238,.08);
-
-  text-align: center;
-
 }
 
 .logo {
 
-  font-size: 30px;
+  font-size:30px;
 
-  font-weight: 800;
+  font-weight:800;
 
-  margin-bottom: 8px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #ffffff,
-      #22d3ee,
-      #2563eb
-    );
-
-  -webkit-background-clip: text;
-
-  -webkit-text-fill-color: transparent;
-
-}
-
-.subtitle {
-
-  color: #94a3b8;
-
-  line-height: 1.5;
-
-  margin-bottom: 25px;
-
-}
-
-.step {
-
-  display: none;
-
-}
-
-.step.active {
-
-  display: block;
-
-}
-
-.number {
-
-  width: 38px;
-  height: 38px;
-
-  margin: 0 auto 14px;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 50%;
+  margin-bottom:8px;
 
   background:
     linear-gradient(
       135deg,
+      #fff,
       #22d3ee,
       #2563eb
     );
 
-  font-weight: bold;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
 
+.sub {
+
+  color:#94a3b8;
+
+  line-height:1.5;
+
+  margin:0 0 25px;
+}
+
+.icon {
+
+  font-size:55px;
+
+  margin-bottom:10px;
 }
 
 h2 {
 
-  margin:
-    0 0 10px;
+  margin:0 0 10px;
 
 }
 
 input {
 
-  width: 100%;
+  width:100%;
 
-  padding: 16px;
+  padding:16px;
 
-  margin-top: 12px;
+  margin-top:12px;
 
-  border-radius: 12px;
+  border-radius:14px;
 
-  border:
-    1px solid
-    rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.1);
 
-  background:
-    #080f1e;
+  background:#0b1220;
 
-  color: white;
+  color:#fff;
 
-  outline: none;
+  font-size:17px;
 
-  text-align: center;
+  text-align:center;
 
-  font-size: 17px;
+  outline:none;
 
-  text-transform: uppercase;
-
+  text-transform:uppercase;
 }
 
 input:focus {
 
-  border-color:
-    #22d3ee;
+  border-color:#22d3ee;
 
   box-shadow:
-    0 0 18px
-    rgba(34,211,238,.15);
-
+    0 0 20px rgba(34,211,238,.15);
 }
 
 button {
 
-  width: 100%;
+  width:100%;
 
-  padding: 15px;
+  padding:15px;
 
-  margin-top: 14px;
+  margin-top:14px;
 
-  border: none;
+  border:0;
 
-  border-radius: 12px;
+  border-radius:14px;
 
   background:
     linear-gradient(
@@ -209,168 +151,124 @@ button {
       #2563eb
     );
 
-  color: white;
+  color:#fff;
 
-  font-size: 16px;
+  font-size:16px;
 
-  font-weight: bold;
+  font-weight:bold;
 
-  cursor: pointer;
+  cursor:pointer;
 
 }
 
 button:hover {
 
-  filter: brightness(1.1);
+  filter:brightness(1.08);
 
-  transform:
-    translateY(-1px);
+  transform:translateY(-1px);
 
 }
 
 button:disabled {
 
-  opacity: .6;
+  opacity:.6;
 
-  cursor: not-allowed;
+  cursor:not-allowed;
 
-  transform: none;
-
-}
-
-.google {
-
-  background: white;
-
-  color: #111827;
+  transform:none;
 
 }
 
 .info {
 
-  margin-top: 18px;
+  margin-top:20px;
 
-  padding: 14px;
+  padding:14px;
 
-  border-radius: 12px;
+  border-radius:14px;
 
-  background:
-    rgba(34,211,238,.05);
+  background:rgba(34,211,238,.06);
 
-  border:
-    1px solid
-    rgba(34,211,238,.1);
+  border:1px solid rgba(34,211,238,.12);
 
-  color: #94a3b8;
+  color:#94a3b8;
 
-  font-size: 13px;
+  font-size:13px;
 
-  line-height: 1.5;
+  line-height:1.5;
 
 }
 
 #message {
 
-  min-height: 24px;
+  min-height:24px;
 
-  margin-top: 18px;
+  margin-top:18px;
 
-  line-height: 1.5;
+  line-height:1.5;
 
+  font-weight:bold;
 }
 
 .success {
-
-  color: #22c55e;
-
+  color:#22c55e;
 }
 
 .error {
-
-  color: #ef4444;
-
+  color:#ef4444;
 }
 
 .loading {
 
-  color: #22d3ee;
+  display:none;
 
-}
+  position:fixed;
 
-.user {
+  inset:0;
 
-  display: none;
+  z-index:999999;
 
-  margin-top: 15px;
+  background:#050816;
 
-  padding: 12px;
+  align-items:center;
 
-  border-radius: 12px;
+  justify-content:center;
 
-  background:
-    rgba(34,197,94,.08);
-
-  color: #86efac;
-
-  font-size: 13px;
-
-}
-
-#loading {
-
-  display: none;
-
-  position: fixed;
-
-  inset: 0;
-
-  z-index: 999999;
-
-  align-items: center;
-
-  justify-content: center;
-
-  background:
-    rgba(2,6,23,.97);
-
+  text-align:center;
 }
 
 .loadingBox {
 
-  text-align: center;
+  background:#111827;
 
-  padding: 30px;
+  padding:30px;
 
+  border-radius:20px;
+
+  border:1px solid rgba(255,255,255,.08);
 }
 
 .spinner {
 
-  width: 48px;
-  height: 48px;
+  width:45px;
 
-  margin: 0 auto 18px;
+  height:45px;
 
-  border:
-    4px solid
-    rgba(255,255,255,.1);
+  margin:0 auto 18px;
 
-  border-top-color:
-    #22d3ee;
+  border:4px solid rgba(255,255,255,.1);
 
-  border-radius: 50%;
+  border-top-color:#22d3ee;
 
-  animation:
-    spin .8s linear infinite;
+  border-radius:50%;
 
+  animation:spin .8s linear infinite;
 }
 
 @keyframes spin {
 
   to {
-
-    transform:
-      rotate(360deg);
-
+    transform:rotate(360deg);
   }
 
 }
@@ -389,107 +287,53 @@ button:disabled {
     CHANNEL+ PREMIUM
   </div>
 
-  <div class="subtitle">
-    Votre accès personnel sécurisé
+  <p class="sub">
+    Accès sécurisé à votre abonnement
+  </p>
+
+
+  <div class="icon">
+    🎫
   </div>
 
 
-  <!-- =================================================
-       ÉTAPE 1
-  ================================================== -->
-
-  <div
-    id="googleStep"
-    class="step active">
-
-    <div class="number">
-      1
-    </div>
-
-    <h2>
-      🔐 Connexion Google
-    </h2>
-
-    <p class="subtitle">
-
-      Connectez votre compte Google
-      avant d'utiliser votre ticket.
-
-    </p>
-
-    <button
-      id="googleButton"
-      class="google">
-
-      🔵 Continuer avec Google
-
-    </button>
-
-    <div
-      id="userInfo"
-      class="user">
-    </div>
-
-    <div class="info">
-
-      🔒 Votre compte Google permet
-      d'associer votre ticket à votre compte.
-
-      <br><br>
-
-      Un ticket ne peut être utilisé
-      que par le compte auquel il est associé.
-
-    </div>
-
-  </div>
+  <h2>
+    Entrez votre ticket
+  </h2>
 
 
-  <!-- =================================================
-       ÉTAPE 2
-  ================================================== -->
+  <p class="sub">
 
-  <div
-    id="ticketStep"
-    class="step">
+    Entrez le code reçu lors de votre achat
+    pour accéder à Channel+ Premium.
 
-    <div class="number">
-      2
-    </div>
+  </p>
 
-    <h2>
-      🎫 Votre ticket
-    </h2>
 
-    <p class="subtitle">
+  <input
+    id="ticketInput"
+    type="text"
+    autocomplete="off"
+    maxlength="50"
+    placeholder="ABCD-1234-EFGH">
 
-      Entrez le code reçu après votre achat.
 
-    </p>
+  <button
+    id="verifyButton">
 
-    <input
-      id="ticketInput"
-      type="text"
-      autocomplete="off"
-      placeholder="ABCD-1234-EFGH"
-      maxlength="50">
+    🔐 Vérifier mon ticket
 
-    <button
-      id="ticketButton">
+  </button>
 
-      Vérifier mon ticket
 
-    </button>
+  <div class="info">
 
-    <div class="info">
+    🔒 Aucun compte Google n'est nécessaire.
 
-      ✅ Votre compte Google est connecté.
+    <br><br>
 
-      <br><br>
-
-      Entrez votre ticket pour continuer.
-
-    </div>
+    Votre accès est sécurisé automatiquement
+    par Firebase.
 
   </div>
 
@@ -499,28 +343,22 @@ button:disabled {
 </div>
 
 
-<!-- =====================================================
-     LOADING
-===================================================== -->
-
-<div id="loading">
+<div
+  id="loading"
+  class="loading">
 
   <div class="loadingBox">
 
     <div class="spinner"></div>
 
     <div id="loadingText">
-      Chargement...
+      Vérification...
     </div>
 
   </div>
 
 </div>
 
-
-<!-- =====================================================
-     FIREBASE
-===================================================== -->
 
 <script type="module">
 
@@ -533,8 +371,7 @@ from
 
 import {
   getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
+  signInAnonymously,
   onAuthStateChanged
 }
 from
@@ -544,6 +381,7 @@ from
 import {
   getFirestore,
   doc,
+  getDoc,
   runTransaction,
   serverTimestamp
 }
@@ -552,16 +390,19 @@ from
 
 
 // =====================================================
-// CONFIGURATION
+// FIREBASE
 // =====================================================
 
 const firebaseConfig = {
 
   apiKey:
-    "AIzaSyDPh3dJ37uy21L70Mekm_ikuIfeD8wCZU",
+    "AIzaSyDPh3dJ37au21L70Mekm_ikuIfeD8wCZU",
 
   authDomain:
     "channelplus-8c219.firebaseapp.com",
+
+  databaseURL:
+    "https://channelplus-8c219-default-rtdb.firebaseio.com",
 
   projectId:
     "channelplus-8c219",
@@ -578,73 +419,45 @@ const firebaseConfig = {
 };
 
 
-// =====================================================
-// FIREBASE
-// =====================================================
-
 const app =
   initializeApp(firebaseConfig);
+
 
 const auth =
   getAuth(app);
 
+
 const db =
   getFirestore(app);
 
-const provider =
-  new GoogleAuthProvider();
-
-provider.setCustomParameters({
-
-  prompt:
-    "select_account"
-
-});
-
 
 // =====================================================
-// ELEMENTS
+// ÉLÉMENTS
 // =====================================================
-
-const googleStep =
-  document.getElementById(
-    "googleStep"
-  );
-
-const ticketStep =
-  document.getElementById(
-    "ticketStep"
-  );
-
-const googleButton =
-  document.getElementById(
-    "googleButton"
-  );
-
-const ticketButton =
-  document.getElementById(
-    "ticketButton"
-  );
 
 const ticketInput =
   document.getElementById(
     "ticketInput"
   );
 
+
+const verifyButton =
+  document.getElementById(
+    "verifyButton"
+  );
+
+
 const message =
   document.getElementById(
     "message"
   );
 
-const userInfo =
-  document.getElementById(
-    "userInfo"
-  );
 
 const loading =
   document.getElementById(
     "loading"
   );
+
 
 const loadingText =
   document.getElementById(
@@ -653,35 +466,42 @@ const loadingText =
 
 
 // =====================================================
-// PAGE MULTICHAINE
+// PAGE MULTICHAÎNE
 // =====================================================
 
-const MULTICHAINE =
+const SITE_MULTICHAINE =
   "./site-multichaine-securise.html";
 
 
 // =====================================================
-// UTILISATEUR
+// SESSION
 // =====================================================
 
-let currentUser =
-  null;
+const SESSION_KEY =
+  "channelplus_access_v2";
 
 
 // =====================================================
-// MESSAGE
+// UTILISATEUR FIREBASE
 // =====================================================
 
-function setMessage(
+let currentUser = null;
+
+
+// =====================================================
+// AFFICHAGE MESSAGE
+// =====================================================
+
+function showMessage(
   text,
-  type = ""
+  type
 ) {
 
   message.textContent =
     text;
 
   message.className =
-    type;
+    type || "";
 
 }
 
@@ -710,128 +530,140 @@ function hideLoading() {
 
 
 // =====================================================
-// CONNEXION GOOGLE
+// AUTHENTIFICATION ANONYME
 // =====================================================
 
-googleButton.addEventListener(
-  "click",
-  async () => {
+async function connectFirebase() {
 
-    googleButton.disabled =
-      true;
+  try {
 
-    setMessage("");
-
-    showLoading(
-      "Connexion à Google..."
-    );
-
-    try {
-
-      const result =
-        await signInWithPopup(
-          auth,
-          provider
-        );
+    if (auth.currentUser) {
 
       currentUser =
-        result.user;
+        auth.currentUser;
+
+      return true;
+
+    }
 
 
-      showUser();
+    const result =
+      await signInAnonymously(auth);
 
 
-      googleStep.classList.remove(
-        "active"
-      );
+    if (!result.user) {
 
-      ticketStep.classList.add(
-        "active"
-      );
-
-      ticketInput.focus();
-
-
-      setMessage(
-        "✅ Compte Google connecté.",
-        "success"
+      throw new Error(
+        "AUTH_FAILED"
       );
 
     }
 
-    catch(error) {
 
-      console.error(error);
+    currentUser =
+      result.user;
 
-      if (
-        error.code ===
-        "auth/popup-blocked"
-      ) {
-
-        setMessage(
-          "❌ La fenêtre Google a été bloquée par le navigateur.",
-          "error"
-        );
-
-      }
-
-      else if (
-        error.code ===
-        "auth/popup-closed-by-user"
-      ) {
-
-        setMessage(
-          "⚠️ La connexion Google a été annulée.",
-          "error"
-        );
-
-      }
-
-      else {
-
-        setMessage(
-          "❌ Impossible de connecter le compte Google.",
-          "error"
-        );
-
-      }
-
-    }
-
-    finally {
-
-      hideLoading();
-
-      googleButton.disabled =
-        false;
-
-    }
+    return true;
 
   }
-);
 
+  catch(error) {
 
-// =====================================================
-// AFFICHER UTILISATEUR
-// =====================================================
-
-function showUser() {
-
-  if (!currentUser)
-    return;
-
-
-  userInfo.style.display =
-    "block";
-
-
-  userInfo.textContent =
-    "✅ Connecté : " +
-    (
-      currentUser.email ||
-      currentUser.displayName ||
-      "Compte Google"
+    console.error(
+      "Erreur authentification Firebase:",
+      error
     );
+
+    return false;
+
+  }
+
+}
+
+
+// =====================================================
+// VÉRIFIER SI UNE SESSION EXISTE
+// =====================================================
+
+function getSavedAccess() {
+
+  try {
+
+    const saved =
+      sessionStorage.getItem(
+        SESSION_KEY
+      );
+
+
+    if (!saved) {
+
+      return null;
+
+    }
+
+
+    const data =
+      JSON.parse(saved);
+
+
+    if (
+      !data.ticket ||
+      !data.expiresAt
+    ) {
+
+      sessionStorage.removeItem(
+        SESSION_KEY
+      );
+
+      return null;
+
+    }
+
+
+    if (
+      Date.now() >=
+      Number(data.expiresAt)
+    ) {
+
+      sessionStorage.removeItem(
+        SESSION_KEY
+      );
+
+      return null;
+
+    }
+
+
+    return data;
+
+  }
+
+  catch(error) {
+
+    sessionStorage.removeItem(
+      SESSION_KEY
+    );
+
+    return null;
+
+  }
+
+}
+
+
+// =====================================================
+// VÉRIFICATION AUTOMATIQUE DE SESSION
+// =====================================================
+
+const savedAccess =
+  getSavedAccess();
+
+
+if (savedAccess) {
+
+  window.location.replace(
+    SITE_MULTICHAINE
+  );
 
 }
 
@@ -840,7 +672,7 @@ function showUser() {
 // VÉRIFICATION TICKET
 // =====================================================
 
-ticketButton.addEventListener(
+verifyButton.addEventListener(
   "click",
   verifyTicket
 );
@@ -864,58 +696,64 @@ ticketInput.addEventListener(
 
 async function verifyTicket() {
 
-  if (!currentUser) {
-
-    setMessage(
-      "❌ Connectez d'abord votre compte Google.",
-      "error"
-    );
-
-    googleStep.classList.add(
-      "active"
-    );
-
-    ticketStep.classList.remove(
-      "active"
-    );
-
-    return;
-
-  }
-
-
   const code =
     ticketInput.value
       .trim()
       .toUpperCase();
 
 
+  // ---------------------------------------------------
+  // CODE VIDE
+  // ---------------------------------------------------
+
   if (!code) {
 
-    setMessage(
+    showMessage(
       "⚠️ Entrez votre ticket.",
       "error"
     );
+
+    ticketInput.focus();
 
     return;
 
   }
 
 
-  ticketButton.disabled =
+  verifyButton.disabled =
     true;
 
-
-  ticketButton.textContent =
+  verifyButton.textContent =
     "Vérification...";
 
 
   showLoading(
-    "Vérification du ticket..."
+    "Connexion sécurisée..."
   );
 
 
   try {
+
+    // =================================================
+    // AUTHENTIFICATION ANONYME
+    // =================================================
+
+    const connected =
+      await connectFirebase();
+
+
+    if (!connected) {
+
+      throw new Error(
+        "AUTH_FAILED"
+      );
+
+    }
+
+
+    // =================================================
+    // RÉFÉRENCE DU TICKET
+    // =================================================
 
     const ticketRef =
       doc(
@@ -925,117 +763,222 @@ async function verifyTicket() {
       );
 
 
-    const userRef =
-      doc(
-        db,
-        "users",
-        currentUser.uid
+    // =================================================
+    // LECTURE
+    // =================================================
+
+    showLoading(
+      "Vérification de votre ticket..."
+    );
+
+
+    const ticketSnap =
+      await getDoc(
+        ticketRef
       );
+
+
+    if (
+      !ticketSnap.exists()
+    ) {
+
+      throw new Error(
+        "TICKET_NOT_FOUND"
+      );
+
+    }
+
+
+    const ticketData =
+      ticketSnap.data();
+
+
+    // =================================================
+    // TICKET ACTIF
+    // =================================================
+
+    if (
+      ticketData.active === false
+    ) {
+
+      throw new Error(
+        "TICKET_INACTIVE"
+      );
+
+    }
+
+
+    // =================================================
+    // TICKET DÉJÀ UTILISÉ PAR QUELQU'UN
+    // =================================================
+
+    if (
+      ticketData.userId &&
+      ticketData.userId !==
+        currentUser.uid
+    ) {
+
+      throw new Error(
+        "TICKET_USED"
+      );
+
+    }
+
+
+    // =================================================
+    // DURÉE
+    // =================================================
+
+    const durationMinutes =
+      Number(
+        ticketData.duration || 720
+      );
+
+
+    // =================================================
+    // CALCUL EXPIRATION
+    // =================================================
+
+    let expiresAt;
+
+
+    if (
+      ticketData.expiresAt &&
+      typeof ticketData.expiresAt.toMillis ===
+        "function"
+    ) {
+
+      expiresAt =
+        ticketData.expiresAt.toMillis();
+
+    }
+
+    else if (
+      ticketData.linkedAt &&
+      typeof ticketData.linkedAt.toMillis ===
+        "function"
+    ) {
+
+      expiresAt =
+        ticketData.linkedAt.toMillis() +
+        durationMinutes *
+        60 *
+        1000;
+
+    }
+
+    else {
+
+      expiresAt =
+        Date.now() +
+        durationMinutes *
+        60 *
+        1000;
+
+    }
+
+
+    // =================================================
+    // TICKET EXPIRÉ
+    // =================================================
+
+    if (
+      Date.now() >=
+      expiresAt
+    ) {
+
+      throw new Error(
+        "TICKET_EXPIRED"
+      );
+
+    }
+
+
+    // =================================================
+    // ASSOCIATION DU TICKET
+    // =================================================
+
+    showLoading(
+      "Activation de votre accès..."
+    );
 
 
     await runTransaction(
       db,
       async transaction => {
 
-        const ticketSnap =
+        const freshSnap =
           await transaction.get(
             ticketRef
           );
 
 
         if (
-          !ticketSnap.exists()
+          !freshSnap.exists()
         ) {
 
           throw new Error(
-            "NOT_FOUND"
+            "TICKET_NOT_FOUND"
           );
 
         }
 
 
-        const ticket =
-          ticketSnap.data();
+        const freshData =
+          freshSnap.data();
 
-
-        // =========================================
-        // TICKET INACTIF
-        // =========================================
 
         if (
-          ticket.active === false
+          freshData.active === false
         ) {
 
           throw new Error(
-            "INACTIVE"
+            "TICKET_INACTIVE"
           );
 
         }
 
 
-        // =========================================
-        // TICKET DÉJÀ UTILISÉ
-        // =========================================
-
         if (
-          ticket.userId &&
-          ticket.userId !==
+          freshData.userId &&
+          freshData.userId !==
             currentUser.uid
         ) {
 
           throw new Error(
-            "USED"
+            "TICKET_USED"
           );
 
         }
 
 
-        // =========================================
-        // SI DÉJÀ ASSOCIÉ AU MÊME COMPTE
-        // =========================================
+        let finalExpiresAt =
+          expiresAt;
+
 
         if (
-          ticket.userId ===
-          currentUser.uid
+          freshData.expiresAt &&
+          typeof freshData.expiresAt.toMillis ===
+            "function"
         ) {
 
-          transaction.set(
-            userRef,
-            {
-
-              uid:
-                currentUser.uid,
-
-              email:
-                currentUser.email || null,
-
-              name:
-                currentUser.displayName || null,
-
-              photo:
-                currentUser.photoURL || null,
-
-              ticketCode:
-                code,
-
-              updatedAt:
-                serverTimestamp()
-
-            },
-
-            {
-              merge: true
-            }
-          );
-
-          return;
+          finalExpiresAt =
+            freshData.expiresAt.toMillis();
 
         }
 
 
-        // =========================================
-        // NOUVELLE ASSOCIATION
-        // =========================================
+        if (
+          Date.now() >=
+          finalExpiresAt
+        ) {
+
+          throw new Error(
+            "TICKET_EXPIRED"
+          );
+
+        }
+
 
         transaction.update(
           ticketRef,
@@ -1044,52 +987,16 @@ async function verifyTicket() {
             userId:
               currentUser.uid,
 
-            ownerEmail:
-              currentUser.email || null,
-
-            ownerName:
-              currentUser.displayName || null,
+            used:
+              true,
 
             linkedAt:
+              freshData.linkedAt ||
               serverTimestamp(),
 
-            used:
-              true
-
-          }
-        );
-
-
-        // =========================================
-        // PROFIL UTILISATEUR
-        // =========================================
-
-        transaction.set(
-          userRef,
-          {
-
-            uid:
-              currentUser.uid,
-
-            email:
-              currentUser.email || null,
-
-            name:
-              currentUser.displayName || null,
-
-            photo:
-              currentUser.photoURL || null,
-
-            ticketCode:
-              code,
-
-            updatedAt:
+            activatedAt:
               serverTimestamp()
 
-          },
-
-          {
-            merge: true
           }
         );
 
@@ -1098,74 +1005,117 @@ async function verifyTicket() {
 
 
     // =================================================
+    // ENREGISTREMENT LOCAL
+    // =================================================
+
+    sessionStorage.setItem(
+      SESSION_KEY,
+      JSON.stringify({
+
+        ticket:
+          code,
+
+        uid:
+          currentUser.uid,
+
+        expiresAt:
+          expiresAt
+
+      })
+    );
+
+
+    // =================================================
     // SUCCÈS
     // =================================================
 
-    setMessage(
-      "✅ Ticket valide. Accès autorisé.",
+    hideLoading();
+
+
+    showMessage(
+      "✅ Ticket valide ! Ouverture de Channel+...",
       "success"
     );
 
 
-    showLoading(
-      "✅ Accès autorisé... Ouverture de Channel+..."
+    await new Promise(
+      resolve =>
+        setTimeout(
+          resolve,
+          800
+        )
     );
 
 
-    setTimeout(
-      () => {
-
-        window.location.replace(
-          MULTICHAINE
-        );
-
-      },
-      800
+    window.location.replace(
+      SITE_MULTICHAINE
     );
 
   }
 
+
   catch(error) {
 
     console.error(
-      "ERREUR TICKET :",
+      "Erreur ticket:",
       error
     );
 
 
+    hideLoading();
+
+
+    let text =
+      "❌ Impossible de vérifier le ticket.";
+
+
     if (
       error.message ===
-      "NOT_FOUND"
+      "AUTH_FAILED"
     ) {
 
-      setMessage(
-        "❌ Ce ticket n'existe pas.",
-        "error"
-      );
+      text =
+        "❌ Impossible de connecter Firebase anonymement. Vérifiez que la connexion anonyme est activée.";
 
     }
 
     else if (
       error.message ===
-      "INACTIVE"
+      "TICKET_NOT_FOUND"
     ) {
 
-      setMessage(
-        "❌ Ce ticket est désactivé.",
-        "error"
-      );
+      text =
+        "❌ Ce ticket n'existe pas.";
 
     }
 
     else if (
       error.message ===
-      "USED"
+      "TICKET_INACTIVE"
     ) {
 
-      setMessage(
-        "❌ Ce ticket est déjà associé à un autre compte Google.",
-        "error"
-      );
+      text =
+        "❌ Ce ticket est désactivé.";
+
+    }
+
+    else if (
+      error.message ===
+      "TICKET_USED"
+    ) {
+
+      text =
+        "❌ Ce ticket est déjà utilisé sur un autre appareil.";
+
+    }
+
+    else if (
+      error.message ===
+      "TICKET_EXPIRED"
+    ) {
+
+      text =
+        "❌ Ce ticket est expiré.";
 
     }
 
@@ -1174,33 +1124,37 @@ async function verifyTicket() {
       "permission-denied"
     ) {
 
-      setMessage(
-        "❌ Firebase refuse l'accès. Vérifie que les règles Firestore ont bien été publiées.",
-        "error"
-      );
+      text =
+        "❌ Firebase refuse l'accès. Vérifiez les règles Firestore.";
 
     }
 
-    else {
+    else if (
+      error.code ===
+      "auth/operation-not-allowed"
+    ) {
 
-      setMessage(
-        "❌ Une erreur est survenue lors de la vérification.",
-        "error"
-      );
+      text =
+        "❌ L'authentification anonyme n'est pas activée dans Firebase.";
 
     }
+
+
+    showMessage(
+      text,
+      "error"
+    );
 
   }
 
+
   finally {
 
-    hideLoading();
-
-    ticketButton.disabled =
+    verifyButton.disabled =
       false;
 
-    ticketButton.textContent =
-      "Vérifier mon ticket";
+    verifyButton.textContent =
+      "🔐 Vérifier mon ticket";
 
   }
 
@@ -1208,31 +1162,19 @@ async function verifyTicket() {
 
 
 // =====================================================
-// SESSION GOOGLE
+// AUTH STATE
 // =====================================================
 
 onAuthStateChanged(
   auth,
   user => {
 
-    if (!user)
-      return;
+    if (user) {
 
+      currentUser =
+        user;
 
-    currentUser =
-      user;
-
-
-    showUser();
-
-
-    googleStep.classList.remove(
-      "active"
-    );
-
-    ticketStep.classList.add(
-      "active"
-    );
+    }
 
   }
 );
