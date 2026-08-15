@@ -18,82 +18,112 @@
 
 html,
 body {
+
   margin: 0;
+  padding: 0;
+
   width: 100%;
   min-height: 100%;
+
   font-family: Arial, sans-serif;
-  background: #050816;
-  color: #fff;
+
+  background:
+    radial-gradient(
+      circle at top,
+      #101c35,
+      #050816 60%
+    );
+
+  color: white;
+
 }
 
 body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
   min-height: 100vh;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
   padding: 20px;
+
 }
 
 .box {
-  width: min(92%, 400px);
+
+  width: min(92%, 430px);
+
+  padding: 32px;
+
+  border-radius: 24px;
 
   background:
-    linear-gradient(
-      145deg,
-      rgba(17,24,39,.97),
-      rgba(15,23,42,.97)
-    );
+    rgba(15,23,42,.96);
 
-  padding: 30px;
+  border:
+    1px solid
+    rgba(255,255,255,.08);
 
-  border-radius: 22px;
+  box-shadow:
+    0 25px 80px rgba(0,0,0,.6),
+    0 0 50px rgba(34,211,238,.08);
 
   text-align: center;
 
-  box-shadow:
-    0 20px 60px rgba(0,0,0,.55),
-    0 0 40px rgba(34,211,238,.08);
-
-  border:
-    1px solid rgba(255,255,255,.08);
 }
 
 .logo {
+
   font-size: 30px;
+
   font-weight: 800;
+
   margin-bottom: 8px;
 
   background:
     linear-gradient(
       135deg,
-      #fff,
+      #ffffff,
       #22d3ee,
       #2563eb
     );
 
   -webkit-background-clip: text;
+
   -webkit-text-fill-color: transparent;
+
 }
 
-.sub {
+.subtitle {
+
   color: #94a3b8;
-  margin: 0 0 24px;
+
   line-height: 1.5;
+
+  margin-bottom: 25px;
+
 }
 
 .step {
+
   display: none;
+
 }
 
 .step.active {
+
   display: block;
+
 }
 
-.step-number {
-  width: 35px;
-  height: 35px;
+.number {
 
-  margin: 0 auto 12px;
+  width: 38px;
+  height: 38px;
+
+  margin: 0 auto 14px;
 
   display: flex;
 
@@ -110,52 +140,65 @@ body {
     );
 
   font-weight: bold;
+
 }
 
 h2 {
-  margin: 0 0 8px;
+
+  margin:
+    0 0 10px;
+
 }
 
 input {
+
   width: 100%;
 
-  padding: 15px;
+  padding: 16px;
 
-  border:
-    1px solid
-    rgba(255,255,255,.08);
+  margin-top: 12px;
 
   border-radius: 12px;
 
-  background: #0b1220;
+  border:
+    1px solid
+    rgba(255,255,255,.1);
 
-  color: #fff;
+  background:
+    #080f1e;
 
-  font-size: 16px;
+  color: white;
 
   outline: none;
 
   text-align: center;
 
+  font-size: 17px;
+
   text-transform: uppercase;
+
 }
 
 input:focus {
-  border-color: #22d3ee;
+
+  border-color:
+    #22d3ee;
 
   box-shadow:
-    0 0 15px
+    0 0 18px
     rgba(34,211,238,.15);
+
 }
 
 button {
+
   width: 100%;
 
-  padding: 14px;
+  padding: 15px;
 
-  margin-top: 12px;
+  margin-top: 14px;
 
-  border: 0;
+  border: none;
 
   border-radius: 12px;
 
@@ -166,83 +209,111 @@ button {
       #2563eb
     );
 
-  color: #fff;
-
-  font-weight: bold;
+  color: white;
 
   font-size: 16px;
 
+  font-weight: bold;
+
   cursor: pointer;
 
-  transition: .25s;
 }
 
 button:hover {
-  transform:
-    translateY(-2px);
 
-  filter:
-    brightness(1.08);
+  filter: brightness(1.1);
+
+  transform:
+    translateY(-1px);
+
 }
 
 button:disabled {
+
   opacity: .6;
 
-  cursor:
-    not-allowed;
+  cursor: not-allowed;
 
-  transform:
-    none;
+  transform: none;
+
 }
 
-.google-btn {
-  background: #fff;
+.google {
+
+  background: white;
+
   color: #111827;
-}
 
-.google-btn:hover {
-  background: #f1f5f9;
 }
 
 .info {
+
   margin-top: 18px;
 
-  padding: 12px;
+  padding: 14px;
 
   border-radius: 12px;
 
   background:
-    rgba(34,211,238,.06);
+    rgba(34,211,238,.05);
 
   border:
     1px solid
-    rgba(34,211,238,.12);
+    rgba(34,211,238,.1);
 
   color: #94a3b8;
 
   font-size: 13px;
 
   line-height: 1.5;
+
 }
 
 #message {
+
   min-height: 24px;
 
-  margin-top: 15px;
+  margin-top: 18px;
 
-  line-height: 1.4;
+  line-height: 1.5;
+
 }
 
 .success {
+
   color: #22c55e;
+
 }
 
 .error {
+
   color: #ef4444;
+
 }
 
 .loading {
+
   color: #22d3ee;
+
+}
+
+.user {
+
+  display: none;
+
+  margin-top: 15px;
+
+  padding: 12px;
+
+  border-radius: 12px;
+
+  background:
+    rgba(34,197,94,.08);
+
+  color: #86efac;
+
+  font-size: 13px;
+
 }
 
 #loading {
@@ -253,36 +324,31 @@ button:disabled {
 
   inset: 0;
 
+  z-index: 999999;
+
   align-items: center;
 
   justify-content: center;
 
-  background: #050816;
+  background:
+    rgba(2,6,23,.97);
 
-  z-index: 99999;
+}
+
+.loadingBox {
 
   text-align: center;
 
   padding: 30px;
-}
 
-.loading-box {
-
-  background: #111827;
-
-  padding: 30px;
-
-  border-radius: 20px;
-
-  border:
-    1px solid
-    rgba(255,255,255,.08);
 }
 
 .spinner {
 
-  width: 45px;
-  height: 45px;
+  width: 48px;
+  height: 48px;
+
+  margin: 0 auto 18px;
 
   border:
     4px solid
@@ -293,92 +359,67 @@ button:disabled {
 
   border-radius: 50%;
 
-  margin: 0 auto 18px;
-
   animation:
     spin .8s linear infinite;
+
 }
 
 @keyframes spin {
 
   to {
+
     transform:
       rotate(360deg);
+
   }
 
-}
-
-.user-info {
-
-  display: none;
-
-  margin-top: 15px;
-
-  padding: 10px;
-
-  border-radius: 10px;
-
-  background:
-    rgba(34,197,94,.08);
-
-  color: #86efac;
-
-  font-size: 13px;
 }
 
 </style>
 
 </head>
 
+
 <body>
 
 
-<!-- =====================================================
-     FORMULAIRE
-===================================================== -->
-
-<div id="accessBox" class="box">
+<div class="box">
 
   <div class="logo">
     CHANNEL+ PREMIUM
   </div>
 
-  <p class="sub">
+  <div class="subtitle">
     Votre accès personnel sécurisé
-  </p>
+  </div>
 
 
   <!-- =================================================
-       ÉTAPE 1 : GOOGLE
+       ÉTAPE 1
   ================================================== -->
 
   <div
-    id="stepGoogle"
+    id="googleStep"
     class="step active">
 
-    <div class="step-number">
+    <div class="number">
       1
     </div>
 
     <h2>
-      🔐 Connexion
+      🔐 Connexion Google
     </h2>
 
-    <p class="sub">
+    <p class="subtitle">
 
       Connectez votre compte Google
-      pour sécuriser votre accès.
-
-      <br><br>
-
-      Votre ticket sera ensuite associé
-      à ce compte.
+      avant d'utiliser votre ticket.
 
     </p>
 
     <button
-      id="btnGoogle"
-      class="google-btn">
+      id="googleButton"
+      class="google">
 
       🔵 Continuer avec Google
 
@@ -386,18 +427,18 @@ button:disabled {
 
     <div
       id="userInfo"
-      class="user-info">
+      class="user">
     </div>
 
     <div class="info">
 
-      🔒 Votre compte Google sert
-      uniquement à sécuriser votre accès.
+      🔒 Votre compte Google permet
+      d'associer votre ticket à votre compte.
 
       <br><br>
 
-      Un ticket ne peut être associé
-      qu'à un seul compte.
+      Un ticket ne peut être utilisé
+      que par le compte auquel il est associé.
 
     </div>
 
@@ -405,14 +446,14 @@ button:disabled {
 
 
   <!-- =================================================
-       ÉTAPE 2 : TICKET
+       ÉTAPE 2
   ================================================== -->
 
   <div
-    id="stepTicket"
+    id="ticketStep"
     class="step">
 
-    <div class="step-number">
+    <div class="number">
       2
     </div>
 
@@ -420,10 +461,9 @@ button:disabled {
       🎫 Votre ticket
     </h2>
 
-    <p class="sub">
+    <p class="subtitle">
 
-      Entrez maintenant le code reçu
-      lors de votre achat.
+      Entrez le code reçu après votre achat.
 
     </p>
 
@@ -435,7 +475,7 @@ button:disabled {
       maxlength="50">
 
     <button
-      id="btnVerifier">
+      id="ticketButton">
 
       Vérifier mon ticket
 
@@ -447,19 +487,14 @@ button:disabled {
 
       <br><br>
 
-      Entrez votre ticket pour activer
-      votre accès Channel+.
+      Entrez votre ticket pour continuer.
 
     </div>
 
   </div>
 
 
-  <!-- =================================================
-       MESSAGE
-  ================================================== -->
-
-  <p id="message"></p>
+  <div id="message"></div>
 
 </div>
 
@@ -470,12 +505,12 @@ button:disabled {
 
 <div id="loading">
 
-  <div class="loading-box">
+  <div class="loadingBox">
 
     <div class="spinner"></div>
 
     <div id="loadingText">
-      Connexion...
+      Chargement...
     </div>
 
   </div>
@@ -497,6 +532,16 @@ from
 
 
 import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+import {
   getFirestore,
   doc,
   runTransaction,
@@ -506,31 +551,14 @@ from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-import {
-
-  getAuth,
-
-  GoogleAuthProvider,
-
-  signInWithPopup,
-
-  onAuthStateChanged,
-
-  signOut
-
-}
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-
 // =====================================================
-// CONFIGURATION FIREBASE
+// CONFIGURATION
 // =====================================================
 
 const firebaseConfig = {
 
   apiKey:
-    "AIzaSyDPh3dJ37auy21L70Mekm_ikuIfeD8wCZU",
+    "AIzaSyDPh3dJ37uy21L70Mekm_ikuIfeD8wCZU",
 
   authDomain:
     "channelplus-8c219.firebaseapp.com",
@@ -551,48 +579,51 @@ const firebaseConfig = {
 
 
 // =====================================================
-// INITIALISATION
+// FIREBASE
 // =====================================================
 
 const app =
   initializeApp(firebaseConfig);
 
-const db =
-  getFirestore(app);
-
 const auth =
   getAuth(app);
 
-const googleProvider =
+const db =
+  getFirestore(app);
+
+const provider =
   new GoogleAuthProvider();
 
-googleProvider.setCustomParameters({
-  prompt: "select_account"
+provider.setCustomParameters({
+
+  prompt:
+    "select_account"
+
 });
 
 
 // =====================================================
-// ÉLÉMENTS
+// ELEMENTS
 // =====================================================
 
-const stepGoogle =
+const googleStep =
   document.getElementById(
-    "stepGoogle"
+    "googleStep"
   );
 
-const stepTicket =
+const ticketStep =
   document.getElementById(
-    "stepTicket"
+    "ticketStep"
   );
 
-const btnGoogle =
+const googleButton =
   document.getElementById(
-    "btnGoogle"
+    "googleButton"
   );
 
-const btnVerifier =
+const ticketButton =
   document.getElementById(
-    "btnVerifier"
+    "ticketButton"
   );
 
 const ticketInput =
@@ -605,6 +636,11 @@ const message =
     "message"
   );
 
+const userInfo =
+  document.getElementById(
+    "userInfo"
+  );
+
 const loading =
   document.getElementById(
     "loading"
@@ -615,22 +651,17 @@ const loadingText =
     "loadingText"
   );
 
-const userInfo =
-  document.getElementById(
-    "userInfo"
-  );
-
 
 // =====================================================
 // PAGE MULTICHAINE
 // =====================================================
 
-const SITE_URL =
+const MULTICHAINE =
   "./site-multichaine-securise.html";
 
 
 // =====================================================
-// UTILISATEUR GOOGLE ACTUEL
+// UTILISATEUR
 // =====================================================
 
 let currentUser =
@@ -641,7 +672,7 @@ let currentUser =
 // MESSAGE
 // =====================================================
 
-function showMessage(
+function setMessage(
   text,
   type = ""
 ) {
@@ -679,164 +710,139 @@ function hideLoading() {
 
 
 // =====================================================
-// GOOGLE
+// CONNEXION GOOGLE
 // =====================================================
 
-btnGoogle.addEventListener(
+googleButton.addEventListener(
   "click",
-  connectGoogle
+  async () => {
+
+    googleButton.disabled =
+      true;
+
+    setMessage("");
+
+    showLoading(
+      "Connexion à Google..."
+    );
+
+    try {
+
+      const result =
+        await signInWithPopup(
+          auth,
+          provider
+        );
+
+      currentUser =
+        result.user;
+
+
+      showUser();
+
+
+      googleStep.classList.remove(
+        "active"
+      );
+
+      ticketStep.classList.add(
+        "active"
+      );
+
+      ticketInput.focus();
+
+
+      setMessage(
+        "✅ Compte Google connecté.",
+        "success"
+      );
+
+    }
+
+    catch(error) {
+
+      console.error(error);
+
+      if (
+        error.code ===
+        "auth/popup-blocked"
+      ) {
+
+        setMessage(
+          "❌ La fenêtre Google a été bloquée par le navigateur.",
+          "error"
+        );
+
+      }
+
+      else if (
+        error.code ===
+        "auth/popup-closed-by-user"
+      ) {
+
+        setMessage(
+          "⚠️ La connexion Google a été annulée.",
+          "error"
+        );
+
+      }
+
+      else {
+
+        setMessage(
+          "❌ Impossible de connecter le compte Google.",
+          "error"
+        );
+
+      }
+
+    }
+
+    finally {
+
+      hideLoading();
+
+      googleButton.disabled =
+        false;
+
+    }
+
+  }
 );
 
 
-async function connectGoogle() {
+// =====================================================
+// AFFICHER UTILISATEUR
+// =====================================================
 
-  btnGoogle.disabled =
-    true;
+function showUser() {
 
-  btnGoogle.textContent =
-    "Connexion Google...";
-
-  showLoading(
-    "Connexion à votre compte Google..."
-  );
+  if (!currentUser)
+    return;
 
 
-  try {
-
-    const result =
-      await signInWithPopup(
-        auth,
-        googleProvider
-      );
+  userInfo.style.display =
+    "block";
 
 
-    if (!result.user) {
-
-      throw new Error(
-        "GOOGLE_USER_NOT_FOUND"
-      );
-
-    }
-
-
-    currentUser =
-      result.user;
-
-
-    // ===============================================
-    // AFFICHAGE DU COMPTE
-    // ===============================================
-
-    userInfo.style.display =
-      "block";
-
-    userInfo.textContent =
-      "✅ Connecté : " +
-      (
-        currentUser.email ||
-        currentUser.displayName ||
-        "Compte Google"
-      );
-
-
-    showMessage(
-      "✅ Compte Google connecté.",
-      "success"
+  userInfo.textContent =
+    "✅ Connecté : " +
+    (
+      currentUser.email ||
+      currentUser.displayName ||
+      "Compte Google"
     );
-
-
-    // ===============================================
-    // PASSAGE AU TICKET
-    // ===============================================
-
-    stepGoogle.classList.remove(
-      "active"
-    );
-
-    stepTicket.classList.add(
-      "active"
-    );
-
-
-    ticketInput.focus();
-
-
-  }
-
-  catch(error) {
-
-    console.error(
-      "Erreur Google :",
-      error
-    );
-
-
-    let text =
-      "❌ Impossible de finaliser la connexion.";
-
-
-    if (
-      error.code ===
-      "auth/popup-closed-by-user"
-    ) {
-
-      text =
-        "⚠️ La fenêtre Google a été fermée.";
-
-    }
-
-
-    else if (
-      error.code ===
-      "auth/popup-blocked"
-    ) {
-
-      text =
-        "⚠️ La fenêtre Google a été bloquée par votre navigateur.";
-
-    }
-
-
-    else if (
-      error.code ===
-      "auth/unauthorized-domain"
-    ) {
-
-      text =
-        "❌ Ce domaine n'est pas autorisé dans Firebase.";
-
-    }
-
-
-    showMessage(
-      text,
-      "error"
-    );
-
-  }
-
-  finally {
-
-    hideLoading();
-
-    btnGoogle.disabled =
-      false;
-
-    btnGoogle.textContent =
-      "🔵 Continuer avec Google";
-
-  }
 
 }
 
 
 // =====================================================
-// VÉRIFICATION DU TICKET
+// VÉRIFICATION TICKET
 // =====================================================
 
-btnVerifier.addEventListener(
+ticketButton.addEventListener(
   "click",
-  verifierTicket
+  verifyTicket
 );
 
 
@@ -848,7 +854,7 @@ ticketInput.addEventListener(
       event.key === "Enter"
     ) {
 
-      verifierTicket();
+      verifyTicket();
 
     }
 
@@ -856,24 +862,20 @@ ticketInput.addEventListener(
 );
 
 
-async function verifierTicket() {
-
-  // ===================================================
-  // VÉRIFIER GOOGLE
-  // ===================================================
+async function verifyTicket() {
 
   if (!currentUser) {
 
-    showMessage(
+    setMessage(
       "❌ Connectez d'abord votre compte Google.",
       "error"
     );
 
-    stepTicket.classList.remove(
+    googleStep.classList.add(
       "active"
     );
 
-    stepGoogle.classList.add(
+    ticketStep.classList.remove(
       "active"
     );
 
@@ -881,10 +883,6 @@ async function verifierTicket() {
 
   }
 
-
-  // ===================================================
-  // CODE
-  // ===================================================
 
   const code =
     ticketInput.value
@@ -894,7 +892,7 @@ async function verifierTicket() {
 
   if (!code) {
 
-    showMessage(
+    setMessage(
       "⚠️ Entrez votre ticket.",
       "error"
     );
@@ -904,23 +902,20 @@ async function verifierTicket() {
   }
 
 
-  btnVerifier.disabled =
+  ticketButton.disabled =
     true;
 
-  btnVerifier.textContent =
+
+  ticketButton.textContent =
     "Vérification...";
 
 
   showLoading(
-    "Vérification de votre ticket..."
+    "Vérification du ticket..."
   );
 
 
   try {
-
-    // ===============================================
-    // RÉFÉRENCE DU TICKET
-    // ===============================================
 
     const ticketRef =
       doc(
@@ -938,17 +933,9 @@ async function verifierTicket() {
       );
 
 
-    // ===============================================
-    // TRANSACTION
-    // ===============================================
-
     await runTransaction(
       db,
       async transaction => {
-
-        // -------------------------------------------
-        // LECTURE DU TICKET
-        // -------------------------------------------
 
         const ticketSnap =
           await transaction.get(
@@ -961,60 +948,94 @@ async function verifierTicket() {
         ) {
 
           throw new Error(
-            "TICKET_NOT_FOUND"
+            "NOT_FOUND"
           );
 
         }
 
 
-        const ticketData =
+        const ticket =
           ticketSnap.data();
 
 
-        // -------------------------------------------
-        // EXPIRATION
-        // -------------------------------------------
+        // =========================================
+        // TICKET INACTIF
+        // =========================================
 
         if (
-          ticketData.expiresAt
-          &&
-          typeof ticketData
-            .expiresAt
-            .toMillis
-            === "function"
-          &&
-          ticketData.expiresAt.toMillis()
-            < Date.now()
+          ticket.active === false
         ) {
 
           throw new Error(
-            "TICKET_EXPIRED"
+            "INACTIVE"
           );
 
         }
 
 
-        // -------------------------------------------
+        // =========================================
         // TICKET DÉJÀ UTILISÉ
-        // -------------------------------------------
+        // =========================================
 
         if (
-          ticketData.userId
-          &&
-          ticketData.userId !==
+          ticket.userId &&
+          ticket.userId !==
             currentUser.uid
         ) {
 
           throw new Error(
-            "TICKET_ALREADY_USED"
+            "USED"
           );
 
         }
 
 
-        // -------------------------------------------
-        // ASSOCIATION
-        // -------------------------------------------
+        // =========================================
+        // SI DÉJÀ ASSOCIÉ AU MÊME COMPTE
+        // =========================================
+
+        if (
+          ticket.userId ===
+          currentUser.uid
+        ) {
+
+          transaction.set(
+            userRef,
+            {
+
+              uid:
+                currentUser.uid,
+
+              email:
+                currentUser.email || null,
+
+              name:
+                currentUser.displayName || null,
+
+              photo:
+                currentUser.photoURL || null,
+
+              ticketCode:
+                code,
+
+              updatedAt:
+                serverTimestamp()
+
+            },
+
+            {
+              merge: true
+            }
+          );
+
+          return;
+
+        }
+
+
+        // =========================================
+        // NOUVELLE ASSOCIATION
+        // =========================================
 
         transaction.update(
           ticketRef,
@@ -1024,23 +1045,24 @@ async function verifierTicket() {
               currentUser.uid,
 
             ownerEmail:
-              currentUser.email ||
-              null,
+              currentUser.email || null,
 
             ownerName:
-              currentUser.displayName ||
-              null,
+              currentUser.displayName || null,
 
             linkedAt:
-              serverTimestamp()
+              serverTimestamp(),
+
+            used:
+              true
 
           }
         );
 
 
-        // -------------------------------------------
+        // =========================================
         // PROFIL UTILISATEUR
-        // -------------------------------------------
+        // =========================================
 
         transaction.set(
           userRef,
@@ -1050,16 +1072,13 @@ async function verifierTicket() {
               currentUser.uid,
 
             email:
-              currentUser.email ||
-              null,
+              currentUser.email || null,
 
             name:
-              currentUser.displayName ||
-              null,
+              currentUser.displayName || null,
 
             photo:
-              currentUser.photoURL ||
-              null,
+              currentUser.photoURL || null,
 
             ticketCode:
               code,
@@ -1068,6 +1087,7 @@ async function verifierTicket() {
               serverTimestamp()
 
           },
+
           {
             merge: true
           }
@@ -1081,109 +1101,105 @@ async function verifierTicket() {
     // SUCCÈS
     // =================================================
 
-    showLoading(
-      "✅ Ticket valide. Ouverture de Channel+..."
-    );
-
-
-    showMessage(
-      "✅ Votre accès est activé.",
+    setMessage(
+      "✅ Ticket valide. Accès autorisé.",
       "success"
     );
 
 
-    await new Promise(
-      resolve =>
-        setTimeout(
-          resolve,
-          1000
-        )
+    showLoading(
+      "✅ Accès autorisé... Ouverture de Channel+..."
     );
 
 
-    // =================================================
-    // OUVERTURE
-    // =================================================
+    setTimeout(
+      () => {
 
-    window.location.replace(
-      SITE_URL
+        window.location.replace(
+          MULTICHAINE
+        );
+
+      },
+      800
     );
 
   }
 
-
   catch(error) {
 
     console.error(
-      "Erreur ticket :",
+      "ERREUR TICKET :",
       error
     );
 
 
-    let text =
-      "❌ Impossible de vérifier le ticket.";
-
-
     if (
       error.message ===
-      "TICKET_NOT_FOUND"
+      "NOT_FOUND"
     ) {
 
-      text =
-        "❌ Ce ticket n'existe pas.";
+      setMessage(
+        "❌ Ce ticket n'existe pas.",
+        "error"
+      );
 
     }
-
 
     else if (
       error.message ===
-      "TICKET_EXPIRED"
+      "INACTIVE"
     ) {
 
-      text =
-        "❌ Ce ticket est expiré.";
+      setMessage(
+        "❌ Ce ticket est désactivé.",
+        "error"
+      );
 
     }
-
 
     else if (
       error.message ===
-      "TICKET_ALREADY_USED"
+      "USED"
     ) {
 
-      text =
-        "❌ Ce ticket est déjà associé à un autre compte Google.";
+      setMessage(
+        "❌ Ce ticket est déjà associé à un autre compte Google.",
+        "error"
+      );
 
     }
-
 
     else if (
       error.code ===
       "permission-denied"
     ) {
 
-      text =
-        "❌ Firebase refuse l'accès. Vérifiez les règles Firestore.";
+      setMessage(
+        "❌ Firebase refuse l'accès. Vérifie que les règles Firestore ont bien été publiées.",
+        "error"
+      );
 
     }
 
+    else {
 
-    showMessage(
-      text,
-      "error"
-    );
+      setMessage(
+        "❌ Une erreur est survenue lors de la vérification.",
+        "error"
+      );
+
+    }
 
   }
-
 
   finally {
 
     hideLoading();
 
-    btnVerifier.disabled =
+    ticketButton.disabled =
       false;
 
-    btnVerifier.textContent =
+    ticketButton.textContent =
       "Vérifier mon ticket";
 
   }
@@ -1192,47 +1208,29 @@ async function verifierTicket() {
 
 
 // =====================================================
-// SESSION GOOGLE EXISTANTE
+// SESSION GOOGLE
 // =====================================================
 
 onAuthStateChanged(
   auth,
   user => {
 
-    if (!user) {
-
-      currentUser =
-        null;
-
+    if (!user)
       return;
-
-    }
 
 
     currentUser =
       user;
 
 
-    // Si l'utilisateur est déjà connecté,
-    // on passe directement au ticket.
-
-    userInfo.style.display =
-      "block";
-
-    userInfo.textContent =
-      "✅ Connecté : " +
-      (
-        user.email ||
-        user.displayName ||
-        "Compte Google"
-      );
+    showUser();
 
 
-    stepGoogle.classList.remove(
+    googleStep.classList.remove(
       "active"
     );
 
-    stepTicket.classList.add(
+    ticketStep.classList.add(
       "active"
     );
 
