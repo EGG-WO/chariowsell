@@ -3,184 +3,733 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Channel+ — Accès</title>
+
 <style>
 *{box-sizing:border-box}
-html,body{margin:0;width:100%;height:100%;font-family:Arial,sans-serif;background:#050816;color:#fff}
-body{display:flex;justify-content:center;align-items:center;min-height:100vh}
-.box{width:min(92%,380px);background:#111827;padding:30px;border-radius:20px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.08)}
-h2{margin:0 0 8px;color:#22d3ee}
-.sub{color:#94a3b8;margin:0 0 20px}
-input{width:100%;padding:14px;border:0;border-radius:12px;background:#0b1220;color:#fff;font-size:16px;outline:none}
-button{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;background:linear-gradient(135deg,#22d3ee,#2563eb);color:#fff;font-weight:bold;font-size:16px;cursor:pointer}
-button:disabled{opacity:.65;cursor:not-allowed}
-#message{min-height:24px;margin-top:15px}
-#app{position:fixed;inset:0;display:none;background:#050816}
-#siteFrame{width:100%;height:100%;border:0;display:block}
-#loading{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:#050816;z-index:10;font-weight:bold}
+
+html,body{
+    margin:0;
+    width:100%;
+    height:100%;
+    font-family:Arial,sans-serif;
+    background:#050816;
+    color:#fff
+}
+
+body{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh
+}
+
+.box{
+    width:min(92%,380px);
+    background:#111827;
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 20px 50px rgba(0,0,0,.45);
+    border:1px solid rgba(255,255,255,.08)
+}
+
+h2{
+    margin:0 0 8px;
+    color:#22d3ee
+}
+
+.sub{
+    color:#94a3b8;
+    margin:0 0 20px
+}
+
+input{
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:12px;
+    background:#0b1220;
+    color:#fff;
+    font-size:16px;
+    outline:none
+}
+
+button{
+    width:100%;
+    padding:14px;
+    margin-top:12px;
+    border:0;
+    border-radius:12px;
+    background:linear-gradient(135deg,#22d3ee,#2563eb);
+    color:#fff;
+    font-weight:bold;
+    font-size:16px;
+    cursor:pointer
+}
+
+button:disabled{
+    opacity:.65;
+    cursor:not-allowed
+}
+
+#message{
+    min-height:24px;
+    margin-top:15px
+}
+
+#app{
+    position:fixed;
+    inset:0;
+    display:none;
+    background:#050816
+}
+
+#siteFrame{
+    width:100%;
+    height:100%;
+    border:0;
+    display:block
+}
+
+#loading{
+    position:fixed;
+    inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    background:#050816;
+    z-index:10;
+    font-weight:bold
+}
 </style>
 </head>
+
 <body>
 
 <div id="ticketBox" class="box">
-<h2>🎫 CHANNEL+ PREMIUM</h2>
-<p class="sub">Entrez votre ticket pour accéder au service.</p>
-<input id="ticketInput" type="text" autocomplete="off" placeholder="ABCD-1234-EFGH">
-<button id="btnVerifier">Vérifier</button>
-<p id="message"></p>
+
+    <h2>🎫 CHANNEL+ PREMIUM</h2>
+
+    <p class="sub">
+        Entrez votre ticket pour accéder au service.
+    </p>
+
+    <input
+        id="ticketInput"
+        type="text"
+        autocomplete="off"
+        placeholder="ABCD-1234-EFGH"
+    >
+
+    <button id="btnVerifier">
+        Vérifier
+    </button>
+
+    <p id="message"></p>
+
 </div>
 
-<div id="loading">🔄 Vérification de votre accès...</div>
+
+<div id="loading">
+    🔄 Vérification de votre accès...
+</div>
+
 
 <div id="app">
-<iframe id="siteFrame" title="Channel+ Premium" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+
+    <iframe
+        id="siteFrame"
+        title="Channel+ Premium"
+        allow="autoplay; fullscreen; picture-in-picture">
+    </iframe>
+
 </div>
 
+
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getFirestore,
+    doc,
+    getDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+/* =========================================
+   FIREBASE
+   ========================================= */
 
 const firebaseConfig = {
-apiKey: "AIzaSyDPh3dJ37uy21L70Mekm_ikuIfeD8wCZU",
-authDomain: "channelplus-8c219.firebaseapp.com",
-projectId: "channelplus-8c219",
-storageBucket: "channelplus-8c219.firebasestorage.app",
-messagingSenderId: "178858225057",
-appId: "1:178858225057:web:63c327bf23eb877f196fe0"
+
+    apiKey: "AIzaSyDPh3dJ37uy21L70Mekm_ikuIfeD8wCZU",
+
+    authDomain:
+        "channelplus-8c219.firebaseapp.com",
+
+    projectId:
+        "channelplus-8c219",
+
+    storageBucket:
+        "channelplus-8c219.firebasestorage.app",
+
+    messagingSenderId:
+        "178858225057",
+
+    appId:
+        "1:178858225057:web:63c327bf23eb877f196fe0"
+
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 
-const TICKET_KEY = "channelplus_ticket";
-const SESSION_KEY = "channelplus_session";
-const SESSION_MAX_AGE = 12 * 60 * 60 * 1000;
-const SITE_URL = "./site-multichaine-securise.html";
+const app =
+    initializeApp(firebaseConfig);
 
-const ticketBox = document.getElementById("ticketBox");
-const appBox = document.getElementById("app");
-const frame = document.getElementById("siteFrame");
-const loading = document.getElementById("loading");
-const input = document.getElementById("ticketInput");
-const button = document.getElementById("btnVerifier");
-const message = document.getElementById("message");
+const db =
+    getFirestore(app);
 
-function saveAccess(code) {
-localStorage.setItem(TICKET_KEY, code);
-localStorage.setItem(SESSION_KEY, String(Date.now()));
+
+/* =========================================
+   CONFIGURATION
+   ========================================= */
+
+const TICKET_KEY =
+    "channelplus_ticket";
+
+const SESSION_KEY =
+    "channelplus_session";
+
+
+/*
+==================================================
+MÉMORISATION DU TICKET :
+
+30 jours
+==================================================
+*/
+
+const SESSION_MAX_AGE =
+    30 * 24 * 60 * 60 * 1000;
+
+
+/*
+URL DE TON SITE PRINCIPAL
+*/
+
+const SITE_URL =
+    "./site-multichaine-securise.html";
+
+
+/* =========================================
+   ELEMENTS
+   ========================================= */
+
+const ticketBox =
+    document.getElementById("ticketBox");
+
+const appBox =
+    document.getElementById("app");
+
+const frame =
+    document.getElementById("siteFrame");
+
+const loading =
+    document.getElementById("loading");
+
+const input =
+    document.getElementById("ticketInput");
+
+const button =
+    document.getElementById("btnVerifier");
+
+const message =
+    document.getElementById("message");
+
+
+/* =========================================
+   SAUVEGARDE DU TICKET
+   ========================================= */
+
+function saveAccess(code){
+
+    /*
+    On mémorise le ticket
+    */
+
+    localStorage.setItem(
+        TICKET_KEY,
+        code
+    );
+
+
+    /*
+    On mémorise la date/heure
+    */
+
+    localStorage.setItem(
+        SESSION_KEY,
+        String(Date.now())
+    );
+
 }
 
-function clearAccess() {
-localStorage.removeItem(TICKET_KEY);
-localStorage.removeItem(SESSION_KEY);
-sessionStorage.removeItem(SESSION_KEY);
+
+/* =========================================
+   SUPPRESSION DE L'ACCES
+   ========================================= */
+
+function clearAccess(){
+
+    localStorage.removeItem(
+        TICKET_KEY
+    );
+
+    localStorage.removeItem(
+        SESSION_KEY
+    );
+
+    sessionStorage.removeItem(
+        SESSION_KEY
+    );
+
 }
 
-function getSavedTicket() {
-const code = localStorage.getItem(TICKET_KEY);
-const time = Number(localStorage.getItem(SESSION_KEY) || 0);
-if (!code || !time || Date.now() - time > SESSION_MAX_AGE) {
-clearAccess();
-return null;
+
+/* =========================================
+   RECUPERATION DU TICKET
+   ========================================= */
+
+function getSavedTicket(){
+
+    const code =
+        localStorage.getItem(
+            TICKET_KEY
+        );
+
+    const time =
+        Number(
+            localStorage.getItem(
+                SESSION_KEY
+            ) || 0
+        );
+
+
+    /*
+    Aucun ticket enregistré
+    */
+
+    if(!code || !time){
+
+        clearAccess();
+
+        return null;
+
+    }
+
+
+    /*
+    Vérification de la durée
+    */
+
+    if(
+        Date.now() - time >
+        SESSION_MAX_AGE
+    ){
+
+        /*
+        Plus de 30 jours :
+        on supprime le ticket mémorisé.
+        */
+
+        clearAccess();
+
+        return null;
+
+    }
+
+
+    return code;
+
 }
-return code;
+
+
+/* =========================================
+   VERIFICATION FIREBASE
+   ========================================= */
+
+async function validateTicket(code){
+
+    const snap =
+        await getDoc(
+            doc(
+                db,
+                "tickets",
+                code
+            )
+        );
+
+
+    /*
+    Ticket inexistant
+    */
+
+    if(!snap.exists()){
+
+        return {
+            ok:false,
+            reason:"Ticket introuvable"
+        };
+
+    }
+
+
+    const data =
+        snap.data();
+
+
+    /*
+    Ticket expiré
+    */
+
+    if(
+        data.expiresAt &&
+        typeof data.expiresAt.toMillis ===
+        "function" &&
+        data.expiresAt.toMillis() <
+        Date.now()
+    ){
+
+        return {
+            ok:false,
+            reason:"Ticket expiré"
+        };
+
+    }
+
+
+    return {
+        ok:true
+    };
+
 }
 
-async function validateTicket(code) {
-const snap = await getDoc(doc(db, "tickets", code));
-if (!snap.exists()) return {ok:false, reason:"Ticket introuvable"};
 
-const data = snap.data();
+/* =========================================
+   AFFICHER LE SITE
+   ========================================= */
 
-if (data.expiresAt && typeof data.expiresAt.toMillis === "function" &&
-data.expiresAt.toMillis() < Date.now()) {
-return {ok:false, reason:"Ticket expiré"};
+function showSite(code){
+
+    /*
+    Autorisation de la page enfant
+    */
+
+    sessionStorage.setItem(
+        SESSION_KEY,
+        JSON.stringify({
+            ticket:code,
+            at:Date.now()
+        })
+    );
+
+
+    /*
+    Cacher le formulaire
+    */
+
+    ticketBox.style.display =
+        "none";
+
+
+    /*
+    Afficher le chargement
+    */
+
+    loading.style.display =
+        "flex";
+
+
+    /*
+    Afficher l'application
+    */
+
+    appBox.style.display =
+        "block";
+
+
+    /*
+    Quand le site enfant est chargé
+    */
+
+    frame.onload = () => {
+
+        frame.contentWindow.postMessage(
+
+            {
+                type:
+                    "CHANNELPLUS_ACCESS",
+
+                ticket:
+                    code
+            },
+
+            window.location.origin
+
+        );
+
+
+        loading.style.display =
+            "none";
+
+    };
+
+
+    /*
+    Charger le site
+    */
+
+    frame.src =
+        SITE_URL;
+
 }
 
-return {ok:true};
+
+/* =========================================
+   VERIFICATION DU TICKET
+   ========================================= */
+
+async function verifierTicket(
+    codeFromStorage = null
+){
+
+    const code =
+        (
+            codeFromStorage ||
+            input.value
+        )
+        .trim()
+        .toUpperCase();
+
+
+    /*
+    Aucun code
+    */
+
+    if(!code){
+
+        message.textContent =
+            "⚠️ Entrez un ticket";
+
+        return false;
+
+    }
+
+
+    button.disabled =
+        true;
+
+    button.textContent =
+        "Vérification...";
+
+    message.textContent =
+        "🔄 Vérification...";
+
+
+    try{
+
+        /*
+        Vérification auprès de Firebase
+        */
+
+        const result =
+            await validateTicket(
+                code
+            );
+
+
+        /*
+        Ticket invalide
+        */
+
+        if(!result.ok){
+
+            clearAccess();
+
+            message.textContent =
+                "❌ " +
+                result.reason;
+
+            return false;
+
+        }
+
+
+        /*
+        Ticket valide :
+        mémorisation pendant 30 jours
+        */
+
+        saveAccess(code);
+
+
+        message.textContent =
+            "✅ Accès autorisé";
+
+
+        /*
+        Ouvrir le site
+        */
+
+        showSite(code);
+
+
+        return true;
+
+
+    }catch(e){
+
+        console.error(e);
+
+        message.textContent =
+            "❌ Impossible de vérifier le ticket.";
+
+        return false;
+
+
+    }finally{
+
+        button.disabled =
+            false;
+
+        button.textContent =
+            "Vérifier";
+
+    }
+
 }
 
-function showSite(code) {
-// Autorisation de session pour la page enfant.
-sessionStorage.setItem(SESSION_KEY, JSON.stringify({ticket:code, at:Date.now()}));
 
-ticketBox.style.display = "none";
-loading.style.display = "flex";
-appBox.style.display = "block";
+/* =========================================
+   BOUTON VERIFIER
+   ========================================= */
 
-frame.onload = () => {
-frame.contentWindow.postMessage(
-{type:"CHANNELPLUS_ACCESS", ticket:code},
-window.location.origin
+button.addEventListener(
+    "click",
+    () => {
+
+        verifierTicket();
+
+    }
 );
-loading.style.display = "none";
-};
-
-frame.src = SITE_URL;
-}
-
-async function verifierTicket(codeFromStorage = null) {
-const code = (codeFromStorage || input.value).trim().toUpperCase();
-
-if (!code) {
-message.textContent = "⚠️ Entrez un ticket";
-return false;
-}
-
-button.disabled = true;
-button.textContent = "Vérification...";
-message.textContent = "🔄 Vérification...";
-
-try {
-const result = await validateTicket(code);
-
-if (!result.ok) {
-  clearAccess();
-  message.textContent = "❌ " + result.reason;
-  return false;
-}
-
-saveAccess(code);
-message.textContent = "✅ Accès autorisé";
-showSite(code);
-return true;
 
 
-} catch (e) {
-console.error(e);
-message.textContent = "❌ Impossible de vérifier le ticket.";
-return false;
-} finally {
-button.disabled = false;
-button.textContent = "Vérifier";
-}
-}
+/* =========================================
+   TOUCHE ENTREE
+   ========================================= */
 
-button.addEventListener("click", () => verifierTicket());
+input.addEventListener(
+    "keydown",
+    e => {
 
-input.addEventListener("keydown", e => {
-if (e.key === "Enter") verifierTicket();
-});
+        if(e.key === "Enter"){
 
-// Au retour sur la page : pas besoin de retaper le ticket.
-// Le ticket mémorisé est néanmoins revalidé auprès de Firestore.
-(async () => {
-const saved = getSavedTicket();
-if (saved) {
-await verifierTicket(saved);
-}
+            verifierTicket();
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   RETOUR SUR LE SITE
+   =========================================
+
+   Si un ticket a déjà été enregistré
+   depuis moins de 30 jours :
+
+   → pas besoin de le retaper
+   → Firebase vérifie quand même
+   → si le ticket est toujours valide :
+     accès automatique
+================================================== */
+
+(async() => {
+
+    const saved =
+        getSavedTicket();
+
+
+    if(saved){
+
+        await verifierTicket(
+            saved
+        );
+
+    }
+
 })();
 
-// Si l'enfant signale un problème d'accès, on revient au formulaire.
-window.addEventListener("message", e => {
-if (e.origin !== window.location.origin) return;
-if (e.data?.type === "CHANNELPLUS_ACCESS_DENIED") {
-clearAccess();
-frame.src = "about:blank";
-appBox.style.display = "none";
-ticketBox.style.display = "block";
-message.textContent = "❌ Accès refusé. Veuillez saisir un ticket valide.";
-}
-});
+
+/* =========================================
+   MESSAGE DE LA PAGE ENFANT
+   ========================================= */
+
+window.addEventListener(
+    "message",
+    e => {
+
+        /*
+        Sécurité de l'origine
+        */
+
+        if(
+            e.origin !==
+            window.location.origin
+        ){
+
+            return;
+
+        }
+
+
+        /*
+        Accès refusé par la page enfant
+        */
+
+        if(
+            e.data?.type ===
+            "CHANNELPLUS_ACCESS_DENIED"
+        ){
+
+            clearAccess();
+
+
+            frame.src =
+                "about:blank";
+
+
+            appBox.style.display =
+                "none";
+
+
+            ticketBox.style.display =
+                "block";
+
+
+            message.textContent =
+                "❌ Accès refusé. " +
+                "Veuillez saisir un ticket valide.";
+
+        }
+
+    }
+);
+
 </script>
+
 </body>
 </html>
